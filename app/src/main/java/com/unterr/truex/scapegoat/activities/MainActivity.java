@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 
 import com.unterr.truex.scapegoat.R;
 import com.unterr.truex.scapegoat.elements.CustomAdapter;
+import com.unterr.truex.scapegoat.models.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView                recyclerView;
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
-    private String[]                    data;
+    private ArrayList<Item>             data;
 
     // Objects
 
@@ -39,13 +40,16 @@ public class MainActivity extends AppCompatActivity {
         toolbar =       findViewById(R.id.toolbar);
         recyclerView =  findViewById(R.id.lst);
 
-        data          = new String[20];
+        data = new ArrayList<Item>();
+        for(int i = 0; i < 30; i++){
+            data.add(new Item());
+        }
+
         layoutManager = new LinearLayoutManager(this);
         adapter       = new CustomAdapter(data);
 
         setSupportActionBar(toolbar);
 
-        Arrays.fill(data, "test");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

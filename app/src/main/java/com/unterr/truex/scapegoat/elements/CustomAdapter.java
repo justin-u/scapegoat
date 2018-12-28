@@ -6,11 +6,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unterr.truex.scapegoat.R;
+import com.unterr.truex.scapegoat.models.Item;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
-    private String[] mDataset;
+    private ArrayList<Item> data;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -25,8 +28,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CustomAdapter(String[] myDataset) {
-        mDataset = myDataset;
+    public CustomAdapter(ArrayList<Item> _data) {
+        data = _data;
     }
 
     // Create new views (invoked by the layout manager)
@@ -34,10 +37,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public CustomAdapter.CustomViewHolder onCreateViewHolder(ViewGroup parent,
                                                      int viewType) {
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
+        TextView textView = (TextView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_textview, parent, false);
 
-        CustomViewHolder viewHolder = new CustomViewHolder(v);
+        CustomViewHolder viewHolder = new CustomViewHolder(textView);
         return viewHolder;
     }
 
@@ -46,13 +49,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(mDataset[position]);
+
+        holder.textView.setText(data.get(position).getString());
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return data.size();
     }
 }
