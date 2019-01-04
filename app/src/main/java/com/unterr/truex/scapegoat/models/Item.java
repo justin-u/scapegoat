@@ -64,7 +64,7 @@ public class Item {
         return this.name;
     }
 
-    public String getString() {
+    public String toString() {
         if(this.isNull())
             return "null";
 

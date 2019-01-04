@@ -50,7 +50,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        holder.textView.setText(data.get(position).getString());
+        holder.textView.setText(data.get(position).toString());
 
     }
 
