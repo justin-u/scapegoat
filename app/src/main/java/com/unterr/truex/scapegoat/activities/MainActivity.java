@@ -4,24 +4,57 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 import com.unterr.truex.scapegoat.R;
+import com.unterr.truex.scapegoat.elements.CustomAdapter;
+import com.unterr.truex.scapegoat.models.Item;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //
+    // Android Elements
+    private Toolbar                     toolbar;
+    private RecyclerView                recyclerView;
+    private RecyclerView.Adapter        adapter;
+    private RecyclerView.LayoutManager  layoutManager;
+    private ArrayList<Item>             data;
+
+    // Objects
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // create
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar =       findViewById(R.id.toolbar);
+        recyclerView =  findViewById(R.id.lst);
+
+        data = new ArrayList<Item>();
+        for(int i = 0; i < 30; i++){
+            data.add(new Item());
+        }
+
+        layoutManager = new LinearLayoutManager(this);
+        adapter       = new CustomAdapter(data);
+
         setSupportActionBar(toolbar);
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        // set action for floating action button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

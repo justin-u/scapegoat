@@ -64,6 +64,13 @@ public class Item {
         return this.name;
     }
 
+    public String toString() {
+        if(this.isNull())
+            return "null";
+
+        return this.name + " | " + this.itemID + " | " + this.tradePrice;
+    }
+
     public Double getTradePrice(){
         return this.tradePrice;
     }
@@ -87,5 +94,14 @@ public class Item {
         this.tradePrice     = _item.tradePrice;
 
         return true;
+    }
+
+    private boolean isNull(){
+        return      iconURL == null ||
+                    iconLargeURL == null ||
+                    itemID == null ||
+                    ifMemberOnly == null ||
+                    name == null ||
+                    tradePrice == null;
     }
 }
