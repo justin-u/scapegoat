@@ -15,12 +15,20 @@ public class Item {
 
     public Item(){}
 
-
-    //Public constructor method might be needed for the API wrapper to easily return a new Item object. Set methods could also be made public
-
+    //Constructor method to call the pullItem method (APIWrapper) that pulls JSON data and uses the second constructor to create a new Item object.
     public Item( Double _itemID ){
         Item _item = APIWrapper.pullItem( _itemID );
         if( _item != null ){ this.update(_item); }
+    }
+
+    //Second constructor method with every parameter to be called by the pullItem method (APIWrapper) in order to create an item object with the pulled JSON data
+    public Item(String _iconURL, String _iconLargeURL, Double _itemID, Boolean _ifMemberOnly, String _name, Double _tradePrice){
+        this.iconURL = _iconURL;
+        this.iconLargeURL = _iconLargeURL;
+        this.itemID = _itemID;
+        this.ifMemberOnly = _ifMemberOnly;
+        this.name = _name;
+        this.tradePrice = _tradePrice;
     }
 
     private void setIconURL( String _iconURL ){
