@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 
 import com.unterr.truex.scapegoat.R;
 import com.unterr.truex.scapegoat.elements.CustomAdapter;
+import com.unterr.truex.scapegoat.methods.APIWrapper;
 import com.unterr.truex.scapegoat.models.Item;
 
 import java.util.ArrayList;
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        //Test for APIWrapper
+        Double testItem = new Double(111);
+        APIWrapper.pullItem (testItem);
     }
 
     @Override

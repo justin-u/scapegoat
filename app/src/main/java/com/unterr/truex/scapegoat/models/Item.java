@@ -15,6 +15,9 @@ public class Item {
 
     public Item(){}
 
+
+    //Public constructor method might be needed for the API wrapper to easily return a new Item object. Set methods could also be made public
+
     public Item( Double _itemID ){
         Item _item = APIWrapper.pullItem( _itemID );
         if( _item != null ){ this.update(_item); }

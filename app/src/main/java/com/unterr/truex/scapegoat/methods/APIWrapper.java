@@ -2,7 +2,6 @@ package com.unterr.truex.scapegoat.methods;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import  com.unterr.truex.scapegoat.models.Item;
 import  com.unterr.truex.scapegoat.models.Player;
@@ -43,7 +42,9 @@ public class APIWrapper {
     public static Item pullItem( Double itemID ){
         Item newItemObject = new Item();
 
-        class DownloadTask extends AsyncTask<String, Void, String> {
+
+        //Have AsyncTask return Item object instead of String
+        class DownloadItem extends AsyncTask<String, Void, String> {
 
             @Override
             protected String doInBackground(String... urls) {
@@ -77,7 +78,7 @@ public class APIWrapper {
 
                 } catch (Exception e) {
 
-
+                    Log.e("JSONException","JSON Downkiad Error:" + e.getMessage());
                 }
 
                 return null;
@@ -89,54 +90,33 @@ public class APIWrapper {
 
                 try {
 
-                    String message = "";
+                    JSONObject reader = new JSONObject(result);
+                    JSONObject itemObj = reader.getJSONObject ("item");
+                    String _iconURL = itemObj.getString ("icon");
+                    Log.i("ItemDataReturn","Icon Url:" + _iconURL);
+                    String _iconLargeURL = itemObj.getString ("icon_large");
+                    Log.i("ItemDataReturn","Large Icon Url:" + _iconLargeURL);
+                    String _itemID = itemObj.getString ("id");
+                    Log.i("ItemDataReturn","Item ID:" + _itemID);
+                    String _ifMembersOnly = itemObj.getString ("members");
+                    Log.i("ItemDataReturn","Members Only:" + _ifMembersOnly);
+                    String _name = itemObj.getString ("name");
+                    Log.i("ItemDataReturn","Item Name:" + _name);
 
-                    JSONObject jsonObject = new JSONObject(result);
-
-                    String itemInfo = jsonObject.getString("item");
-
-                    Log.i("Item Data", itemInfo);
-
-                    JSONArray arr = new JSONArray(itemInfo);
-
-                    for (int i = 0; i < arr.length(); i++) {
-
-                        JSONObject jsonPart = arr.getJSONObject(i);
-
-                        String main = "";
-                        String description = "";
-
-                        main = jsonPart.getString("current");
-                        description = jsonPart.getString("description");
-
-                        if (main != "" && description != "") {
-
-                            message += main + ": " + description + "\r\n";
-
-                        }
-
-                    }
-
-                    if (message != "") {
+                    JSONObject currentObj = reader.getJSONObject ("current");
+                    String _tradePrice = currentObj.getString ("price");
+                    Log.i("ItemDataReturn","Trade Price:" + _tradePrice);
 
 
-
-                    } else {
-
-                    }
-
-
-                } catch (JSONException e) {
-
+                } catch (final JSONException e) {
+                    Log.e("JSONException","JSON Parsing Error:" + e.getMessage());
 
                 }
-
-
 
             }
         }
 
-        DownloadTask task = new DownloadTask();
+        DownloadItem task = new DownloadItem();
         task.execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + itemID.toString());
 
         //TODO: pull item info from the API and return
