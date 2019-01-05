@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Test for APIWrapper
+        //Test for APIWrapper pullItem
         Double testItem = new Double(111);
         APIWrapper.pullItem (testItem);
     }

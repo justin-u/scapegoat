@@ -78,7 +78,7 @@ public class APIWrapper {
 
                 } catch (Exception e) {
 
-                    Log.e("JSONException","JSON Downkiad Error:" + e.getMessage());
+                    Log.e("JSONException","JSON Download Error:" + e.getMessage());
                 }
 
                 return null;
@@ -116,8 +116,11 @@ public class APIWrapper {
             }
         }
 
+        //Double itemID converted to String urlItemID with formatting to remove the decimal point and decimal values. (decimal point causes url to not return data)
+        String urlItemID = String.format("%.0f", itemID);
+
         DownloadItem task = new DownloadItem();
-        task.execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + itemID.toString());
+        task.execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + urlItemID);
 
         //TODO: pull item info from the API and return
 
