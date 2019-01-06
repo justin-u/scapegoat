@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Struct;
 
 /*
  * APIWrapper:
@@ -33,6 +34,11 @@ public class APIWrapper {
     public static Player pullPlayer( String username ){
         Player newPlayerObject = new Player();
 
+        //TODO: pull character data from character api
+        //Character API: (https://secure.runescape.com/m=hiscore_oldschool/index_lite.ws?player=)
+
+        //TODO: split pulled data by commas and store data in array/hashmap
+
 
         //TODO: pull the herblore lvl from the API and return it
 
@@ -41,7 +47,6 @@ public class APIWrapper {
 
     public static Item pullItem( Double itemID ){
         Item newItemObject = new Item();
-
 
         //Have AsyncTask return Item object instead of String
         class DownloadItem extends AsyncTask<String, Void, String> {
@@ -55,11 +60,8 @@ public class APIWrapper {
 
                 try {
                     url = new URL(urls[0]);
-
                     urlConnection = (HttpURLConnection) url.openConnection();
-
                     InputStream in = urlConnection.getInputStream();
-
                     InputStreamReader reader = new InputStreamReader(in);
 
                     int data = reader.read();
@@ -107,7 +109,6 @@ public class APIWrapper {
                     String _tradePrice = currentObj.getString ("price");
                     Log.i("ItemDataReturn","Trade Price:" + _tradePrice);
 
-
                 } catch (final JSONException e) {
                     Log.e("JSONException","JSON Parsing Error:" + e.getMessage());
 
@@ -116,13 +117,15 @@ public class APIWrapper {
             }
         }
 
+        //TODO: Create check to validate if the given (perameter) itemID matches the itemID pulled from the ge API
+
         //Double itemID converted to String urlItemID with formatting to remove the decimal point and decimal values. (decimal point causes url to not return data)
         String urlItemID = String.format("%.0f", itemID);
 
         DownloadItem task = new DownloadItem();
         task.execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + urlItemID);
 
-        //TODO: pull item info from the API and return
+        //TODO: create new Item object with the pulled JSON data
 
         return newItemObject;
     }

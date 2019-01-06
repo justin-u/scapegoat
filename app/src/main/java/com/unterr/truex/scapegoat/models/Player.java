@@ -14,9 +14,16 @@ public class Player {
 
     public Player(){}
 
+    //Constructor method to call the pulPlayer method (APIWrapper) that pulls API data and uses the second constructor to create a new Item object.
     public Player( String _username ){
         Player _player = APIWrapper.pullPlayer( _username );
         if( _player != null ){ this.update(_player); }
+    }
+
+    //Second constructor method with every parameter to be called by the pullPlayer method (APIWrapper) in order to create a player object with the pulled API data
+    public Player(String _username, Double _herbLvl){
+        this.username = _username;
+        this.herbLvl = _herbLvl;
     }
 
     private void setUsername( String _username ){
