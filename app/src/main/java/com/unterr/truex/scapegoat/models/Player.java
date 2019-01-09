@@ -10,7 +10,29 @@ import com.unterr.truex.scapegoat.methods.APIWrapper;
 public class Player {
 
     private String username;
+    private Double attackLvl;
+    private Double defenceLvl;
+    private Double strengthLvl;
+    private Double hitpointsLvl;
+    private Double rangedLvl;
+    private Double prayerLvl;
+    private Double magicLvl;
+    private Double cookingLvl;
+    private Double woodcuttingLvl;
+    private Double fletchingLvl;
+    private Double fishingLvl;
+    private Double firemakingLvl;
+    private Double craftingLvl;
+    private Double smithingLvl;
+    private Double miningLvl;
     private Double herbLvl;
+    private Double agilityLvl;
+    private Double thievingLvl;
+    private Double slayerLvl;
+    private Double farmingLvl;
+    private Double runecraftingLvl;
+    private Double hunterLvl;
+    private Double constructionLvl;
 
     public Player(){}
 
@@ -21,9 +43,36 @@ public class Player {
     }
 
     //Second constructor method with every parameter to be called by the pullPlayer method (APIWrapper) in order to create a player object with the pulled API data
-    public Player(String _username, Double _herbLvl){
+    public Player(String _username, Double _attackLvl, Double _defenceLvl, Double _strengthLvl, Double _hitpointsLvl, Double _rangedLvl,
+                  Double _prayerLvl, Double _magicLvl, Double _cookingLvl, Double _woodcuttingLvl, Double _fletchingLvl, Double _fishingLvl,
+                  Double _firemakingLvl, Double _craftingLvl, Double _smithingLvl, Double _miningLvl, Double _herbLvl, Double _agilityLvl,
+                  Double _thievingLvl, Double _slayerLvl, Double _farmingLvl, Double _runecraftingLvl, Double _hunterLvl, Double _constructionLvl){
+
         this.username = _username;
+        this.attackLvl = _attackLvl;
+        this.defenceLvl = _defenceLvl;
+        this.strengthLvl = _strengthLvl;
+        this.hitpointsLvl = _hitpointsLvl;
+        this.rangedLvl = _rangedLvl;
+        this.prayerLvl = _prayerLvl;
+        this.magicLvl = _magicLvl;
+        this.cookingLvl = _cookingLvl;
+        this.woodcuttingLvl = _woodcuttingLvl;
+        this.fletchingLvl = _fletchingLvl;
+        this.fishingLvl = _fishingLvl;
+        this.firemakingLvl = _firemakingLvl;
+        this.craftingLvl = _craftingLvl;
+        this.smithingLvl = _smithingLvl;
+        this.miningLvl = _miningLvl;
         this.herbLvl = _herbLvl;
+        this.agilityLvl = _agilityLvl;
+        this.thievingLvl = _thievingLvl;
+        this.slayerLvl = _slayerLvl;
+        this.farmingLvl = _farmingLvl;
+        this.runecraftingLvl = _runecraftingLvl;
+        this.hunterLvl = _hunterLvl;
+        this.constructionLvl = _constructionLvl;
+
     }
 
     private void setUsername( String _username ){
