@@ -1,4 +1,7 @@
 package com.unterr.truex.scapegoat.methods;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -15,6 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Array;
 import java.sql.Struct;
 
 /*
@@ -43,6 +47,15 @@ public class APIWrapper {
         //TODO: pull the herblore lvl from the API and return it
 
         return newPlayerObject;
+    }
+
+    //Method to pull all itemIDs from a given category from the OSRS API and return the itemIDs in an int[] array
+    public static int[] pullCategory( String categoryID ){
+
+        //TODO: pull itemID data from Runescape API and return it in an array
+        int[] categoryArray = new int[30];
+
+        return categoryArray;
     }
 
     public static Item pullItem( Double itemID ){
@@ -130,17 +143,37 @@ public class APIWrapper {
         return newItemObject;
     }
 
-    public static Drawable pullIcon( String URL ){
+    public static Drawable pullIcon( String iconURL ){
 
-        //TODO: load drawable from icon URL
+        Bitmap x;
+        try{
+            HttpURLConnection connection = (HttpURLConnection) new URL(iconURL).openConnection();
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            x = BitmapFactory.decodeStream(input);
+        } catch (Exception e){
+            Log.e("HTTPError","HTTP Connection Error:" + e.getMessage());
+            return null;
+        }
+        //TODO: alter pullIcon BitmapDrawable to non deprecated method
+        return new BitmapDrawable(x);
 
-        return null;
     }
 
-    public static Drawable pullIconLarge( String URL ){
+    public static Drawable pullIconLarge( String iconURL ){
 
-        //TODO: load drawable from iconLarge URL
+        Bitmap x;
+        try{
+            HttpURLConnection connection = (HttpURLConnection) new URL(iconURL).openConnection();
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            x = BitmapFactory.decodeStream(input);
+        } catch (Exception e){
+            Log.e("HTTPError","HTTP Connection Error:" + e.getMessage());
+            return null;
+        }
+        //TODO: alter pullIconLarge BitmapDrawable to non deprecated method
+        return new BitmapDrawable(x);
 
-        return null;
     }
 }
