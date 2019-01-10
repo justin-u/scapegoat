@@ -91,6 +91,14 @@ public class Player {
         return this.herbLvl;
     }
 
+    //TODO: Alter toString() to include all Player variables
+    public String toString() {
+        if(this.isNull()){
+            return "null";
+        }
+        return this.username + " | " + this.attackLvl.toString () + " | " + this.defenceLvl.toString ();
+    }
+
     private boolean update(){
         if( this.username == null ){ return false; }
         Player _player = APIWrapper.pullPlayer( this.username );
@@ -101,12 +109,64 @@ public class Player {
     private boolean update( Player _player ){
 
         if(  _player              == null           ){ return false; }
+        //Might be cause of .toString() returning null
         if(  _player         .equals(this)          ){ return false; }
         if( !_player.username.equals(this.username) ){ return false; }
 
+
         this.username = _player.username;
-        this.herbLvl  = _player.herbLvl;
+        this.attackLvl = _player.attackLvl;
+        this.defenceLvl = _player.defenceLvl;
+        this.strengthLvl = _player.strengthLvl;
+        this.hitpointsLvl = _player.hitpointsLvl;
+        this.rangedLvl = _player.rangedLvl;
+        this.prayerLvl = _player.prayerLvl;
+        this.magicLvl = _player.magicLvl;
+        this.cookingLvl = _player.cookingLvl;
+        this.woodcuttingLvl = _player.woodcuttingLvl;
+        this.fletchingLvl = _player.fletchingLvl;
+        this.fishingLvl = _player.fishingLvl;
+        this.firemakingLvl = _player.firemakingLvl;
+        this.craftingLvl = _player.craftingLvl;
+        this.smithingLvl = _player.smithingLvl;
+        this.miningLvl = _player.miningLvl;
+        this.herbLvl = _player.herbLvl;
+        this.agilityLvl = _player.agilityLvl;
+        this.thievingLvl = _player.thievingLvl;
+        this.slayerLvl = _player.slayerLvl;
+        this.farmingLvl = _player.farmingLvl;
+        this.runecraftingLvl = _player.runecraftingLvl;
+        this.hunterLvl = _player.hunterLvl;
+        this.constructionLvl = _player.constructionLvl;
 
         return true;
+    }
+
+    private boolean isNull(){
+        return  username == null ||
+                attackLvl == null ||
+                defenceLvl  == null ||
+                strengthLvl  == null ||
+                hitpointsLvl  == null ||
+                rangedLvl  == null ||
+                prayerLvl  == null ||
+                magicLvl  == null ||
+                cookingLvl  == null ||
+                woodcuttingLvl  == null ||
+                fletchingLvl  == null ||
+                fishingLvl  == null ||
+                firemakingLvl  == null ||
+                craftingLvl  == null ||
+                smithingLvl  == null ||
+                miningLvl  == null ||
+                herbLvl  == null ||
+                agilityLvl  == null ||
+                thievingLvl  == null ||
+                slayerLvl  == null ||
+                farmingLvl  == null ||
+                runecraftingLvl  == null ||
+                hunterLvl  == null ||
+                constructionLvl  == null;
+
     }
 }

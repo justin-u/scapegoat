@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import com.unterr.truex.scapegoat.R;
 import com.unterr.truex.scapegoat.elements.CustomAdapter;
 import com.unterr.truex.scapegoat.methods.APIWrapper;
 import com.unterr.truex.scapegoat.models.Item;
+import com.unterr.truex.scapegoat.models.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
         APIWrapper.pullItem (testItem);
 
         String testUser = new String("Jtruezie");
-        APIWrapper.pullPlayer (testUser);
+        //APIWrapper.pullPlayer (testUser);
+
+        Player testPlayer = new Player (testUser);
+        Log.i("PlayerData:", testPlayer.toString());
     }
 
     @Override

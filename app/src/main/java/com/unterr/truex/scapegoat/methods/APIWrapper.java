@@ -29,6 +29,8 @@ public class APIWrapper {
 
     public static Boolean verifyUsername( String username ){
 
+        //TODO: Fix verifyUsername to return Boolean
+
         class DownloadUser extends AsyncTask<String, Void, Boolean> {
 
             @Override
@@ -77,7 +79,6 @@ public class APIWrapper {
 
     public static Player pullPlayer( String username ){
 
-        Player newPlayerObject = new Player();
         String rawUser = "";
 
 
@@ -133,22 +134,43 @@ public class APIWrapper {
         }catch (ExecutionException e){
             Log.e("AsyncException","Execution Exception:" + e.getMessage());
         }
+        //TODO: Use loop that pulls the data every 2 indices of the array.
+
         Log.i("UserData", "User data" + rawUser);
         String[] userArray = rawUser.split(",");
+        Double _attackLvl = Double.parseDouble (userArray[3]);
+        Log.i("SpecData", _attackLvl.toString ());
+        Double _defenceLvl = Double.parseDouble (userArray[5]);
+        Double _strengthLvl = Double.parseDouble (userArray[7]);
+        Double _hitpointsLvl = Double.parseDouble (userArray[9]);
+        Double _rangedLvl = Double.parseDouble (userArray[11]);
+        Double _prayerLvl = Double.parseDouble (userArray[13]);
+        Double _magicLvl = Double.parseDouble (userArray[15]);
+        Double _cookingLvl = Double.parseDouble (userArray[17]);
+        Double _woodcuttingLvl = Double.parseDouble (userArray[19]);
+        Double _fletchingLvl = Double.parseDouble (userArray[21]);
+        Double _fishingLvl = Double.parseDouble (userArray[23]);
+        Double _firemakingLvl = Double.parseDouble (userArray[25]);
+        Double _craftingLvl = Double.parseDouble (userArray[27]);
+        Double _smithingLvl = Double.parseDouble (userArray[29]);
+        Double _miningLvl = Double.parseDouble (userArray[31]);
+        Double _herbLvl = Double.parseDouble (userArray[33]);
+        Double _agilityLvl = Double.parseDouble (userArray[35]);
+        Double _thievingLvl = Double.parseDouble (userArray[37]);
+        Double _slayerLvl = Double.parseDouble (userArray[39]);
+        Double _farmingLvl = Double.parseDouble (userArray[41]);
+        Double _runecraftingLvl = Double.parseDouble (userArray[43]);
+        Double _hunterLvl = Double.parseDouble (userArray[45]);
+        Log.i("SpecData", _hunterLvl.toString ());
+        Double _constructionLvl = Double.parseDouble (userArray[47]);
 
-        //this to set delegate/listener back to this class
-        //task.delegate = this;
+        Player newPlayerObject = new Player(username, _attackLvl, _defenceLvl, _strengthLvl, _hitpointsLvl, _rangedLvl,
+                _prayerLvl, _magicLvl, _cookingLvl, _woodcuttingLvl, _fletchingLvl, _fishingLvl,
+                _firemakingLvl, _craftingLvl, _smithingLvl, _miningLvl, _herbLvl, _agilityLvl,
+                _thievingLvl, _slayerLvl, _farmingLvl, _runecraftingLvl, _hunterLvl, _constructionLvl);
+
+
         //task.execute("https://secure.runescape.com/m=hiscore_oldschool/index_lite.ws?player=" + username);
-
-
-
-        //TODO: pull character data from character api
-        //Character API: (https://secure.runescape.com/m=hiscore_oldschool/index_lite.ws?player=)
-
-        //TODO: split pulled data by commas and store data in array/hashmap
-
-
-        //TODO: pull the herblore lvl from the API and return it
 
         return newPlayerObject;
     }
@@ -168,6 +190,10 @@ public class APIWrapper {
 
     public static Item pullItem( Double itemID ){
         Item newItemObject = new Item();
+
+        String rawItem = "";
+
+        //TODO: return item data from AsyncTask (array?) and then call Item constructor method
 
         //Have AsyncTask return Item object instead of String
         class DownloadItem extends AsyncTask<String, Void, String> {
