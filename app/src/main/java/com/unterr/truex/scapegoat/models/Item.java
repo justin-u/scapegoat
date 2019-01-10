@@ -94,6 +94,7 @@ public class Item {
     private boolean update( Item _item ){
 
         if(  _item             == null        ){ return false; }
+        //Might be cause of .toString() returning null
         if(  _item       .equals(this)        ){ return false; }
         if( !_item.itemID.equals(this.itemID) ){ return false; }
 

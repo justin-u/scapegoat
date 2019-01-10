@@ -110,7 +110,7 @@ public class Player {
 
         if(  _player              == null           ){ return false; }
         //Might be cause of .toString() returning null
-        if(  _player         .equals(this)          ){ return false; }
+        //if(  _player         .equals(this)          ){ return false; }
         if( !_player.username.equals(this.username) ){ return false; }
 
 

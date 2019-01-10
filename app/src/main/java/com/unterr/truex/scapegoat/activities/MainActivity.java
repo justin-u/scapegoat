@@ -67,15 +67,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Test for APIWrapper pullItem
-        Double testItem = new Double(111);
-        APIWrapper.pullItem (testItem);
+        //Test Variables:
+        Double testItemID = new Double(111);
+        String testUsername = new String("?{ASDfadfe");
 
-        String testUser = new String("Jtruezie");
-        //APIWrapper.pullPlayer (testUser);
+        //Tests for APIWrapper pullItem:
+        //APIWrapper.pullItem (testItemID);
+        //Item testItem = new Item (testItemID);
+        //Log.i("TestItemData:", testItem.toString());
 
-        Player testPlayer = new Player (testUser);
-        Log.i("PlayerData:", testPlayer.toString());
+
+        //Tests for APIWrapper pullPlayer:
+        //APIWrapper.pullPlayer (testUsername);
+        //Player testPlayer = new Player (testUsername);
+        //Log.i("PlayerData:", testPlayer.toString());
+
+        //Tests for APIWrapper verifyUsername:
+        Log.i("VerifyTest:", APIWrapper.verifyUsername (testUsername).toString ());
     }
 
     @Override
