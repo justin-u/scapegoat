@@ -83,6 +83,8 @@ public class Player {
         this.herbLvl = _herbLvl;
     }
 
+    //TODO: create void set(Skill)Lvl methods for all skills
+
     public String getUsername(){
         return this.username;
     }
@@ -90,6 +92,8 @@ public class Player {
     public Double getherbLvl(){
         return this.herbLvl;
     }
+
+    //TODO: create Double get(Skill)Lvl methods for all skills
 
     //TODO: Alter toString() to include all Player variables
     public String toString() {

@@ -74,6 +74,23 @@ public class MoneyProcess {
 
     //TODO: create method to check if inputID and productID have corresponding Item Objects (creates new Item Objects if they do not exist)
 
+    //TODO: create getName(productID) method that returns the name of the corresponding Item object (used to set this.name = getName(productID))
+
+    //TODO: create getInputTradePrice(inputID) method that returns the tradePrice of the corresponding Item object (used to set this.inputTradePrice = getInputTradePrice(inputID))
+
+    //TODO: create getProductTradePrice(productID) method that returns the tradePrice of the corresponding Item object (used to set this.inputTradePrice = getInputTradePrice(productID))
+
+    //TODO: create getProfitPer(inputID, productID) method that returns the profitPer (productTradePrice - inputTradePrice) X(Could be calculated in update/constructor)
+
+    //TODO: create getOutputTotal(categoryID) method that returns the outputTotal (currently only using constants)
+
+    //TODO: create getProfitTotal(outputTotal, profitPer) method that returns profitTotal (outputTotal * profitPer) X(Could be calculated in update/constructor)
+
+    //TODO: create getXpTotal(outputTotal, xpPer) method that returns xpTotal (outputTotal * xpPer) X(Could be calculated in update/constructor)
+
+    //TODO: create getIfMemberOnly(categoryID, inputID, productID) method that returns T/F by calling ifMemberOnly of corresponding inputID, productID Item Objects
+
+    //TODO: create getReqLvlMet(reqLvl) (categoryID, inputID, productID) method that determines the skill type (from categoryID) and returns T/F by calling get(Skill)Lvl() of corresponding inputID, productID Item Objects
 
     //TODO: create update() method that calls all other calculation methods
 
