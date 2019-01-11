@@ -8,13 +8,14 @@ public class MoneyProcess {
     // product = item that is the result of the MoneyProcess to be sold (ex: one clean herb)
     // total = result from completing the MoneyProcess over time or completing a recurring MoneyProcess (Recurring/PerHR depending on categoryID)
 
-    //**Variables that are passed as parameters in the constructor method**
     //itemID of the item that needs to be used (called in the constructor method)
     public Double inputID;
 
     //itemID of the item that will be the final product to be sold (called in the constructor method)
     public Double productID;
 
+
+    //**Variables that are passed as parameters in the constructor method**
     //categoryID determines how certain methods will calculate results and is also used to pull specific MoneyProcess Objects to populate the RecyclerView (called in constructor method)
     public int categoryID;
 
@@ -70,11 +71,72 @@ public class MoneyProcess {
 
     public MoneyProcess(){}
 
+    public MoneyProcess(Item _inputItem, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer){
+        this.inputID = getItemID (_inputItem);
+        this.productID = getItemID (_productItem);
+        this.categoryID = _categoryID;
+        this.reqLvl = _reqLvl;
+        this.xpPer = _xpPer;
+        this.name = getItemName (_productItem);
+        this.inputTradePrice = getItemTradePrice (_inputItem);
+        this.productTradePrice = getItemTradePrice (_inputItem);
+        this.profitPer = getProfitPer (_inputItem, _productItem);
+        this.outputTotal = getOutputTotal (_categoryID);
+        this.profitTotal = getProfitTotal (_categoryID, _inputItem, _productItem);
+        this.xpTotal = getXpTotal (_categoryID, _xpPer);
+        this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
+        //Alter ReqLvlMet
+        this.reqLvlMet = false;
+    }
+
     //TODO: create constructor methods that calls update() method based on parameters
 
-    //TODO: create method to check if inputID and productID have corresponding Item Objects (creates new Item Objects if they do not exist)
-
     //TODO: create getName(productID) method that returns the name of the corresponding Item object (used to set this.name = getName(productID))
+
+    public double getItemID (Item _item){
+        return _item.getItemID ();
+    }
+
+    public String getItemName (Item _item){
+        return _item.getName ();
+    }
+
+    public Double getItemTradePrice (Item _item){
+        return _item.getTradePrice ();
+    }
+
+    public Double getProfitPer (Item _inputItem, Item _productItem){
+        return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
+    }
+
+    public Double getOutputTotal (int _categoryID){
+        if(_categoryID == 1){
+            //OutputTotal (PerHr) for cleaning herbs
+            return 5000.0;
+        } else{
+            return 0.0;
+        }
+    }
+
+    public Double getProfitTotal (int _categoryID, Item _inputItem, Item _productItem){
+        return ((getOutputTotal (_categoryID)) * (getProfitPer (_inputItem, _productItem)));
+    }
+
+    public Double getXpTotal(int _categoryID, Double _xpPer){
+        return (getOutputTotal (_categoryID)) * (_xpPer);
+    }
+
+    public Boolean getIfMemberOnly(Item _inputItem, Item _productItem){
+        if(_inputItem.getIfMemberOnly () || _productItem.getIfMemberOnly ()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public Boolean getReqLvlMet(){
+        return false;
+    }
 
     //TODO: create getInputTradePrice(inputID) method that returns the tradePrice of the corresponding Item object (used to set this.inputTradePrice = getInputTradePrice(inputID))
 
