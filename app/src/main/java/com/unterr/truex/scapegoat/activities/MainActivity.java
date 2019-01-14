@@ -3,6 +3,7 @@ package com.unterr.truex.scapegoat.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 
 import com.unterr.truex.scapegoat.R;
 import com.unterr.truex.scapegoat.elements.CustomAdapter;
+import com.unterr.truex.scapegoat.elements.CustomDialogFragment;
 import com.unterr.truex.scapegoat.models.Item;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
     private ArrayList<Item>             data;
+    public static String username;
 
     // Objects
 
@@ -59,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                showNameDialog();
             }
         });
     }
@@ -86,4 +88,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void showNameDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        CustomDialogFragment dialogFragment = CustomDialogFragment.newInstance("Some Title");
+        dialogFragment.show(fm, "fragment_edit_name");
+    }
+
 }
