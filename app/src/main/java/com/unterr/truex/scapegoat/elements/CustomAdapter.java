@@ -1,7 +1,9 @@
 package com.unterr.truex.scapegoat.elements;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -20,10 +22,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     // you provide access to all the views for a data item in a view holder
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public CardView cardView;
         public TextView textView;
-        public CustomViewHolder(TextView v) {
+        public CustomViewHolder(View v) {
             super(v);
-            textView = v;
+            cardView = v.findViewById(R.id.crd);
+            textView = v.findViewById(R.id.tv_gp2);
         }
     }
 
@@ -37,10 +41,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public CustomAdapter.CustomViewHolder onCreateViewHolder(ViewGroup parent,
                                                      int viewType) {
         // create a new view
-        TextView textView = (TextView) LayoutInflater.from(parent.getContext())
+
+        View v = (View) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_textview, parent, false);
 
-        CustomViewHolder viewHolder = new CustomViewHolder(textView);
+        CustomViewHolder viewHolder = new CustomViewHolder(v);
         return viewHolder;
     }
 
