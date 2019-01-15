@@ -25,23 +25,28 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         public final View view;
         public final TextView name;
+        public final TextView reqLvl;
         public final TextView inputPrice;
         public final TextView productPrice;
         public final TextView profitPer;
         public final TextView xpPer;
         public final TextView profitPerHr;
         public final ImageView image;
+        public final ImageView imageSkill;
+
 
         public CustomViewHolder(View view) {
             super(view);
             this.view = view;
             name = view.findViewById (R.id.name);
+            reqLvl = view.findViewById (R.id.reqLvl);
             inputPrice = view.findViewById (R.id.inputPrice);
             productPrice = view.findViewById (R.id.productPrice);
             profitPer = view.findViewById (R.id.profitPer);
             xpPer = view.findViewById (R.id.xpPer);
             profitPerHr = view.findViewById (R.id.profitPerHr);
             image = view.findViewById (R.id.image);
+            imageSkill = view.findViewById (R.id.imageSkill);
         }
     }
 
@@ -68,6 +73,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
+        //Temporary solution. Icon needs to be added to drawable
+        String skillUrl = ("https://vignette.wikia.nocookie.net/2007scape/images/0/03/Herblore_icon.png/revision/latest?cb=20180424011014&format=original");
         MoneyProcess process = data.get(position);
 
         if (process.getProfitPer () < 0){
@@ -76,13 +83,25 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             holder.profitPer.setTextColor (Color.rgb(33, 132, 38));
         }
 
+        if (process.getReqLvlMet () == false){
+            holder.reqLvl.setTextColor (Color.rgb (124,27,16));
+            holder.name.setTextColor (Color.rgb (124,27,16));
+        } else{
+            holder.reqLvl.setTextColor (Color.rgb(33, 132, 38));
+            holder.name.setTextColor (Color.rgb(33, 132, 38));
+        }
+
+
         holder.name.setText (process.getProcessName ());
+        holder.reqLvl.setText (process.getReqLvl ().toString ());
         holder.inputPrice.setText (process.getInputTradePrice ().toString ());
         holder.productPrice.setText (process.getProductTradePrice ().toString ());
         holder.profitPer.setText (process.getProfitPer ().toString ());
         holder.xpPer.setText (process.getXpPer ().toString ());
         holder.profitPerHr.setText (process.getProfitTotal ().toString ());
         Picasso.get().load(process.getIconUrl()).into(holder.image);
+        //Temporary solution. Icon needs to be added to drawable and called
+        Picasso.get().load(skillUrl).into(holder.imageSkill);
 
     }
 

@@ -92,6 +92,25 @@ public class MoneyProcess {
         this.reqLvlMet = false;
         this.iconUrl = getIconUrl (_productItem);
     }
+
+    public MoneyProcess(Item _inputItem, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Player _player){
+        this.inputID = getItemID (_inputItem);
+        this.productID = getItemID (_productItem);
+        this.categoryID = _categoryID;
+        this.reqLvl = _reqLvl;
+        this.xpPer = _xpPer;
+        this.name = getItemName (_productItem);
+        this.inputTradePrice = getItemTradePrice (_inputItem);
+        this.productTradePrice = getItemTradePrice (_productItem);
+        this.profitPer = getProfitPer (_inputItem, _productItem);
+        this.outputTotal = getOutputTotal (_categoryID);
+        this.profitTotal = getProfitTotal (_categoryID, _inputItem, _productItem);
+        this.xpTotal = getXpTotal (_categoryID, _xpPer);
+        this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
+        //Alter ReqLvlMet
+        this.reqLvlMet = setReqLvlMet (_player);
+        this.iconUrl = getIconUrl (_productItem);
+    }
     //TODO: create other constructor methods with no _inputItem (mining, woodcutting)
 
     //TODO: create constructor methods that calls update() method based on parameters
@@ -140,8 +159,17 @@ public class MoneyProcess {
     }
 
     //TODO: Alter method to check if player level is high enough
-    public Boolean getReqLvlMet(Player _player){
-        return false;
+    public Boolean setReqLvlMet(Player _player){
+        Double skillLvl = 0.0;
+        if (this.categoryID==1){
+            skillLvl = _player.getherbLvl ();
+        }
+
+        if (skillLvl >= this.reqLvl){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     public String getIconUrl(Item _item){ return _item.getIconURL ();}
