@@ -83,14 +83,22 @@ public class Player {
         this.herbLvl = _herbLvl;
     }
 
+    private void setFletchingLvl ( Double _fletchingLvl) {
+        this.fletchingLvl = _fletchingLvl;
+    }
+
     //TODO: create void set(Skill)Lvl methods for all skills
 
     public String getUsername(){
         return this.username;
     }
 
-    public Double getherbLvl(){
+    public Double getHerbLvl(){
         return this.herbLvl;
+    }
+
+    public Double getFletchingLvl() {
+        return this.fletchingLvl;
     }
 
     //TODO: create Double get(Skill)Lvl methods for all skills

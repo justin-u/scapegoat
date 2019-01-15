@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
     private ArrayList<MoneyProcess>     dataCleaning;
+    private ArrayList<MoneyProcess>     dataBoltTips;
 
     // Objects
     public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         */
 
         //layoutManager = new LinearLayoutManager(this);
-        adapter       = new CustomAdapter(dataHerbCleaning ());
+        adapter       = new CustomAdapter(dataHerbUnfinished ());
 
         //setSupportActionBar(toolbar);
 
@@ -148,6 +149,78 @@ public class MainActivity extends AppCompatActivity {
         dataCleaning.add (cleaningTorstol);
 
         return(dataCleaning);
+    }
+
+    public ArrayList<MoneyProcess> dataHerbUnfinished(){
+
+        MoneyProcess unfGuam = new MoneyProcess (APIWrapper.pullItem(249.0), APIWrapper.pullItem(91.0), 2, 3.0, 0.0, testPlayer);
+        MoneyProcess unfMarrentil = new MoneyProcess (APIWrapper.pullItem(251.0), APIWrapper.pullItem(93.0), 2, 5.0, 0.0, testPlayer);
+        MoneyProcess unfTarromin = new MoneyProcess (APIWrapper.pullItem(253.0), APIWrapper.pullItem(95.0), 2, 11.0, 0.0, testPlayer);
+        MoneyProcess unfHarralander = new MoneyProcess (APIWrapper.pullItem(255.0), APIWrapper.pullItem(97.0), 2, 20.0, 0.0, testPlayer);
+        MoneyProcess unfRanarr = new MoneyProcess (APIWrapper.pullItem(257.0), APIWrapper.pullItem(99.0), 2, 25.0, 0.0, testPlayer);
+        MoneyProcess unfToadflax = new MoneyProcess (APIWrapper.pullItem(2998.0), APIWrapper.pullItem(3002.0), 2, 30.0, 0.0, testPlayer);
+        MoneyProcess unfIrit = new MoneyProcess (APIWrapper.pullItem(259.0), APIWrapper.pullItem(101.0), 2, 40.0, 0.0, testPlayer);
+        MoneyProcess unfAvantoe = new MoneyProcess (APIWrapper.pullItem(261.0), APIWrapper.pullItem(103.0), 2, 48.0, 0.0, testPlayer);
+        MoneyProcess unfKwuarm = new MoneyProcess (APIWrapper.pullItem(263.0), APIWrapper.pullItem(105.0), 2, 54.0, 0.0, testPlayer);
+        MoneyProcess unfSnapdragon = new MoneyProcess (APIWrapper.pullItem(3000.0), APIWrapper.pullItem(3004.0), 2, 59.0, 0.0, testPlayer);
+        MoneyProcess unfCadantine = new MoneyProcess (APIWrapper.pullItem(265.0), APIWrapper.pullItem(107.0), 2, 65.0, 0.0, testPlayer);
+        MoneyProcess unfLantadyme = new MoneyProcess (APIWrapper.pullItem(2481.0), APIWrapper.pullItem(2483.0), 2, 67.0, 0.0, testPlayer);
+        MoneyProcess unfDwarfWeed = new MoneyProcess (APIWrapper.pullItem(267.0), APIWrapper.pullItem(109.0), 2, 70.0, 0.0, testPlayer);
+        MoneyProcess unfTorstol = new MoneyProcess (APIWrapper.pullItem (269.0), APIWrapper.pullItem (111.0), 2, 75.0, 0.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataHerbUnfinished = new ArrayList<MoneyProcess>();
+
+        dataHerbUnfinished.add (unfGuam);
+        dataHerbUnfinished.add (unfMarrentil);
+        dataHerbUnfinished.add (unfTarromin);
+        dataHerbUnfinished.add (unfHarralander);
+        dataHerbUnfinished.add (unfRanarr);
+        dataHerbUnfinished.add (unfToadflax);
+        dataHerbUnfinished.add (unfIrit);
+        dataHerbUnfinished.add (unfAvantoe);
+        dataHerbUnfinished.add (unfKwuarm);
+        dataHerbUnfinished.add (unfSnapdragon);
+        dataHerbUnfinished.add (unfCadantine);
+        dataHerbUnfinished.add (unfLantadyme);
+        dataHerbUnfinished.add (unfDwarfWeed);
+        dataHerbUnfinished.add (unfTorstol);
+
+        return(dataHerbUnfinished);
+    }
+
+    public ArrayList<MoneyProcess> dataBoltTips(){
+        MoneyProcess cuttingOpalTips = new MoneyProcess (APIWrapper.pullItem(1609.0), APIWrapper.pullItem(45.0), 4, 11.0, 1.6, testPlayer);
+        MoneyProcess cuttingJadeTips = new MoneyProcess (APIWrapper.pullItem(1611.0), APIWrapper.pullItem(9187.0), 4, 26.0, 2.4, testPlayer);
+        MoneyProcess cuttingRedTopazTips = new MoneyProcess (APIWrapper.pullItem(1613.0), APIWrapper.pullItem(9188.0), 4, 48.0, 4.0, testPlayer);
+        MoneyProcess cuttingSapphireTips = new MoneyProcess (APIWrapper.pullItem(1607.0), APIWrapper.pullItem(9189.0), 4, 56.0, 4.0, testPlayer);
+        MoneyProcess cuttingEmeraldTips = new MoneyProcess (APIWrapper.pullItem(1605.0), APIWrapper.pullItem(9190.0), 4, 58.0, 5.5, testPlayer);
+        MoneyProcess cuttingRubyTips = new MoneyProcess (APIWrapper.pullItem(1603.0), APIWrapper.pullItem(9191.0), 4, 63.0, 6.0, testPlayer);
+        MoneyProcess cuttingDiamondTips = new MoneyProcess (APIWrapper.pullItem(1601.0), APIWrapper.pullItem(9192.0), 4, 65.0, 7.0, testPlayer);
+        //cuttingDragonTips and cuttingOnyxTips causes the app to crash
+        //MoneyProcess cuttingDragonTips = new MoneyProcess (APIWrapper.pullItem(1615.0), APIWrapper.pullItem(9193.0), 4, 71.0, 8.2, testPlayer);
+        //MoneyProcess cuttingOnyxTips = new MoneyProcess (APIWrapper.pullItem(6573.0), APIWrapper.pullItem(9194.0), 4, 73.0, 9.4, testPlayer);
+
+
+        //OnyxTips produce double the amount per input compared to other bolt tips
+        //cuttingOnyxTips.setProfitPer (cuttingOnyxTips.profitPer * 2.0);
+        //cuttingOnyxTips.setProfitTotal (cuttingOnyxTips.profitTotal * 2.0);
+
+        //Amethyst Bolts require crafting and not fletching
+        //MoneyProcess cuttingAmethystTips = new MoneyProcess (APIWrapper.pullItem(21347.0), APIWrapper.pullItem(21338.0), 4, 83.0, 60.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataBoltTips = new ArrayList<MoneyProcess>();
+
+        dataBoltTips.add (cuttingOpalTips);
+        dataBoltTips.add (cuttingJadeTips);
+        dataBoltTips.add (cuttingRedTopazTips);
+        dataBoltTips.add (cuttingSapphireTips);
+        dataBoltTips.add (cuttingEmeraldTips);
+        dataBoltTips.add (cuttingRubyTips);
+        dataBoltTips.add (cuttingDiamondTips);
+        //dataBoltTips.add (cuttingDragonTips);
+        //dataBoltTips.add (cuttingOnyxTips);
+
+        return(dataBoltTips);
     }
 
     @Override

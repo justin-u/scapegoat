@@ -19,6 +19,12 @@ public class MoneyProcess {
     //categoryID determines how certain methods will calculate results and is also used to pull specific MoneyProcess Objects to populate the RecyclerView (called in constructor method)
     public int categoryID;
 
+    //**Category IDs**
+    // 1 - Cleaning Herbs
+    // 2 - Making Unfinished Potions
+    // 3 - Making Potions
+    // 4 - Cutting Bolt Tips
+
     //reqLvl is the skill requirement of the given MoneyProcess and is used to set reqLvlMet based on given Player Object
     public Double reqLvl;
 
@@ -83,7 +89,7 @@ public class MoneyProcess {
         this.name = getItemName (_productItem);
         this.inputTradePrice = getItemTradePrice (_inputItem);
         this.productTradePrice = getItemTradePrice (_productItem);
-        this.profitPer = getProfitPer (_inputItem, _productItem);
+        this.profitPer = getProfitPer (_inputItem, _productItem, _categoryID);
         this.outputTotal = getOutputTotal (_categoryID);
         this.profitTotal = getProfitTotal (_categoryID, _inputItem, _productItem);
         this.xpTotal = getXpTotal (_categoryID, _xpPer);
@@ -102,7 +108,7 @@ public class MoneyProcess {
         this.name = getItemName (_productItem);
         this.inputTradePrice = getItemTradePrice (_inputItem);
         this.productTradePrice = getItemTradePrice (_productItem);
-        this.profitPer = getProfitPer (_inputItem, _productItem);
+        this.profitPer = getProfitPer (_inputItem, _productItem, _categoryID);
         this.outputTotal = getOutputTotal (_categoryID);
         this.profitTotal = getProfitTotal (_categoryID, _inputItem, _productItem);
         this.xpTotal = getXpTotal (_categoryID, _xpPer);
@@ -129,21 +135,32 @@ public class MoneyProcess {
         return _item.getTradePrice ();
     }
 
-    public Double getProfitPer (Item _inputItem, Item _productItem){
-        return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
+    public Double getProfitPer (Item _inputItem, Item _productItem, int _categoryID){
+        if (_categoryID == 2){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 5.0));
+        }if (_categoryID == 4){
+            return ((_productItem.getTradePrice ()* 12.0) - (_inputItem.getTradePrice ()));
+        }else{
+            return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
+        }
+
     }
 
     public Double getOutputTotal (int _categoryID){
         if(_categoryID == 1){
             //OutputTotal (PerHr) for cleaning herbs
             return 5000.0;
-        } else{
+        } if(_categoryID == 2){
+            return 2000.0;
+        }if(_categoryID == 4){
+            return 1400.0;
+        }else{
             return 0.0;
         }
     }
 
     public Double getProfitTotal (int _categoryID, Item _inputItem, Item _productItem){
-        return ((getOutputTotal (_categoryID)) * (getProfitPer (_inputItem, _productItem)));
+        return ((getOutputTotal (_categoryID)) * (getProfitPer (_inputItem, _productItem, _categoryID)));
     }
 
     public Double getXpTotal(int _categoryID, Double _xpPer){
@@ -161,8 +178,10 @@ public class MoneyProcess {
     //TODO: Alter method to check if player level is high enough
     public Boolean setReqLvlMet(Player _player){
         Double skillLvl = 0.0;
-        if (this.categoryID==1){
-            skillLvl = _player.getherbLvl ();
+        if (this.categoryID == 1 || this.categoryID == 2){
+            skillLvl = _player.getHerbLvl ();
+        } if (this.categoryID==4){
+            skillLvl = _player.getFletchingLvl ();
         }
 
         if (skillLvl >= this.reqLvl){
