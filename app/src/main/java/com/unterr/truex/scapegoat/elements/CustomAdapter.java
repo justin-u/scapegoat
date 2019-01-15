@@ -9,10 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.unterr.truex.scapegoat.R;
-import com.unterr.truex.scapegoat.models.Item;
 import com.unterr.truex.scapegoat.models.MoneyProcess;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -27,14 +24,22 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         public final View view;
         public final TextView name;
-        public final TextView description;
+        public final TextView inputPrice;
+        public final TextView productPrice;
+        public final TextView profitPer;
+        public final TextView xpPer;
+        public final TextView profitPerHr;
         public final ImageView image;
 
         public CustomViewHolder(View view) {
             super(view);
             this.view = view;
             name = view.findViewById (R.id.name);
-            description = view.findViewById (R.id.description);
+            inputPrice = view.findViewById (R.id.inputPrice);
+            productPrice = view.findViewById (R.id.productPrice);
+            profitPer = view.findViewById (R.id.profitPer);
+            xpPer = view.findViewById (R.id.xpPer);
+            profitPerHr = view.findViewById (R.id.profitPerHr);
             image = view.findViewById (R.id.image);
         }
     }
@@ -65,7 +70,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         MoneyProcess process = data.get(position);
 
         holder.name.setText (process.getProcessName ());
-        holder.description.setText (process.getProfitTotal ().toString ());
+        holder.inputPrice.setText (process.getInputTradePrice ().toString ());
+        holder.productPrice.setText (process.getProductTradePrice ().toString ());
+        holder.profitPer.setText (process.getProfitPer ().toString ());
+        holder.xpPer.setText (process.getXpPer ().toString ());
+        holder.profitPerHr.setText (process.getProfitTotal ().toString ());
         Picasso.get().load(process.getIconUrl()).into(holder.image);
 
     }
