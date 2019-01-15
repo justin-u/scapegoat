@@ -274,7 +274,7 @@ public class APIWrapper {
 
         try{
             String urlItemID = String.format("%.0f", itemID);
-            rawItem = new DownloadItem().execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + urlItemID).get();
+            rawItem = new DownloadItem().execute("http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=" + urlItemID).get();
         }catch(InterruptedException e){
             Log.e("AsyncException","Interrupted Exception:" + e.getMessage());
         }catch (ExecutionException e){
@@ -301,9 +301,12 @@ public class APIWrapper {
             Log.i("ItemDataReturn","Item Name:" + _name);
 
 
+            //TODO: Return proper trade price (need to convert 1,111 to Double)
             //JSON might not return _tradePrice properly
-            JSONObject currentObj = reader.getJSONObject ("current");
-            _tradePrice = Double.parseDouble (currentObj.getString ("price"));
+            JSONObject currentObj = itemObj.getJSONObject ("current");
+            String tradePrice = currentObj.getString ("price");
+            tradePrice = tradePrice.replace (",","");
+            _tradePrice = Double.parseDouble (tradePrice);
             Log.i("ItemDataReturn","Trade Price:" + _tradePrice.toString ());
 
         } catch (final JSONException e) {

@@ -63,6 +63,7 @@ public class MoneyProcess {
     //ifMemberOnly can be used to filter what MoneyProcess Objects are displayed in the RecyclerView
     public Boolean ifMemberOnly;
 
+
     //reqLvlMet checks if the corresponding Player skillLvl (specific skill determined by categoryID) is greater than or equal (>=) to the reqLvl variable
     //reqLvlMet calls Player.get(skill)Lvl to perform the check
     //reqLvlMet can be used to filter what MoneyProcess Objects are displayed (or how they're displayed) in the RecyclerView
@@ -79,7 +80,7 @@ public class MoneyProcess {
         this.xpPer = _xpPer;
         this.name = getItemName (_productItem);
         this.inputTradePrice = getItemTradePrice (_inputItem);
-        this.productTradePrice = getItemTradePrice (_inputItem);
+        this.productTradePrice = getItemTradePrice (_productItem);
         this.profitPer = getProfitPer (_inputItem, _productItem);
         this.outputTotal = getOutputTotal (_categoryID);
         this.profitTotal = getProfitTotal (_categoryID, _inputItem, _productItem);
@@ -134,8 +135,131 @@ public class MoneyProcess {
         }
     }
 
-    public Boolean getReqLvlMet(){
+    //TODO: Alter method to check if player level is high enough
+    public Boolean getReqLvlMet(Player _player){
         return false;
+    }
+
+    //Getter Methods:
+    public Double getInputID() {return inputID;}
+
+    public Double getProductID() {return productID;}
+
+    public int getCategoryID() {return categoryID;}
+
+    public Double getReqLvl() {return reqLvl;}
+
+    public Double getXpPer() {return xpPer;}
+
+    public String getProcessName() {return name;}
+
+    public Double getInputTradePrice() {return inputTradePrice;}
+
+    public Double getProductTradePrice() {return productTradePrice;}
+
+    public Double getProfitPer() {return profitPer;}
+
+    public Double getOutputTotal() {return outputTotal;}
+
+    public Double getProfitTotal() {return profitTotal;}
+
+    public Double getXpTotal() {return xpTotal;}
+
+    public Boolean getIfMemberOnly() {return ifMemberOnly;}
+
+    public Boolean getReqLvlMet() {return reqLvlMet;}
+
+    //Setter Methods:
+    public void setInputID(Double inputID) {
+        this.inputID = inputID;
+    }
+
+    public void setProductID(Double productID) {
+        this.productID = productID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public void setReqLvl(Double reqLvl) {
+        this.reqLvl = reqLvl;
+    }
+
+    public void setXpPer(Double xpPer) {
+        this.xpPer = xpPer;
+    }
+
+    public void setProcessName(String name) {
+        this.name = name;
+    }
+
+    public void setInputTradePrice(Double inputTradePrice) {
+        this.inputTradePrice = inputTradePrice;
+    }
+
+    public void setProductTradePrice(Double productTradePrice) {
+        this.productTradePrice = productTradePrice;
+    }
+
+    public void setProfitPer(Double profitPer) {
+        this.profitPer = profitPer;
+    }
+
+    public void setOutputTotal(Double outputTotal) {
+        this.outputTotal = outputTotal;
+    }
+
+    public void setProfitTotal(Double profitTotal) {
+        this.profitTotal = profitTotal;
+    }
+
+    public void setXpTotal(Double xpTotal) {
+        this.xpTotal = xpTotal;
+    }
+
+    public void setIfMemberOnly(Boolean ifMemberOnly) {
+        this.ifMemberOnly = ifMemberOnly;
+    }
+
+    public void setReqLvlMet(Boolean reqLvlMet) {
+        this.reqLvlMet = reqLvlMet;
+    }
+
+
+    public String toString() {
+        if(this.isNull())
+            return "null";
+
+        return "Input ID = " + this.inputID +
+                "\n| Product ID = " + this.productID +
+                "\n| Required Level = " + this.reqLvl +
+                "\n| XP Per = " + this.xpPer +
+                "\n| Name = " + this.name +
+                "\n| Input Trade Price = " + this.inputTradePrice +
+                "\n| Product Trade Price = " + this.productTradePrice +
+                "\n| Profit Per = " + this.profitPer +
+                "\n| Output Total = " + this.outputTotal +
+                "\n| Profit Total = " + this.profitTotal +
+                "\n| XP Total = " + this.xpTotal +
+                "\n| If Member Only = " + this.ifMemberOnly +
+                "\n| Required Level Met = " + this.reqLvlMet;
+    }
+
+    private boolean isNull(){
+        return      inputID == null ||
+                    productID == null ||
+                    reqLvl == null ||
+                    xpPer == null ||
+                    name == null ||
+                    inputTradePrice == null ||
+                    productTradePrice == null ||
+                    profitPer == null ||
+                    outputTotal == null ||
+                    profitTotal == null ||
+                    xpTotal == null ||
+                    ifMemberOnly == null ||
+                    reqLvlMet == null;
     }
 
     //TODO: create getInputTradePrice(inputID) method that returns the tradePrice of the corresponding Item object (used to set this.inputTradePrice = getInputTradePrice(inputID))

@@ -17,6 +17,7 @@ import com.unterr.truex.scapegoat.R;
 import com.unterr.truex.scapegoat.elements.CustomAdapter;
 import com.unterr.truex.scapegoat.methods.APIWrapper;
 import com.unterr.truex.scapegoat.models.Item;
+import com.unterr.truex.scapegoat.models.MoneyProcess;
 import com.unterr.truex.scapegoat.models.Player;
 
 import java.util.ArrayList;
@@ -69,21 +70,33 @@ public class MainActivity extends AppCompatActivity {
 
         //Test Variables:
         Double testItemID = new Double(111);
-        String testUsername = new String("?{ASDfadfe");
+        String testUsername = new String("Jtruezie");
 
         //Tests for APIWrapper pullItem:
         //APIWrapper.pullItem (testItemID);
-        //Item testItem = new Item (testItemID);
+        //Item testItem = APIWrapper.pullItem(testItemID);
         //Log.i("TestItemData:", testItem.toString());
 
 
         //Tests for APIWrapper pullPlayer:
         //APIWrapper.pullPlayer (testUsername);
-        //Player testPlayer = new Player (testUsername);
-        //Log.i("PlayerData:", testPlayer.toString());
+        Player testPlayer = APIWrapper.pullPlayer (testUsername);
+        Log.i("PlayerData:", testPlayer.toString());
+
 
         //Tests for APIWrapper verifyUsername:
         Log.i("VerifyTest:", APIWrapper.verifyUsername (testUsername).toString ());
+
+        //Tests for MoneyProcess:
+        Double grimyTorstolItemID = new Double(219);
+        Item grimyTorstol = APIWrapper.pullItem(grimyTorstolItemID);
+        Log.i("TestItemData:", grimyTorstol.toString());
+        Double torstolItemID = new Double(269);
+        Item torstol = APIWrapper.pullItem(torstolItemID);
+        Log.i("TestItemData:", torstol.toString());
+
+        MoneyProcess cleaningTorstol = new MoneyProcess (grimyTorstol, torstol, 1, 75.0, 15.0);
+        Log.i("TestItemData:", cleaningTorstol.toString());
     }
 
     @Override

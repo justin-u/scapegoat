@@ -79,7 +79,7 @@ public class Item {
         if(this.isNull())
             return "null";
 
-        return this.name + " | " + this.itemID + " | " + this.tradePrice;
+        return "Name = " + this.name + " | Item ID:" + this.itemID + " | TradePrice:" + this.tradePrice;
     }
 
     public Double getTradePrice(){

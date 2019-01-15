@@ -100,7 +100,30 @@ public class Player {
         if(this.isNull()){
             return "null";
         }
-        return this.username + " | " + this.attackLvl.toString () + " | " + this.defenceLvl.toString ();
+        return "Username: "  + this.username +
+                "\n | Attack Level: " + this.attackLvl.toString () +
+                "\n | Defence Level: " + this.defenceLvl.toString () +
+                "\n | Strength Level: " + this.strengthLvl.toString () +
+                "\n | Hitpoints Level: " + this.hitpointsLvl.toString () +
+                "\n | Ranged Level: " + this.rangedLvl.toString () +
+                "\n | Prayer Level: " + this.prayerLvl.toString () +
+                "\n | Magic Level: " + this.magicLvl.toString () +
+                "\n | Cooking Level: " + this.cookingLvl.toString () +
+                "\n | Woodcutting Level: " + this.woodcuttingLvl.toString () +
+                "\n | Fletching Level: " + this.fletchingLvl.toString () +
+                "\n | Fishing Level: " + this.fishingLvl.toString () +
+                "\n | Firemaking Level: " + this.firemakingLvl.toString () +
+                "\n | Crafting Level: " + this.craftingLvl.toString () +
+                "\n | Smithing Level: " + this.smithingLvl.toString () +
+                "\n | Mining Level: " + this.miningLvl.toString () +
+                "\n | Herblore Level: " + this.herbLvl.toString () +
+                "\n | Agility Level: " + this.agilityLvl.toString () +
+                "\n | Thieving Level: " + this.thievingLvl.toString () +
+                "\n | Slayer Level: " + this.slayerLvl.toString () +
+                "\n | Farming Level: " + this.farmingLvl.toString () +
+                "\n | Runecrafting Level: " + this.runecraftingLvl.toString () +
+                "\n | Hunter Level: " + this.hunterLvl.toString () +
+                "\n | Construction Level: " + this.constructionLvl.toString ();
     }
 
     private boolean update(){
