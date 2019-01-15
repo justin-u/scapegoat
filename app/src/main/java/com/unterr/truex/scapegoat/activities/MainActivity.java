@@ -44,6 +44,24 @@ public class MainActivity extends AppCompatActivity {
         toolbar =       findViewById(R.id.toolbar);
         recyclerView =  findViewById(R.id.lst);
 
+        //Double grimyGuamItemID = new Double(199);
+        //Item grimyGuam = APIWrapper.pullItem(grimyGuamItemID);
+        //Double guamItemID = new Double(249);
+        //Item guam = APIWrapper.pullItem(guamItemID);
+        MoneyProcess cleaningGuam = new MoneyProcess (APIWrapper.pullItem(199.0), APIWrapper.pullItem(249.0), 1, 3.0, 2.5);
+        MoneyProcess cleaningMarrentil = new MoneyProcess (APIWrapper.pullItem(201.0), APIWrapper.pullItem(251.0), 1, 5.0, 3.75);
+        MoneyProcess cleaningTarromin = new MoneyProcess (APIWrapper.pullItem(203.0), APIWrapper.pullItem(253.0), 1, 11.0, 5.0);
+        MoneyProcess cleaningHarralander = new MoneyProcess (APIWrapper.pullItem(205.0), APIWrapper.pullItem(255.0), 1, 20.0, 6.25);
+        MoneyProcess cleaningRanarr = new MoneyProcess (APIWrapper.pullItem(207.0), APIWrapper.pullItem(257.0), 1, 25.0, 7.5);
+        MoneyProcess cleaningToadflax = new MoneyProcess (APIWrapper.pullItem(3049.0), APIWrapper.pullItem(2998.0), 1, 30.0, 8.0);
+        MoneyProcess cleaningIrit = new MoneyProcess (APIWrapper.pullItem(209.0), APIWrapper.pullItem(259.0), 1, 40.0, 8.75);
+        MoneyProcess cleaningAvantoe = new MoneyProcess (APIWrapper.pullItem(211.0), APIWrapper.pullItem(261.0), 1, 48.0, 10.0);
+        MoneyProcess cleaningKwuarm = new MoneyProcess (APIWrapper.pullItem(213.0), APIWrapper.pullItem(263.0), 1, 54.0, 11.25);
+        MoneyProcess cleaningSnapdragon = new MoneyProcess (APIWrapper.pullItem(3051.0), APIWrapper.pullItem(3000.0), 1, 59.0, 11.75);
+        MoneyProcess cleaningCadantine = new MoneyProcess (APIWrapper.pullItem(215.0), APIWrapper.pullItem(265.0), 1, 65.0, 12.5);
+        MoneyProcess cleaningLantadyme = new MoneyProcess (APIWrapper.pullItem(2485.0), APIWrapper.pullItem(2481.0), 1, 67.0, 13.125);
+        MoneyProcess cleaningDwarfWeed = new MoneyProcess (APIWrapper.pullItem(217.0), APIWrapper.pullItem(267.0), 1, 70.0, 13.75);
+
         Double grimyTorstolItemID = new Double(219);
         Item grimyTorstol = APIWrapper.pullItem(grimyTorstolItemID);
         Log.i("TestItemData:", grimyTorstol.toString());
@@ -53,15 +71,23 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess cleaningTorstol = new MoneyProcess (grimyTorstol, torstol, 1, 75.0, 15.0);
         Log.i("TestItemData:", cleaningTorstol.toString());
 
-        Double grimyGuamItemID = new Double(199);
-        Item grimyGuam = APIWrapper.pullItem(grimyGuamItemID);
-        Double guamItemID = new Double(249);
-        Item guam = APIWrapper.pullItem(guamItemID);
-        MoneyProcess cleaningGuam = new MoneyProcess (grimyGuam, guam, 1, 3.0, 2.5);
 
         data = new ArrayList<MoneyProcess>();
-        data.add (cleaningTorstol);
         data.add (cleaningGuam);
+        data.add (cleaningMarrentil);
+        data.add (cleaningTarromin);
+        data.add (cleaningHarralander);
+        data.add (cleaningRanarr);
+        data.add (cleaningToadflax);
+        data.add (cleaningIrit);
+        data.add (cleaningAvantoe);
+        data.add (cleaningKwuarm);
+        data.add (cleaningSnapdragon);
+        data.add (cleaningCadantine);
+        data.add (cleaningLantadyme);
+        data.add (cleaningDwarfWeed);
+        data.add (cleaningTorstol);
+
         /*
         for(int i = 0; i < 30; i++){
             data.add(new MoneyProcess ());
