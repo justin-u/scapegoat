@@ -69,6 +69,8 @@ public class MoneyProcess {
     //reqLvlMet can be used to filter what MoneyProcess Objects are displayed (or how they're displayed) in the RecyclerView
     public Boolean reqLvlMet = false;
 
+    public String iconUrl;
+
 
     public MoneyProcess(){}
 
@@ -88,6 +90,7 @@ public class MoneyProcess {
         this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
         //Alter ReqLvlMet
         this.reqLvlMet = false;
+        this.iconUrl = getIconUrl (_productItem);
     }
 
     //TODO: create constructor methods that calls update() method based on parameters
@@ -140,6 +143,8 @@ public class MoneyProcess {
         return false;
     }
 
+    public String getIconUrl(Item _item){ return _item.getIconURL ();}
+
     //Getter Methods:
     public Double getInputID() {return inputID;}
 
@@ -168,6 +173,9 @@ public class MoneyProcess {
     public Boolean getIfMemberOnly() {return ifMemberOnly;}
 
     public Boolean getReqLvlMet() {return reqLvlMet;}
+
+    public String getIconUrl() {return iconUrl;}
+
 
     //Setter Methods:
     public void setInputID(Double inputID) {
@@ -226,6 +234,10 @@ public class MoneyProcess {
         this.reqLvlMet = reqLvlMet;
     }
 
+    public void setIconUrl(String iconUrl){
+        this.iconUrl = iconUrl;
+    }
+
 
     public String toString() {
         if(this.isNull())
@@ -259,7 +271,8 @@ public class MoneyProcess {
                     profitTotal == null ||
                     xpTotal == null ||
                     ifMemberOnly == null ||
-                    reqLvlMet == null;
+                    reqLvlMet == null ||
+                    iconUrl == null;
     }
 
     //TODO: create getInputTradePrice(inputID) method that returns the tradePrice of the corresponding Item object (used to set this.inputTradePrice = getInputTradePrice(inputID))

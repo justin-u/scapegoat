@@ -63,6 +63,8 @@ public class Item {
         return APIWrapper.pullIconLarge(this.iconLargeURL);
     }
 
+    public String getIconURL(){return this.iconURL;};
+
     public double getItemID(){
         return this.itemID;
     }

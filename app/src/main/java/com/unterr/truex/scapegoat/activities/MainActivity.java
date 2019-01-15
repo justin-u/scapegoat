@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView                recyclerView;
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
-    private ArrayList<Item>             data;
+    private ArrayList<MoneyProcess>     data;
 
     // Objects
 
@@ -44,18 +44,41 @@ public class MainActivity extends AppCompatActivity {
         toolbar =       findViewById(R.id.toolbar);
         recyclerView =  findViewById(R.id.lst);
 
-        data = new ArrayList<Item>();
-        for(int i = 0; i < 30; i++){
-            data.add(new Item());
-        }
+        Double grimyTorstolItemID = new Double(219);
+        Item grimyTorstol = APIWrapper.pullItem(grimyTorstolItemID);
+        Log.i("TestItemData:", grimyTorstol.toString());
+        Double torstolItemID = new Double(269);
+        Item torstol = APIWrapper.pullItem(torstolItemID);
+        Log.i("TestItemData:", torstol.toString());
+        MoneyProcess cleaningTorstol = new MoneyProcess (grimyTorstol, torstol, 1, 75.0, 15.0);
+        Log.i("TestItemData:", cleaningTorstol.toString());
 
-        layoutManager = new LinearLayoutManager(this);
+        Double grimyGuamItemID = new Double(199);
+        Item grimyGuam = APIWrapper.pullItem(grimyGuamItemID);
+        Double guamItemID = new Double(249);
+        Item guam = APIWrapper.pullItem(guamItemID);
+        MoneyProcess cleaningGuam = new MoneyProcess (grimyGuam, guam, 1, 3.0, 2.5);
+
+        data = new ArrayList<MoneyProcess>();
+        data.add (cleaningTorstol);
+        data.add (cleaningGuam);
+        /*
+        for(int i = 0; i < 30; i++){
+            data.add(new MoneyProcess ());
+        }
+        */
+
+        //layoutManager = new LinearLayoutManager(this);
         adapter       = new CustomAdapter(data);
 
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
+
+        this.recyclerView = (RecyclerView) findViewById (R.id.lst);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager (this);
+        this.recyclerView.setLayoutManager(mLayoutManager);
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         // set action for floating action button
@@ -88,15 +111,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("VerifyTest:", APIWrapper.verifyUsername (testUsername).toString ());
 
         //Tests for MoneyProcess:
-        Double grimyTorstolItemID = new Double(219);
-        Item grimyTorstol = APIWrapper.pullItem(grimyTorstolItemID);
-        Log.i("TestItemData:", grimyTorstol.toString());
-        Double torstolItemID = new Double(269);
-        Item torstol = APIWrapper.pullItem(torstolItemID);
-        Log.i("TestItemData:", torstol.toString());
 
-        MoneyProcess cleaningTorstol = new MoneyProcess (grimyTorstol, torstol, 1, 75.0, 15.0);
-        Log.i("TestItemData:", cleaningTorstol.toString());
+
     }
 
     @Override
