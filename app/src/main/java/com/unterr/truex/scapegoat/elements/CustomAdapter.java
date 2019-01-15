@@ -1,5 +1,6 @@
 package com.unterr.truex.scapegoat.elements;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +69,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         // - replace the contents of the view with that element
 
         MoneyProcess process = data.get(position);
+
+        if (process.getProfitPer () < 0){
+            holder.profitPer.setTextColor (Color.rgb (124,27,16));
+        } else{
+            holder.profitPer.setTextColor (Color.rgb(33, 132, 38));
+        }
 
         holder.name.setText (process.getProcessName ());
         holder.inputPrice.setText (process.getInputTradePrice ().toString ());

@@ -92,6 +92,7 @@ public class MoneyProcess {
         this.reqLvlMet = false;
         this.iconUrl = getIconUrl (_productItem);
     }
+    //TODO: create other constructor methods with no _inputItem (mining, woodcutting)
 
     //TODO: create constructor methods that calls update() method based on parameters
 
