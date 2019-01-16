@@ -87,6 +87,14 @@ public class Player {
         this.fletchingLvl = _fletchingLvl;
     }
 
+    private void setFarmingLvl ( Double _farmingLvl) {
+        this.farmingLvl = _farmingLvl;
+    }
+
+    private void setSmithingLvl ( Double _smithingLvl){
+        this.smithingLvl = _smithingLvl;
+    }
+
     //TODO: create void set(Skill)Lvl methods for all skills
 
     public String getUsername(){
@@ -99,6 +107,14 @@ public class Player {
 
     public Double getFletchingLvl() {
         return this.fletchingLvl;
+    }
+
+    public Double getFarmingLvl(){
+        return this.farmingLvl;
+    }
+
+    public Double getSmithingLvl() {
+        return this.smithingLvl;
     }
 
     //TODO: create Double get(Skill)Lvl methods for all skills

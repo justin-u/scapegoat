@@ -20,10 +20,13 @@ public class MoneyProcess {
     public int categoryID;
 
     //**Category IDs**
-    // 1 - Cleaning Herbs
-    // 2 - Making Unfinished Potions
-    // 3 - Making Potions
-    // 4 - Cutting Bolt Tips
+    // 1 - (Herblore) Cleaning Herbs
+    // 2 - (Herblore) Making Unfinished Potions
+    // 3 - (Farming) Growing Saplings
+    // 4 - (Fletching)Cutting Bolt Tips
+    // **5 - (Fletching) Cutting Bows
+    // **6 - (Fletching) Stringing Bows
+    // 7 - (Smithing) Dart Tips
 
     //reqLvl is the skill requirement of the given MoneyProcess and is used to set reqLvlMet based on given Player Object
     public Double reqLvl;
@@ -139,7 +142,10 @@ public class MoneyProcess {
         if (_categoryID == 2){
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 5.0));
         }if (_categoryID == 4){
-            return ((_productItem.getTradePrice ()* 12.0) - (_inputItem.getTradePrice ()));
+            return (((_productItem.getTradePrice ())* 12.0) - (_inputItem.getTradePrice ()));
+        }if (_categoryID == 7){
+            //Multipy by 10
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice ()));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -152,9 +158,14 @@ public class MoneyProcess {
             return 5000.0;
         } if(_categoryID == 2){
             return 2000.0;
+        }if(_categoryID == 3){
+            return 1700.0;
         }if(_categoryID == 4){
             return 1400.0;
-        }else{
+        }if(_categoryID == 7){
+            return 950.0;
+        }
+        else{
             return 0.0;
         }
     }
@@ -179,9 +190,13 @@ public class MoneyProcess {
     public Boolean setReqLvlMet(Player _player){
         Double skillLvl = 0.0;
         if (this.categoryID == 1 || this.categoryID == 2){
-            skillLvl = _player.getHerbLvl ();
-        } if (this.categoryID==4){
-            skillLvl = _player.getFletchingLvl ();
+            skillLvl = _player.getHerbLvl();
+        }if (this.categoryID == 3){
+            skillLvl = _player.getFarmingLvl();
+        }if (this.categoryID == 4 || this.categoryID == 5 || this.categoryID == 6){
+            skillLvl = _player.getFletchingLvl();
+        }if (this.categoryID == 7){
+            skillLvl = _player.getSmithingLvl();
         }
 
         if (skillLvl >= this.reqLvl){

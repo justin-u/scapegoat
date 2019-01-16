@@ -32,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
     private ArrayList<MoneyProcess>     dataCleaning;
+    private ArrayList<MoneyProcess>     dataHerbUnfinished;
+    private ArrayList<MoneyProcess>     dataSapling;
     private ArrayList<MoneyProcess>     dataBoltTips;
+    private ArrayList<MoneyProcess>     dataSmithDarts;
+
 
     // Objects
     public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
@@ -47,27 +51,19 @@ public class MainActivity extends AppCompatActivity {
         recyclerView =  findViewById(R.id.lst);
 
 
-        //Double grimyGuamItemID = new Double(199);
-        //Item grimyGuam = APIWrapper.pullItem(grimyGuamItemID);
-        //Double guamItemID = new Double(249);
-        //Item guam = APIWrapper.pullItem(guamItemID);
-
-        Double grimyTorstolItemID = new Double(219);
-        Item grimyTorstol = APIWrapper.pullItem(grimyTorstolItemID);
-        Log.i("TestItemData:", grimyTorstol.toString());
-        Double torstolItemID = new Double(269);
-        Item torstol = APIWrapper.pullItem(torstolItemID);
-        Log.i("TestItemData:", torstol.toString());
-
-
         /*
         for(int i = 0; i < 30; i++){
             data.add(new MoneyProcess ());
         }
         */
 
-        //layoutManager = new LinearLayoutManager(this);
-        adapter       = new CustomAdapter(dataHerbUnfinished ());
+        //**CustomAdapter calls one of the temporary data() methods below to create new MoneyProcess classes and populate the RecyclerView**
+        //1 - dataHerbCleaning() is complete and can be called without exceptions
+        //2 - dataHerbUnfinished() is complete and can be called without exceptions
+        //3 - dataSaplings() is not complete but can be called without exceptions
+        //4 - dataBoltTips() is not complete but can be called without exceptions
+        //7 - dataSmithDarts() is not complete and cannot be called without exceptions
+        adapter       = new CustomAdapter(dataHerbCleaning ());
 
         //setSupportActionBar(toolbar);
 
@@ -89,31 +85,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Test Variables:
-        Double testItemID = new Double(111);
-        String testUsername = new String("Jtruezie");
-        //Player testPlayer = APIWrapper.pullPlayer (testUsername);
-
-        //Tests for APIWrapper pullItem:
-        //APIWrapper.pullItem (testItemID);
-        //Item testItem = APIWrapper.pullItem(testItemID);
-        //Log.i("TestItemData:", testItem.toString());
-
-
-        //Tests for APIWrapper pullPlayer:
-        //APIWrapper.pullPlayer (testUsername);
-        //Player testPlayer = APIWrapper.pullPlayer (testUsername);
-        //Log.i("PlayerData:", testPlayer.toString());
-
-
-        //Tests for APIWrapper verifyUsername:
-        //Log.i("VerifyTest:", APIWrapper.verifyUsername (testUsername).toString ());
-
-        //Tests for MoneyProcess:
-
 
     }
 
+    //CategoryID = 1 (Cleaning Herbs)
     public ArrayList<MoneyProcess> dataHerbCleaning(){
 
         MoneyProcess cleaningGuam = new MoneyProcess (APIWrapper.pullItem(199.0), APIWrapper.pullItem(249.0), 1, 3.0, 2.5, testPlayer);
@@ -151,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
         return(dataCleaning);
     }
 
+    //Could add data for using unclean herbs
+    //CategoryID = 2 (Making Unfinished Potions)
     public ArrayList<MoneyProcess> dataHerbUnfinished(){
 
         MoneyProcess unfGuam = new MoneyProcess (APIWrapper.pullItem(249.0), APIWrapper.pullItem(91.0), 2, 3.0, 0.0, testPlayer);
@@ -188,6 +165,52 @@ public class MainActivity extends AppCompatActivity {
         return(dataHerbUnfinished);
     }
 
+    //CategoryID = 3 (Growing Saplings)
+    public ArrayList<MoneyProcess> dataSaplings(){
+
+        MoneyProcess sapOak = new MoneyProcess (APIWrapper.pullItem(5312.0), APIWrapper.pullItem(5370.0), 3, 15.0, 0.0, testPlayer);
+        MoneyProcess sapApple = new MoneyProcess (APIWrapper.pullItem(5283.0), APIWrapper.pullItem(5496.0), 3, 27.0, 0.0, testPlayer);
+        MoneyProcess sapWillow = new MoneyProcess (APIWrapper.pullItem(5313.0), APIWrapper.pullItem(5371.0), 3, 30.0, 0.0, testPlayer);
+        MoneyProcess sapBanana = new MoneyProcess (APIWrapper.pullItem(5284.0), APIWrapper.pullItem(5497.0),  3, 33.0, 0.0, testPlayer);
+        MoneyProcess sapTeak = new MoneyProcess (APIWrapper.pullItem(21486.0), APIWrapper.pullItem(21477.0),  3, 35.0, 0.0, testPlayer);
+        MoneyProcess sapOrange = new MoneyProcess (APIWrapper.pullItem(5285.0), APIWrapper.pullItem(5498.0), 3, 39.0, 0.0, testPlayer);
+        MoneyProcess sapCurry = new MoneyProcess (APIWrapper.pullItem(5286.0), APIWrapper.pullItem(5499.0),  3, 42.0, 0.0, testPlayer);
+
+        /*
+        MoneyProcess sapMaple = new MoneyProcess (APIWrapper.pullItem(5314.0), APIWrapper.pullItem(5372.0), 3, 45.0, 0.0, testPlayer);
+        MoneyProcess sapPineapple = new MoneyProcess (APIWrapper.pullItem(5287.0), APIWrapper.pullItem(5500.0), 3, 51.0, 0.0, testPlayer);
+        MoneyProcess sapMahogany = new MoneyProcess (APIWrapper.pullItem(21488.0), APIWrapper.pullItem(21480.0),  3, 55.0, 0.0, testPlayer);
+        MoneyProcess sapPapaya = new MoneyProcess (APIWrapper.pullItem(5288.0), APIWrapper.pullItem(5501.0), 3, 57.0, 0.0, testPlayer);
+        MoneyProcess sapYew = new MoneyProcess (APIWrapper.pullItem(5315.0), APIWrapper.pullItem(5373.0),  3, 60.0, 0.0, testPlayer);
+        MoneyProcess sapPalm = new MoneyProcess (APIWrapper.pullItem(5289.0), APIWrapper.pullItem(5502.0),  3, 68.0, 0.0, testPlayer);
+        MoneyProcess sapCalquat = new MoneyProcess (APIWrapper.pullItem (5290.0), APIWrapper.pullItem (5503.0),  3, 72.0, 0.0, testPlayer);
+        MoneyProcess sapMagic = new MoneyProcess (APIWrapper.pullItem (5316.0), APIWrapper.pullItem (5374.0),  3, 75.0, 0.0, testPlayer);
+        */
+
+        ArrayList<MoneyProcess> dataSaplings = new ArrayList<MoneyProcess>();
+
+        dataSaplings.add (sapOak);
+        dataSaplings.add (sapApple);
+        dataSaplings.add (sapWillow);
+        dataSaplings.add (sapBanana);
+        dataSaplings.add (sapTeak);
+        dataSaplings.add (sapOrange);
+        dataSaplings.add (sapCurry);
+        /*
+        dataSaplings.add (sapMaple);
+        dataSaplings.add (sapPineapple);
+        dataSaplings.add (sapMahogany);
+        dataSaplings.add (sapPapaya);
+        dataSaplings.add (sapYew);
+        dataSaplings.add (sapPalm);
+        dataSaplings.add (sapCalquat);
+        dataSaplings.add (sapMagic);
+        */
+
+        return(dataSaplings);
+    }
+
+    //CategoryID = 4 (Making Bolt Tips)
     public ArrayList<MoneyProcess> dataBoltTips(){
         MoneyProcess cuttingOpalTips = new MoneyProcess (APIWrapper.pullItem(1609.0), APIWrapper.pullItem(45.0), 4, 11.0, 1.6, testPlayer);
         MoneyProcess cuttingJadeTips = new MoneyProcess (APIWrapper.pullItem(1611.0), APIWrapper.pullItem(9187.0), 4, 26.0, 2.4, testPlayer);
@@ -221,6 +244,33 @@ public class MainActivity extends AppCompatActivity {
         //dataBoltTips.add (cuttingOnyxTips);
 
         return(dataBoltTips);
+    }
+
+    //CategoryID = 5 (Fletching Bows)
+
+    //CategoryID = 6 (Stringing Bows)
+
+    //CategoryID = 7 (Smithing Dart Tips)
+    public ArrayList<MoneyProcess> dataSmithDarts(){
+
+        MoneyProcess smithBronzeTips = new MoneyProcess (APIWrapper.pullItem(2349.0), APIWrapper.pullItem(819.0), 7, 4.0, 12.5, testPlayer);
+        MoneyProcess smithIronTips = new MoneyProcess (APIWrapper.pullItem(2351.0), APIWrapper.pullItem(820.0), 7, 19.0, 25.0, testPlayer);
+        MoneyProcess smithSteelTips = new MoneyProcess (APIWrapper.pullItem(2353.0), APIWrapper.pullItem(821.0), 7, 34.0, 37.5, testPlayer);
+        MoneyProcess smithMithrilTips = new MoneyProcess (APIWrapper.pullItem(2359.0), APIWrapper.pullItem(822.0), 7, 54.0, 50.0, testPlayer);
+        MoneyProcess smithAdamantTips = new MoneyProcess (APIWrapper.pullItem(2361.0), APIWrapper.pullItem(823.0), 7, 74.0, 62.5, testPlayer);
+        MoneyProcess smithRuneTips = new MoneyProcess (APIWrapper.pullItem(2363.0), APIWrapper.pullItem(824.0), 7, 89.0, 75.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataSmithDarts = new ArrayList<MoneyProcess>();
+
+        dataBoltTips.add (smithBronzeTips);
+        dataBoltTips.add (smithIronTips);
+        dataBoltTips.add (smithSteelTips);
+        dataBoltTips.add (smithMithrilTips);
+        dataBoltTips.add (smithAdamantTips);
+        dataBoltTips.add (smithRuneTips);
+
+
+        return(dataSmithDarts);
     }
 
     @Override
