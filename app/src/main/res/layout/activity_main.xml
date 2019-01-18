@@ -2,6 +2,7 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,8 +12,29 @@
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include layout="@layout/toolbar_layout" />
+        android:layout_height="match_parent"
+        tools:context=".activities.MainActivity">
+
+        //Toolbar displayed at the top of the activity
+        <include
+            layout="@layout/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <include
+            layout="@layout/content_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <FrameLayout
+            android:id="@+id/flContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
@@ -21,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="@android:color/holo_purple"
         app:menu="@menu/nav_menu"
         />
 

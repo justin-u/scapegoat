@@ -4,16 +4,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 
 import com.unterr.truex.scapegoat.R;
 import com.unterr.truex.scapegoat.elements.CustomAdapter;
@@ -30,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Android Elements
     private Toolbar                     toolbar;
-    private DrawerLayout                mDrawerLayout;
+    private DrawerLayout                mDrawer;
+    private NavigationView              nvDrawer;
+
     private RecyclerView                recyclerView;
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
@@ -46,19 +51,48 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         // create
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar =       findViewById(R.id.toolBar);
+
+
+        toolbar = findViewById (R.id.toolBar);
         setSupportActionBar (toolbar);
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        mDrawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById (R.id.nav_view);
+
+
+
+        recyclerView = (RecyclerView) findViewById (R.id.lst);
+        layoutManager = new LinearLayoutManager (this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        //************
+        adapter       = new CustomAdapter(dataStringBows ());
+
+
+
+        //***********
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
+
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        /*
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // set item as selected to persist highlight
+                        switch (menuItem.getItemId ()){
+                            case R.id.nav_herbCleaning:{
+
+                            }
+                        }
                         menuItem.setChecked(true);
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
@@ -67,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        */
 
         //recyclerView =  findViewById(R.id.lst);
 
@@ -94,26 +129,7 @@ public class MainActivity extends AppCompatActivity {
         */
 
 
-        //************
-        //ArrayList<Integer> itemsimg = new ArrayList<Integer> ();
-        //itemsimg.add(R.drawable.herblore.png);
 
-
-
-        //adapter       = new CustomAdapter(dataStringBows ());
-
-
-
-        //***********
-        //this.recyclerView = (RecyclerView) findViewById (R.id.lst);
-        //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager (this);
-        //this.recyclerView.setLayoutManager(mLayoutManager);
-
-        //recyclerView.setHasFixedSize(true);
-        //recyclerView.setAdapter(adapter);
-
-
-        //recyclerView.setLayoutManager(layoutManager);
 
 
         // set action for floating action button
@@ -128,6 +144,17 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId ()){
+            case android.R.id.home:
+                mDrawer.openDrawer (GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected (item);
     }
 
     //CategoryID = 1 (Cleaning Herbs)
