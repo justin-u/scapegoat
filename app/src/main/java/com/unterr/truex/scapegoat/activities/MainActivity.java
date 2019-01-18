@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         //3 - dataSaplings() is not complete but can be called without exceptions
         //4 - dataBoltTips() is not complete but can be called without exceptions
         //5 - dataFletchBows() is complete and can be called without exceptions
+        //6 - dataStringBows() is complete and can be called without exceptions
         //7 - dataSmithDarts() is not complete and cannot be called without exceptions
         /*
         try{
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         */
         ArrayList<Integer> itemsimg = new ArrayList<Integer> ();
         //itemsimg.add(R.drawable.herblore.png);
-        adapter       = new CustomAdapter(dataFletchBows ());
+        adapter       = new CustomAdapter(dataStringBows ());
 
         //setSupportActionBar(toolbar);
 
@@ -256,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CategoryID = 5 (Fletching Bows)
+    //TODO: Change method so it stores the logs in an item so it doesn't call each log type twice
     public ArrayList<MoneyProcess> dataFletchBows(){
         MoneyProcess fletchSB = new MoneyProcess (APIWrapper.pullItem(1511.0), APIWrapper.pullItem(50.0), 5, 5.0, 5.0, testPlayer);
         MoneyProcess fletchLB = new MoneyProcess (APIWrapper.pullItem(1511.0), APIWrapper.pullItem(48.0), 5, 10.0, 10.0, testPlayer);
@@ -291,6 +293,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CategoryID = 6 (Stringing Bows)
+    public ArrayList<MoneyProcess> dataStringBows(){
+        Item bowString = APIWrapper.pullItem (1777.0);
+        MoneyProcess stringSB = new MoneyProcess (APIWrapper.pullItem(50.0), bowString, APIWrapper.pullItem(841.0), 5, 5.0, 5.0, testPlayer);
+        MoneyProcess stringLB = new MoneyProcess (APIWrapper.pullItem(48.0), bowString, APIWrapper.pullItem(839.0), 5, 10.0, 10.0, testPlayer);
+        MoneyProcess stringOakSB = new MoneyProcess (APIWrapper.pullItem(54.0), bowString, APIWrapper.pullItem(843.0), 5, 20.0, 16.5, testPlayer);
+        MoneyProcess stringOakLB = new MoneyProcess (APIWrapper.pullItem(56.0), bowString, APIWrapper.pullItem(845.0), 5, 25.0, 25.0, testPlayer);
+        MoneyProcess stringWillowSB = new MoneyProcess (APIWrapper.pullItem(60.0), bowString, APIWrapper.pullItem(849.0), 5, 35.0, 33.3, testPlayer);
+        MoneyProcess stringWillowLB = new MoneyProcess (APIWrapper.pullItem(58.0), bowString, APIWrapper.pullItem(847.0), 5, 40.0, 41.5, testPlayer);
+        MoneyProcess stringMapleSB = new MoneyProcess (APIWrapper.pullItem(64.0), bowString, APIWrapper.pullItem(853.0), 5, 50.0, 50.0, testPlayer);
+        MoneyProcess stringMapleLB = new MoneyProcess (APIWrapper.pullItem(62.0), bowString, APIWrapper.pullItem(859.0), 5, 55.0, 58.3, testPlayer);
+        MoneyProcess stringYewSB = new MoneyProcess (APIWrapper.pullItem(68.0), bowString, APIWrapper.pullItem(857.0), 5, 65.0, 67.5, testPlayer);
+        MoneyProcess stringYewLB = new MoneyProcess (APIWrapper.pullItem(66.0), bowString, APIWrapper.pullItem(855.0), 5, 70.0, 75.5, testPlayer);
+        MoneyProcess stringMagicSB = new MoneyProcess (APIWrapper.pullItem(72.0), bowString, APIWrapper.pullItem(861.0), 5, 80.0, 83.3, testPlayer);
+        MoneyProcess stringMagicLB = new MoneyProcess (APIWrapper.pullItem(70.0), bowString, APIWrapper.pullItem(859.0), 5, 85.0, 91.5, testPlayer);
+
+
+        ArrayList<MoneyProcess> dataStringBows = new ArrayList<MoneyProcess>();
+
+        dataStringBows.add (stringSB);
+        dataStringBows.add (stringLB);
+        dataStringBows.add (stringOakSB);
+        dataStringBows.add (stringOakLB);
+        dataStringBows.add (stringWillowSB);
+        dataStringBows.add (stringWillowLB);
+        dataStringBows.add (stringMapleSB);
+        dataStringBows.add (stringMapleLB);
+        dataStringBows.add (stringYewSB);
+        dataStringBows.add (stringYewLB);
+        dataStringBows.add (stringMagicSB);
+        dataStringBows.add (stringMagicLB);
+
+
+        return(dataStringBows);
+    }
 
     //CategoryID = 7 (Smithing Dart Tips)
     //Pulling data for smithRuneTips causes exceptions and forces the app to close

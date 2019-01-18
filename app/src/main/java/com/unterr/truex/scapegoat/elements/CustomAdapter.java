@@ -90,8 +90,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         if (process.getProfitPer () < 0){
             holder.profitPer.setTextColor (Color.rgb (124,27,16));
+            holder.profitPerHr.setTextColor (Color.rgb (124,27,16));
         } else{
             holder.profitPer.setTextColor (Color.rgb(33, 132, 38));
+            holder.profitPerHr.setTextColor (Color.rgb(33, 132, 38));
         }
 
         if (process.getReqLvlMet () == false){

@@ -123,6 +123,25 @@ public class MoneyProcess {
         this.reqLvlMet = setReqLvlMet (_player);
         this.iconUrl = getIconUrl (_productItem);
     }
+
+    public MoneyProcess(Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Player _player){
+        this.inputID = getItemID (_inputItem);
+        this.productID = getItemID (_productItem);
+        this.categoryID = _categoryID;
+        this.reqLvl = _reqLvl;
+        this.xpPer = _xpPer;
+        this.name = getItemName (_productItem);
+        this.inputTradePrice = getItemTradePrice (_inputItem);
+        this.productTradePrice = getItemTradePrice (_productItem);
+        this.profitPer = getProfitPer (_inputItem, _inputItem2, _productItem, _categoryID);
+        this.outputTotal = getOutputTotal (_categoryID);
+        this.profitTotal = getProfitTotal (_categoryID, _inputItem, _productItem);
+        this.xpTotal = getXpTotal (_categoryID, _xpPer);
+        this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
+        //Alter ReqLvlMet
+        this.reqLvlMet = setReqLvlMet (_player);
+        this.iconUrl = getIconUrl (_productItem);
+    }
     //TODO: create other constructor methods with no _inputItem (mining, woodcutting)
 
     //TODO: create constructor methods that calls update() method based on parameters
@@ -154,17 +173,36 @@ public class MoneyProcess {
 
     }
 
+    public Double getProfitPer (Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID){
+        if (_categoryID == 6){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + _inputItem2.getTradePrice ()));
+        }else{
+            return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
+        }
+
+    }
+
     public Double getOutputTotal (int _categoryID){
         if(_categoryID == 1){
             //OutputTotal (PerHr) for cleaning herbs
             return 5000.0;
         } if(_categoryID == 2){
+            //OutputTotal (PerHr) for making unfinished potions
             return 2000.0;
         }if(_categoryID == 3){
+            //OutputTotal (PerHr) for growing saplings
             return 1700.0;
         }if(_categoryID == 4){
+            //OutputTotal (PerHr) for making bolt tips
             return 1400.0;
+        }if(_categoryID == 5){
+            //OutputTotal (PerHr) for fletching bows
+            return 1500.0;
+        }if (_categoryID == 6){
+            //OutputTotal (PerHr) for stringing bows
+            return 1700.0;
         }if(_categoryID == 7){
+            //OutputTotal (PerHr) for smithing dart tips
             return 950.0;
         }
         else{
