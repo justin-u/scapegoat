@@ -35,16 +35,11 @@ public class MainActivity extends AppCompatActivity {
     // Android Elements
     private Toolbar                     toolbar;
     private DrawerLayout                mDrawer;
-    private NavigationView              nvDrawer;
+    //private NavigationView              nvDrawer;
 
     private RecyclerView                recyclerView;
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
-    private ArrayList<MoneyProcess>     dataCleaning;
-    private ArrayList<MoneyProcess>     dataHerbUnfinished;
-    private ArrayList<MoneyProcess>     dataSapling;
-    private ArrayList<MoneyProcess>     dataBoltTips;
-    private ArrayList<MoneyProcess>     dataSmithDarts;
 
 
     // Objects
