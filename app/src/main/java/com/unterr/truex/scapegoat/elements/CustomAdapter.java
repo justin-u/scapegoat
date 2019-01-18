@@ -16,7 +16,9 @@ import com.squareup.picasso.Picasso;
 import com.unterr.truex.scapegoat.R;
 import com.unterr.truex.scapegoat.models.MoneyProcess;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
     private ArrayList<MoneyProcess> data;
@@ -84,6 +86,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         MoneyProcess process = data.get(position);
 
+        NumberFormat numberFormat = NumberFormat.getNumberInstance (Locale.US);
 
         if (process.getProfitPer () < 0){
             holder.profitPer.setTextColor (Color.rgb (124,27,16));
@@ -99,14 +102,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             holder.name.setTextColor (Color.rgb(33, 132, 38));
         }
 
-
         holder.name.setText (process.getProcessName ());
-        holder.reqLvl.setText (process.getReqLvl ().toString ());
-        holder.inputPrice.setText (process.getInputTradePrice ().toString ());
-        holder.productPrice.setText (process.getProductTradePrice ().toString ());
-        holder.profitPer.setText (process.getProfitPer ().toString ());
+        holder.reqLvl.setText (String.format("%.0f", process.getReqLvl ()));
+        holder.inputPrice.setText (numberFormat.format(process.getInputTradePrice ()) + "gp");
+        holder.productPrice.setText (numberFormat.format(process.getProductTradePrice ()) + "gp");
+        holder.profitPer.setText (numberFormat.format(process.getProfitPer ()) + "gp");
         holder.xpPer.setText (process.getXpPer ().toString ());
-        holder.profitPerHr.setText (process.getProfitTotal ().toString ());
+        holder.profitPerHr.setText (numberFormat.format(process.getProfitTotal ()) + "gp");
         Picasso.get().load(process.getIconUrl()).into(holder.image);
 
         //Temporary solution. Icon needs to be added to drawable and called
