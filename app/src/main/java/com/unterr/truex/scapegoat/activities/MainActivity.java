@@ -1,6 +1,7 @@
 package com.unterr.truex.scapegoat.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -60,29 +61,20 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar (toolbar);
 
         mDrawer = findViewById(R.id.drawer_layout);
+        //Used for setupDrawerContent
         NavigationView navigationView = findViewById (R.id.nav_view);
+        //setupDrawerContent (navigationView);
 
 
 
         recyclerView = (RecyclerView) findViewById (R.id.lst);
         layoutManager = new LinearLayoutManager (this);
         recyclerView.setLayoutManager(layoutManager);
-
-        //************
-        adapter       = new CustomAdapter(dataStringBows ());
-
-
-
-        //***********
-
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
 
 
-        recyclerView.setLayoutManager(layoutManager);
 
 
-        /*
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -90,18 +82,51 @@ public class MainActivity extends AppCompatActivity {
                         // set item as selected to persist highlight
                         switch (menuItem.getItemId ()){
                             case R.id.nav_herbCleaning:{
-
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataHerbCleaning ());
+                                recyclerView.setAdapter(adapter);
+                                break;
+                            }case R.id.nav_unfPotions:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataHerbUnfinished ());
+                                recyclerView.setAdapter(adapter);
+                                break;
+                            }case R.id.nav_growingSaplings:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataSaplings ());
+                                recyclerView.setAdapter(adapter);
+                                break;
+                            }case R.id.nav_fletchingBoltTips:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataBoltTips ());
+                                recyclerView.setAdapter(adapter);
+                                break;
+                            }case R.id.nav_fletchingBows:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataFletchBows ());
+                                recyclerView.setAdapter(adapter);
+                                break;
+                            }case R.id.nav_stringingBows:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataStringBows ());
+                                recyclerView.setAdapter(adapter);
+                                break;
+                            }case R.id.nav_smithingDartTips:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataSmithDarts ());
+                                recyclerView.setAdapter(adapter);
+                                break;
                             }
                         }
                         menuItem.setChecked(true);
                         // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
+                        mDrawer.closeDrawers();
 
                         return false;
                     }
                 });
 
-        */
+
 
         //recyclerView =  findViewById(R.id.lst);
 
@@ -146,16 +171,53 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    public void setupDrawerContent(NavigationView navigationView){
+        navigationView.setNavigationItemSelectedListener (
+                new NavigationView.OnNavigationItemSelectedListener () {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        selectDrawerItem (menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    //Could be used to access fragments based on the nav_menu item selected
+    public void selectDrawerItem(MenuItem menuItem){
+        switch(menuItem.getItemId ()){
+            case R.id.nav_herbCleaning:
+                mDrawer.closeDrawer (GravityCompat.START);
+                adapter = new CustomAdapter (dataHerbCleaning ());
+                recyclerView.setAdapter(adapter);
+            case R.id.nav_unfPotions:
+                mDrawer.closeDrawer (GravityCompat.START);
+                adapter = new CustomAdapter (dataHerbUnfinished ());
+                recyclerView.setAdapter(adapter);
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId ()){
             case android.R.id.home:
                 mDrawer.openDrawer (GravityCompat.START);
                 return true;
+
+            case R.id.nav_herbCleaning:
+                adapter       = new CustomAdapter(dataStringBows ());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(adapter);
+
         }
 
         return super.onOptionsItemSelected (item);
     }
+    */
+
+
+
 
     //CategoryID = 1 (Cleaning Herbs)
     public ArrayList<MoneyProcess> dataHerbCleaning(){

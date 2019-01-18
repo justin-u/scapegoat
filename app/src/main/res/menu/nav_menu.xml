@@ -17,5 +17,17 @@
             android:id="@+id/nav_fletchingBoltTips"
             android:icon="@drawable/fletching"
             android:title="Fletching Bolt Tips" />
+        <item
+            android:id="@+id/nav_fletchingBows"
+            android:icon="@drawable/fletching"
+            android:title="Fletching Bows" />
+        <item
+            android:id="@+id/nav_stringingBows"
+            android:icon="@drawable/fletching"
+            android:title="Stringing Bows" />
+        <item
+            android:id="@+id/nav_smithingDartTips"
+            android:icon="@drawable/smithing"
+            android:title="Smithing Dart Tips" />
     </group>
 </menu>
