@@ -2,7 +2,9 @@ package com.unterr.truex.scapegoat.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Android Elements
     private Toolbar                     toolbar;
+    private DrawerLayout                mDrawerLayout;
     private RecyclerView                recyclerView;
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
@@ -47,8 +50,25 @@ public class MainActivity extends AppCompatActivity {
         // create
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar =       findViewById(R.id.toolbar);
-        recyclerView =  findViewById(R.id.lst);
+        toolbar =       findViewById(R.id.toolBar);
+        setSupportActionBar (toolbar);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById (R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        return false;
+                    }
+                });
+
+
+        //recyclerView =  findViewById(R.id.lst);
 
 
         /*
@@ -72,21 +92,32 @@ public class MainActivity extends AppCompatActivity {
             Log.i ("AdapterException", e.getMessage ());
         }
         */
-        ArrayList<Integer> itemsimg = new ArrayList<Integer> ();
+
+
+        //************
+        //ArrayList<Integer> itemsimg = new ArrayList<Integer> ();
         //itemsimg.add(R.drawable.herblore.png);
-        adapter       = new CustomAdapter(dataStringBows ());
 
-        //setSupportActionBar(toolbar);
 
-        this.recyclerView = (RecyclerView) findViewById (R.id.lst);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager (this);
-        this.recyclerView.setLayoutManager(mLayoutManager);
 
-        recyclerView.setHasFixedSize(true);
+        //adapter       = new CustomAdapter(dataStringBows ());
+
+
+
+        //***********
+        //this.recyclerView = (RecyclerView) findViewById (R.id.lst);
+        //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager (this);
+        //this.recyclerView.setLayoutManager(mLayoutManager);
+
+        //recyclerView.setHasFixedSize(true);
+        //recyclerView.setAdapter(adapter);
+
+
         //recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+
 
         // set action for floating action button
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
+        */
 
     }
 
@@ -352,25 +383,5 @@ public class MainActivity extends AppCompatActivity {
         return(dataSmithDarts);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

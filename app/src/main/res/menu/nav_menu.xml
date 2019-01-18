@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_herbCleaning"
+            android:icon="@drawable/herblore"
+            android:title="Herb Cleaning" />
+        <item
+            android:id="@+id/nav_unfPotions"
+            android:icon="@drawable/herblore"
+            android:title="Unfinished Potions" />
+        <item
+            android:id="@+id/nav_growingSaplings"
+            android:icon="@drawable/farming"
+            android:title="Growing Saplings" />
+        <item
+            android:id="@+id/nav_fletchingBoltTips"
+            android:icon="@drawable/fletching"
+            android:title="Fletching Bolt Tips" />
+    </group>
+</menu>
