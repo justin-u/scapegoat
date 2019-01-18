@@ -63,7 +63,16 @@ public class MainActivity extends AppCompatActivity {
         //3 - dataSaplings() is not complete but can be called without exceptions
         //4 - dataBoltTips() is not complete but can be called without exceptions
         //7 - dataSmithDarts() is not complete and cannot be called without exceptions
-        adapter       = new CustomAdapter(dataHerbCleaning ());
+        /*
+        try{
+
+        } catch (Exception e){
+            Log.i ("AdapterException", e.getMessage ());
+        }
+        */
+        ArrayList<Integer> itemsimg = new ArrayList<Integer> ();
+        //itemsimg.add(R.drawable.herblore.png);
+        adapter       = new CustomAdapter(dataSaplings ());
 
         //setSupportActionBar(toolbar);
 
@@ -257,18 +266,20 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess smithIronTips = new MoneyProcess (APIWrapper.pullItem(2351.0), APIWrapper.pullItem(820.0), 7, 19.0, 25.0, testPlayer);
         MoneyProcess smithSteelTips = new MoneyProcess (APIWrapper.pullItem(2353.0), APIWrapper.pullItem(821.0), 7, 34.0, 37.5, testPlayer);
         MoneyProcess smithMithrilTips = new MoneyProcess (APIWrapper.pullItem(2359.0), APIWrapper.pullItem(822.0), 7, 54.0, 50.0, testPlayer);
+        /*
         MoneyProcess smithAdamantTips = new MoneyProcess (APIWrapper.pullItem(2361.0), APIWrapper.pullItem(823.0), 7, 74.0, 62.5, testPlayer);
         MoneyProcess smithRuneTips = new MoneyProcess (APIWrapper.pullItem(2363.0), APIWrapper.pullItem(824.0), 7, 89.0, 75.0, testPlayer);
-
+        */
         ArrayList<MoneyProcess> dataSmithDarts = new ArrayList<MoneyProcess>();
 
-        dataBoltTips.add (smithBronzeTips);
-        dataBoltTips.add (smithIronTips);
-        dataBoltTips.add (smithSteelTips);
-        dataBoltTips.add (smithMithrilTips);
-        dataBoltTips.add (smithAdamantTips);
-        dataBoltTips.add (smithRuneTips);
-
+        dataSmithDarts.add (smithBronzeTips);
+        dataSmithDarts.add (smithIronTips);
+        dataSmithDarts.add (smithSteelTips);
+        dataSmithDarts.add (smithMithrilTips);
+        /*
+        dataSmithDarts.add (smithAdamantTips);
+        dataSmithDarts.add (smithRuneTips);
+        */
 
         return(dataSmithDarts);
     }

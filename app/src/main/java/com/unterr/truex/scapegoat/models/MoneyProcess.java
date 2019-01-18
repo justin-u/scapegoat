@@ -1,5 +1,7 @@
 package com.unterr.truex.scapegoat.models;
 
+import java.util.Locale;
+
 public class MoneyProcess {
 
     //**Terminology Reference**
@@ -81,6 +83,7 @@ public class MoneyProcess {
     public String iconUrl;
 
 
+
     public MoneyProcess(){}
 
     public MoneyProcess(Item _inputItem, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer){
@@ -144,8 +147,7 @@ public class MoneyProcess {
         }if (_categoryID == 4){
             return (((_productItem.getTradePrice ())* 12.0) - (_inputItem.getTradePrice ()));
         }if (_categoryID == 7){
-            //Multipy by 10
-            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice ()));
+            return ((_productItem.getTradePrice () * 10.0) - (_inputItem.getTradePrice ()));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -205,6 +207,7 @@ public class MoneyProcess {
             return false;
         }
     }
+
 
     public String getIconUrl(Item _item){ return _item.getIconURL ();}
 

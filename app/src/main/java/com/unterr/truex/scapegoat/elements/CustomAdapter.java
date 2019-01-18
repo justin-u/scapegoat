@@ -1,6 +1,10 @@
 package com.unterr.truex.scapegoat.elements;
 
+import android.app.ActionBar;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,8 +78,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         // - replace the contents of the view with that element
 
         //Temporary solution. Icon needs to be added to drawable
-        String skillUrl = ("https://vignette.wikia.nocookie.net/2007scape/images/0/03/Herblore_icon.png/revision/latest?cb=20180424011014&format=original");
+
+        //String skillIcon = ("herblore");
+        //Drawable myDrawable = getResources().getDrawable(R.drawable.icon.herblore);
+
         MoneyProcess process = data.get(position);
+
 
         if (process.getProfitPer () < 0){
             holder.profitPer.setTextColor (Color.rgb (124,27,16));
@@ -100,8 +108,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         holder.xpPer.setText (process.getXpPer ().toString ());
         holder.profitPerHr.setText (process.getProfitTotal ().toString ());
         Picasso.get().load(process.getIconUrl()).into(holder.image);
+
         //Temporary solution. Icon needs to be added to drawable and called
-        Picasso.get().load(skillUrl).into(holder.imageSkill);
+        if (process.categoryID == 1 || process.categoryID == 2){
+            holder.imageSkill.setImageResource(R.drawable.herblore);
+        }if (process.categoryID == 3){
+            holder.imageSkill.setImageResource(R.drawable.farming);
+        }if (process.categoryID == 4 || process.categoryID == 5 || process.categoryID == 6){
+            holder.imageSkill.setImageResource(R.drawable.fletching);
+        }if (process.categoryID == 7){
+            holder.imageSkill.setImageResource(R.drawable.smithing);
+        }
+
 
     }
 
