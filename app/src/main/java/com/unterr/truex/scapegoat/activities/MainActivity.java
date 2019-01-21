@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     // Android Elements
     private Toolbar                     toolbar;
     private DrawerLayout                mDrawer;
-    //private NavigationView              nvDrawer;
+    private NavigationView              navigationView;
 
     private RecyclerView                recyclerView;
     private RecyclerView.Adapter        adapter;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawer = findViewById(R.id.drawer_layout);
         //Used for setupDrawerContent
-        NavigationView navigationView = findViewById (R.id.nav_view);
+        navigationView = findViewById (R.id.nav_view);
         //setupDrawerContent (navigationView);
 
 

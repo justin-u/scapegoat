@@ -124,6 +124,25 @@ public class MoneyProcess {
         this.iconUrl = getIconUrl (_productItem);
     }
 
+    public MoneyProcess(Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Double _outputTotal, Player _player){
+        this.inputID = getItemID (_inputItem);
+        this.productID = getItemID (_productItem);
+        this.categoryID = _categoryID;
+        this.reqLvl = _reqLvl;
+        this.xpPer = _xpPer;
+        this.name = getItemName (_productItem);
+        this.inputTradePrice = getItemTradePrice (_inputItem);
+        this.productTradePrice = getItemTradePrice (_productItem);
+        this.profitPer = getProfitPer (_inputItem, _inputItem2, _productItem, _categoryID);
+        this.outputTotal = _outputTotal;
+        this.profitTotal = getProfitTotal (_categoryID, _inputItem, _productItem);
+        this.xpTotal = getXpTotal (_categoryID, _xpPer);
+        this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
+        //Alter ReqLvlMet
+        this.reqLvlMet = setReqLvlMet (_player);
+        this.iconUrl = getIconUrl (_productItem);
+    }
+
     public MoneyProcess(Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Player _player){
         this.inputID = getItemID (_inputItem);
         this.productID = getItemID (_productItem);
@@ -204,6 +223,10 @@ public class MoneyProcess {
         }if(_categoryID == 7){
             //OutputTotal (PerHr) for smithing dart tips
             return 950.0;
+        } if (_categoryID == 8 || getXpPer () == 12.5){
+            return 4000.0;
+        } if (_categoryID == 8 || getXpPer () == 17.5){
+            return 4600.0;
         }
         else{
             return 0.0;
