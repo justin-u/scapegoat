@@ -15,9 +15,20 @@ public class Item {
 
     public Item(){}
 
+    //Constructor method to call the pullItem method (APIWrapper) that pulls JSON data and uses the second constructor to create a new Item object.
     public Item( Double _itemID ){
         Item _item = APIWrapper.pullItem( _itemID );
         if( _item != null ){ this.update(_item); }
+    }
+
+    //Second constructor method with every parameter to be called by the pullItem method (APIWrapper) in order to create an item object with the pulled JSON data
+    public Item(String _iconURL, String _iconLargeURL, Double _itemID, Boolean _ifMemberOnly, String _name, Double _tradePrice){
+        this.iconURL = _iconURL;
+        this.iconLargeURL = _iconLargeURL;
+        this.itemID = _itemID;
+        this.ifMemberOnly = _ifMemberOnly;
+        this.name = _name;
+        this.tradePrice = _tradePrice;
     }
 
     private void setIconURL( String _iconURL ){
@@ -52,6 +63,8 @@ public class Item {
         return APIWrapper.pullIconLarge(this.iconLargeURL);
     }
 
+    public String getIconURL(){return this.iconLargeURL;};
+
     public double getItemID(){
         return this.itemID;
     }
@@ -68,7 +81,7 @@ public class Item {
         if(this.isNull())
             return "null";
 
-        return this.name + " | " + this.itemID + " | " + this.tradePrice;
+        return "Name = " + this.name + " | Item ID:" + this.itemID + " | TradePrice:" + this.tradePrice;
     }
 
     public Double getTradePrice(){
@@ -83,6 +96,7 @@ public class Item {
     private boolean update( Item _item ){
 
         if(  _item             == null        ){ return false; }
+        //Might be cause of .toString() returning null
         if(  _item       .equals(this)        ){ return false; }
         if( !_item.itemID.equals(this.itemID) ){ return false; }
 
