@@ -124,6 +124,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             holder.imageSkill.setImageResource(R.drawable.smithing);
         } if (process.categoryID == 11){
             holder.imageSkill.setImageResource (R.drawable.cooking);
+        } if (process.categoryID == 15){
+            holder.imageSkill.setImageResource (R.drawable.crafting);
         }
 
 

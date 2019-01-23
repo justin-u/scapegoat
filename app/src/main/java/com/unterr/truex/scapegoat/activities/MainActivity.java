@@ -116,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
                                 adapter = new CustomAdapter (dataCookingFish ());
                                 recyclerView.setAdapter(adapter);
                                 break;
+                            }case R.id.nav_tanningLeather:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataTanningLeather ());
+                                recyclerView.setAdapter(adapter);
+                                break;
                             }
                         }
                         menuItem.setChecked(true);
@@ -528,5 +533,26 @@ public class MainActivity extends AppCompatActivity {
         return(dataCookingFish);
     }
 
+    //CategoryID = 15 (Tanning Leather)
+    public ArrayList<MoneyProcess> dataTanningLeather(){
 
+        MoneyProcess tanningLeather = new MoneyProcess (APIWrapper.pullItem(1739.0), APIWrapper.pullItem(1741.0), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningHardLeather = new MoneyProcess (APIWrapper.pullItem(1739.0), APIWrapper.pullItem(1743.0), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningGreenDragon = new MoneyProcess (APIWrapper.pullItem(1753.0), APIWrapper.pullItem(1745.0), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningBlueDragon = new MoneyProcess (APIWrapper.pullItem(1751.0), APIWrapper.pullItem(2505.0), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningRedDragon = new MoneyProcess (APIWrapper.pullItem(1749.0), APIWrapper.pullItem(2507.0), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningBlackDragon = new MoneyProcess (APIWrapper.pullItem(1747.0), APIWrapper.pullItem(2509.0), 15, 1.0, 0.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataTanningLeather = new ArrayList<MoneyProcess>();
+
+        dataTanningLeather.add (tanningLeather);
+        dataTanningLeather.add (tanningHardLeather);
+        dataTanningLeather.add (tanningGreenDragon);
+        dataTanningLeather.add (tanningBlueDragon);
+        dataTanningLeather.add (tanningRedDragon);
+        dataTanningLeather.add (tanningBlackDragon);
+
+
+        return(dataTanningLeather);
+    }
 }

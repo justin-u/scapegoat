@@ -186,6 +186,12 @@ public class MoneyProcess {
             return (((_productItem.getTradePrice ())* 12.0) - (_inputItem.getTradePrice ()));
         }if (_categoryID == 7){
             return ((_productItem.getTradePrice () * 10.0) - (_inputItem.getTradePrice ()));
+        }if (_categoryID == 15 || _productItem.getItemID () == 1741.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 1.0));
+        }if (_categoryID == 15 || _productItem.getItemID () == 1743.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 3.0));
+        }if (_categoryID == 15){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 20.0));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -229,6 +235,8 @@ public class MoneyProcess {
             return 4600.0;
         } if (_categoryID == 11){
             return 1100.0;
+        } if (_categoryID == 15){
+            return 2800.0;
         }
         else{
             return 0.0;
@@ -266,6 +274,8 @@ public class MoneyProcess {
             skillLvl = _player.getFishingLvl ();
         } if (this.categoryID == 11){
             skillLvl = _player.getCookingLvl ();
+        } if (this.categoryID == 15){
+            skillLvl = _player.getCraftingLvl ();
         }
 
         if (skillLvl >= this.reqLvl){

@@ -83,6 +83,10 @@ public class Player {
         this.cookingLvl = _cookingLvl;
     }
 
+    private void setCraftingLvl( Double _craftingLvl){
+        this.craftingLvl = _craftingLvl;
+    }
+
     private void setFishingLvl( Double _fishingLvl ){
         this.fishingLvl = _fishingLvl;
     }
@@ -111,6 +115,10 @@ public class Player {
 
     public Double getCookingLvl() {
         return this.cookingLvl;
+    }
+
+    public Double getCraftingLvl(){
+        return this.craftingLvl;
     }
 
     public Double getFishingLvl(){
