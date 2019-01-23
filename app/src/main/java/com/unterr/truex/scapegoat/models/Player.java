@@ -79,6 +79,14 @@ public class Player {
         this.username = _username;
     }
 
+    private void setCookingLvl( Double _cookingLvl ){
+        this.cookingLvl = _cookingLvl;
+    }
+
+    private void setFishingLvl( Double _fishingLvl ){
+        this.fishingLvl = _fishingLvl;
+    }
+
     private void setHerbLvl( Double _herbLvl ){
         this.herbLvl = _herbLvl;
     }
@@ -99,6 +107,14 @@ public class Player {
 
     public String getUsername(){
         return this.username;
+    }
+
+    public Double getCookingLvl() {
+        return this.cookingLvl;
+    }
+
+    public Double getFishingLvl(){
+        return this.fishingLvl;
     }
 
     public Double getHerbLvl(){

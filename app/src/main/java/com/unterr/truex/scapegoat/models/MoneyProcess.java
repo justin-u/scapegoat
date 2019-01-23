@@ -227,6 +227,8 @@ public class MoneyProcess {
             return 4000.0;
         } if (_categoryID == 8 || getXpPer () == 17.5){
             return 4600.0;
+        } if (_categoryID == 11){
+            return 1100.0;
         }
         else{
             return 0.0;
@@ -258,8 +260,12 @@ public class MoneyProcess {
             skillLvl = _player.getFarmingLvl();
         }if (this.categoryID == 4 || this.categoryID == 5 || this.categoryID == 6){
             skillLvl = _player.getFletchingLvl();
-        }if (this.categoryID == 7){
+        }if (this.categoryID == 7 || this.categoryID == 8){
             skillLvl = _player.getSmithingLvl();
+        } if (this.categoryID == 9){
+            skillLvl = _player.getFishingLvl ();
+        } if (this.categoryID == 11){
+            skillLvl = _player.getCookingLvl ();
         }
 
         if (skillLvl >= this.reqLvl){

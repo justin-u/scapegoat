@@ -111,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
                                 adapter = new CustomAdapter (dataSmithDarts ());
                                 recyclerView.setAdapter(adapter);
                                 break;
+                            }case R.id.nav_cookingFish:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataCookingFish ());
+                                recyclerView.setAdapter(adapter);
+                                break;
                             }
                         }
                         menuItem.setChecked(true);
@@ -465,6 +470,62 @@ public class MainActivity extends AppCompatActivity {
 
 
         return(dataSmithDarts);
+    }
+
+    //CategoryID = 11 (Cooking Fish)
+    public ArrayList<MoneyProcess> dataCookingFish(){
+
+        MoneyProcess cookingShrimp = new MoneyProcess (APIWrapper.pullItem(317.0), APIWrapper.pullItem(315.0), 11, 1.0, 30.0, testPlayer);
+        MoneyProcess cookingSardine = new MoneyProcess (APIWrapper.pullItem(327.0), APIWrapper.pullItem(325.0), 11, 1.0, 40.0, testPlayer);
+        MoneyProcess cookingAnchovies = new MoneyProcess (APIWrapper.pullItem(321.0), APIWrapper.pullItem(319.0), 11, 1.0, 30.0, testPlayer);
+        MoneyProcess cookingHerring = new MoneyProcess (APIWrapper.pullItem(345.0), APIWrapper.pullItem(347.0), 11, 5.0, 50.0, testPlayer);
+        MoneyProcess cookingMackerel = new MoneyProcess (APIWrapper.pullItem(353.0), APIWrapper.pullItem(355.0), 11, 10.0, 60.0, testPlayer);
+        MoneyProcess cookingTrout = new MoneyProcess (APIWrapper.pullItem(335.0), APIWrapper.pullItem(333.0), 11, 15.0, 70.0, testPlayer);
+        MoneyProcess cookingCod = new MoneyProcess (APIWrapper.pullItem(341.0), APIWrapper.pullItem(339.0), 11, 18.0, 75.0, testPlayer);
+        MoneyProcess cookingPike = new MoneyProcess (APIWrapper.pullItem(349.0), APIWrapper.pullItem(351.0), 11, 20.0, 80.0, testPlayer);
+        MoneyProcess cookingSalmon = new MoneyProcess (APIWrapper.pullItem(331.0), APIWrapper.pullItem(329.0), 11, 25.0, 90.0, testPlayer);
+        MoneyProcess cookingSlimyEel = new MoneyProcess (APIWrapper.pullItem(3379.0), APIWrapper.pullItem(3381.0), 11, 28.0, 95.0, testPlayer);
+        MoneyProcess cookingTuna = new MoneyProcess (APIWrapper.pullItem(359.0), APIWrapper.pullItem(361.0), 11, 30.0, 100.0, testPlayer);
+        MoneyProcess cookingRainbowFish = new MoneyProcess (APIWrapper.pullItem(10138.0), APIWrapper.pullItem(10136.0), 11, 35.0, 110.0, testPlayer);
+        MoneyProcess cookingCaveEel = new MoneyProcess (APIWrapper.pullItem(5001.0), APIWrapper.pullItem(5003.0), 11, 38.0, 115.0, testPlayer);
+        MoneyProcess cookingLobster = new MoneyProcess (APIWrapper.pullItem (377.0), APIWrapper.pullItem (379.0), 11, 40.0, 120.0, testPlayer);
+        MoneyProcess cookingBass = new MoneyProcess (APIWrapper.pullItem (363.0), APIWrapper.pullItem (365.0), 11, 43.0, 130.0, testPlayer);
+        MoneyProcess cookingSwordfish = new MoneyProcess (APIWrapper.pullItem (371.0), APIWrapper.pullItem (373.0), 11, 45.0, 140.0, testPlayer);
+        MoneyProcess cookingMonkfish = new MoneyProcess (APIWrapper.pullItem (7944.0), APIWrapper.pullItem (7946.0), 11, 62.0, 150.0, testPlayer);
+        MoneyProcess cookingKarambwan = new MoneyProcess (APIWrapper.pullItem (3142.0), APIWrapper.pullItem (3144.0), 11, 30.0, 190.0, testPlayer);
+        MoneyProcess cookingShark = new MoneyProcess (APIWrapper.pullItem (383.0), APIWrapper.pullItem (385.0), 11, 80.0, 210.0, testPlayer);
+        MoneyProcess cookingSeaTurtle = new MoneyProcess (APIWrapper.pullItem (395.0), APIWrapper.pullItem (397.0), 11, 82.0, 212.0, testPlayer);
+        MoneyProcess cookingMantaRay = new MoneyProcess (APIWrapper.pullItem (389.0), APIWrapper.pullItem (391.0), 11, 91.0, 216.0, testPlayer);
+        MoneyProcess cookingAnglerfish = new MoneyProcess (APIWrapper.pullItem (13439.0), APIWrapper.pullItem (13441.0), 11, 84.0, 230.0, testPlayer);
+        MoneyProcess cookingDarkCrab = new MoneyProcess (APIWrapper.pullItem (11934.0), APIWrapper.pullItem (11936.0), 11, 90.0, 215.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataCookingFish = new ArrayList<MoneyProcess>();
+
+        dataCookingFish.add (cookingShrimp);
+        dataCookingFish.add (cookingSardine);
+        dataCookingFish.add (cookingAnchovies);
+        dataCookingFish.add (cookingHerring);
+        dataCookingFish.add (cookingMackerel);
+        dataCookingFish.add (cookingTrout);
+        dataCookingFish.add (cookingCod);
+        dataCookingFish.add (cookingPike);
+        dataCookingFish.add (cookingSalmon);
+        dataCookingFish.add (cookingSlimyEel);
+        dataCookingFish.add (cookingTuna);
+        dataCookingFish.add (cookingRainbowFish);
+        dataCookingFish.add (cookingCaveEel);
+        dataCookingFish.add (cookingLobster);
+        dataCookingFish.add (cookingBass);
+        dataCookingFish.add (cookingSwordfish);
+        dataCookingFish.add (cookingMonkfish);
+        dataCookingFish.add (cookingKarambwan);
+        dataCookingFish.add (cookingShark);
+        dataCookingFish.add (cookingSeaTurtle);
+        dataCookingFish.add (cookingMantaRay);
+        dataCookingFish.add (cookingAnglerfish);
+        dataCookingFish.add (cookingDarkCrab);
+
+        return(dataCookingFish);
     }
 
 

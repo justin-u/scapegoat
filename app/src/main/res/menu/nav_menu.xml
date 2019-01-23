@@ -29,5 +29,9 @@
             android:id="@+id/nav_smithingDartTips"
             android:icon="@drawable/smithing"
             android:title="Smithing Dart Tips" />
+        <item
+            android:id="@+id/nav_cookingFish"
+            android:icon="@drawable/cooking"
+            android:title="Cooking Fish" />
     </group>
 </menu>
