@@ -34,6 +34,10 @@
             android:icon="@drawable/cooking"
             android:title="Cooking Fish" />
         <item
+            android:id="@+id/nav_makingPlanks"
+            android:icon="@drawable/firemaking"
+            android:title="Making Planks" />
+        <item
             android:id="@+id/nav_tanningLeather"
             android:icon="@drawable/crafting"
             android:title="Tanning Leather" />

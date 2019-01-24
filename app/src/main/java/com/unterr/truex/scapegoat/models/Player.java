@@ -91,6 +91,10 @@ public class Player {
         this.fishingLvl = _fishingLvl;
     }
 
+    private void setFiremakingLvl( Double _firemakingLvl){
+        this.firemakingLvl = _firemakingLvl;
+    }
+
     private void setHerbLvl( Double _herbLvl ){
         this.herbLvl = _herbLvl;
     }
@@ -123,6 +127,10 @@ public class Player {
 
     public Double getFishingLvl(){
         return this.fishingLvl;
+    }
+
+    public Double getFiremakingLvl(){
+        return this.firemakingLvl;
     }
 
     public Double getHerbLvl(){

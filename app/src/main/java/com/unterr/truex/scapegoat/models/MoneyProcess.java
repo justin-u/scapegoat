@@ -154,7 +154,7 @@ public class MoneyProcess {
         this.productTradePrice = getItemTradePrice (_productItem);
         this.profitPer = getProfitPer (_inputItem, _inputItem2, _productItem, _categoryID);
         this.outputTotal = getOutputTotal (_categoryID);
-        this.profitTotal = getProfitTotal (_categoryID, _inputItem, _productItem);
+        this.profitTotal = getProfitTotal (_categoryID, _inputItem, _inputItem2, _productItem);
         this.xpTotal = getXpTotal (_categoryID, _xpPer);
         this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
         //Alter ReqLvlMet
@@ -201,6 +201,17 @@ public class MoneyProcess {
     public Double getProfitPer (Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID){
         if (_categoryID == 6){
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + _inputItem2.getTradePrice ()));
+        }if (_categoryID == 14){
+            if (_inputItem.getItemID () == 1511.0){
+                return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 100.0 + Math.round(_inputItem2.getTradePrice ()/34.0)));
+            }else if (_inputItem.getItemID () == 1521.0){
+                return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 250.0 + Math.round (_inputItem2.getTradePrice ()/34.0)));
+            }else if (_inputItem.getItemID () == 6333.0){
+                return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 500.0 + Math.round(_inputItem2.getTradePrice ()/34.0)));
+            }else if (_inputItem.getItemID () == 6332.0){
+                return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 1500.0 + Math.round(_inputItem2.getTradePrice ()/34.0)));
+            }
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 100.0 + Math.round(_inputItem2.getTradePrice ()/34.0)));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -229,13 +240,15 @@ public class MoneyProcess {
         }if(_categoryID == 7){
             //OutputTotal (PerHr) for smithing dart tips
             return 950.0;
-        } if (_categoryID == 8 || getXpPer () == 12.5){
+        }if (_categoryID == 8 || getXpPer () == 12.5){
             return 4000.0;
-        } if (_categoryID == 8 || getXpPer () == 17.5){
+        }if (_categoryID == 8 || getXpPer () == 17.5){
             return 4600.0;
-        } if (_categoryID == 11){
+        }if (_categoryID == 11){
             return 1100.0;
-        } if (_categoryID == 15){
+        }if (_categoryID == 14){
+            return 2028.0;
+        }if (_categoryID == 15){
             return 2800.0;
         }
         else{
@@ -245,6 +258,10 @@ public class MoneyProcess {
 
     public Double getProfitTotal (int _categoryID, Item _inputItem, Item _productItem){
         return ((getOutputTotal (_categoryID)) * (getProfitPer (_inputItem, _productItem, _categoryID)));
+    }
+
+    public Double getProfitTotal (int _categoryID, Item _inputItem, Item _inputItem2, Item _productItem){
+        return ((getOutputTotal (_categoryID)) * (getProfitPer (_inputItem, _inputItem2, _productItem, _categoryID)));
     }
 
     public Double getXpTotal(int _categoryID, Double _xpPer){
@@ -270,11 +287,13 @@ public class MoneyProcess {
             skillLvl = _player.getFletchingLvl();
         }if (this.categoryID == 7 || this.categoryID == 8){
             skillLvl = _player.getSmithingLvl();
-        } if (this.categoryID == 9){
+        }if (this.categoryID == 9){
             skillLvl = _player.getFishingLvl ();
-        } if (this.categoryID == 11){
+        }if (this.categoryID == 11){
             skillLvl = _player.getCookingLvl ();
-        } if (this.categoryID == 15){
+        }if (this.categoryID == 14){
+            skillLvl = _player.getFiremakingLvl ();
+        }if (this.categoryID == 15){
             skillLvl = _player.getCraftingLvl ();
         }
 

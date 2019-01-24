@@ -116,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
                                 adapter = new CustomAdapter (dataCookingFish ());
                                 recyclerView.setAdapter(adapter);
                                 break;
+                            }case R.id.nav_makingPlanks:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataMakingPlanks ());
+                                recyclerView.setAdapter(adapter);
+                                break;
                             }case R.id.nav_tanningLeather:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataTanningLeather ());
@@ -531,6 +536,26 @@ public class MainActivity extends AppCompatActivity {
         dataCookingFish.add (cookingDarkCrab);
 
         return(dataCookingFish);
+    }
+
+    //CategoryID = 14 (Making Planks)
+    public ArrayList<MoneyProcess> dataMakingPlanks(){
+        Item ringOfDueling = APIWrapper.pullItem (2552.0);
+
+        MoneyProcess makingPlank = new MoneyProcess (APIWrapper.pullItem(1511.0), ringOfDueling, APIWrapper.pullItem(960.0), 14, 50.0, 0.0, testPlayer);
+        MoneyProcess makingOakPlank = new MoneyProcess (APIWrapper.pullItem(1521.0), ringOfDueling, APIWrapper.pullItem(8778.0), 14, 50.0, 0.0, testPlayer);
+        MoneyProcess makingTeakPlank = new MoneyProcess (APIWrapper.pullItem(6333.0), ringOfDueling, APIWrapper.pullItem(8780.0), 14, 50.0, 0.0, testPlayer);
+        MoneyProcess makingMahoganyPlank = new MoneyProcess (APIWrapper.pullItem(6332.0), ringOfDueling, APIWrapper.pullItem(8782.0), 14, 50.0, 0.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataMakingPlanks = new ArrayList<MoneyProcess>();
+
+        dataMakingPlanks.add (makingPlank);
+        dataMakingPlanks.add (makingOakPlank);
+        dataMakingPlanks.add (makingTeakPlank);
+        dataMakingPlanks.add (makingMahoganyPlank);
+
+
+        return(dataMakingPlanks);
     }
 
     //CategoryID = 15 (Tanning Leather)
