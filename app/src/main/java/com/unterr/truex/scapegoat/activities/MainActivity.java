@@ -81,66 +81,129 @@ public class MainActivity extends AppCompatActivity {
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CharacterAdapter (getPlayerArray ());
                                 recyclerView.setAdapter(adapter);
+                                if (testPlayer.getUsername () != null){
+                                    setToolbar (testPlayer.getUsername ());
+                                }
                                 break;
                             }case R.id.nav_herbCleaning:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataHerbCleaning ());
                                 recyclerView.setAdapter(adapter);
+                                if (testPlayer.getHerbLvl () != null){
+                                    setToolbar ("Cleaning Grimy Herbs" + " (lvl:" + (String.format("%.0f", testPlayer.getHerbLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Cleaning Grimy Herbs");
+                                }
                                 break;
                             }case R.id.nav_unfPotions:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataHerbUnfinished ());
                                 recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_growingSaplings:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataSaplings ());
-                                recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_farmingHerbs:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataHerbFarming ());
-                                recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_fletchingBoltTips:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataBoltTips ());
-                                recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_fletchingBows:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataFletchBows ());
-                                recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_stringingBows:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataStringBows ());
-                                recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_smithingDartTips:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataSmithDarts ());
-                                recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_cookingFish:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataCookingFish ());
-                                recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_makingPlanks:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataMakingPlanks ());
-                                recyclerView.setAdapter(adapter);
-                                break;
-                            }case R.id.nav_tanningLeather:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataTanningLeather ());
-                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getHerbLvl () != null){
+                                    setToolbar ("Making Unf Potions" + " (lvl:" + (String.format("%.0f", testPlayer.getHerbLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Making Unf Potions");
+                                }
                                 break;
                             }case R.id.nav_decantPotions:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataDecantPotions ());
                                 recyclerView.setAdapter(adapter);
+                                if (testPlayer.getHerbLvl () != null){
+                                    setToolbar ("Decanting Potions" + " (lvl:" + (String.format("%.0f", testPlayer.getHerbLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Decanting Potions");
+                                }
+                                break;
+                            }case R.id.nav_growingSaplings:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataSaplings ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getFarmingLvl () != null){
+                                    setToolbar ("Growing Saplings" + " (lvl:" + (String.format("%.0f", testPlayer.getFarmingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Growing Saplings");
+                                }
+                                break;
+                            }case R.id.nav_farmingHerbs:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataHerbFarming ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getFarmingLvl () != null){
+                                    setToolbar ("Farming Herbs" + " (lvl:" + (String.format("%.0f", testPlayer.getFarmingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Farming Herbs");
+                                }
+                                break;
+                            }case R.id.nav_fletchingBoltTips:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataBoltTips ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getFletchingLvl () != null){
+                                    setToolbar ("Cutting Bolt Tips" + " (lvl:" + (String.format("%.0f", testPlayer.getFletchingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Cutting Bolt Tips");
+                                }
+                                break;
+                            }case R.id.nav_fletchingBows:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataFletchBows ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getFletchingLvl () != null){
+                                    setToolbar ("Fletching Bows" + " (lvl:" + (String.format("%.0f", testPlayer.getFletchingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Fletching Bows");
+                                }
+                                break;
+                            }case R.id.nav_stringingBows:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataStringBows ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getFletchingLvl () != null){
+                                    setToolbar ("Stringing Bows" + " (lvl:" + (String.format("%.0f", testPlayer.getFletchingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Stringing Bows");
+                                }
+                                break;
+                            }case R.id.nav_smithingDartTips:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataSmithDarts ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getSmithingLvl () != null){
+                                    setToolbar ("Smithing Dart Tips" + " (lvl:" + (String.format("%.0f", testPlayer.getSmithingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Smithing Dart Tips");
+                                }
+                                break;
+                            }case R.id.nav_cookingFish:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataCookingFish ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getCookingLvl () != null){
+                                    setToolbar ("Cooking Fish" + " (lvl:" + (String.format("%.0f", testPlayer.getCookingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Cooking Fish");
+                                }
+                                break;
+                            }case R.id.nav_makingPlanks:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataMakingPlanks ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getFiremakingLvl () != null){
+                                    setToolbar ("Making Planks" + " (lvl:" + (String.format("%.0f", testPlayer.getFiremakingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Making Planks");
+                                }
+                                break;
+                            }case R.id.nav_tanningLeather:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataTanningLeather ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getCraftingLvl () != null){
+                                    setToolbar ("Tanning Leather" + " (lvl:" + (String.format("%.0f", testPlayer.getCraftingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Tanning Leather");
+                                }
                                 break;
                             }
                         }
@@ -195,6 +258,10 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
+    }
+
+    public void setToolbar(String heading) {
+        toolbar.setTitle(heading);
     }
 
     /*
