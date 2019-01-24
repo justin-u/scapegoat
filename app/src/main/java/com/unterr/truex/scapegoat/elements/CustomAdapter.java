@@ -40,6 +40,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         public final ImageView image;
         public final ImageView imageSkill;
 
+        public final TextView labelProfitPerHr;
+
 
         public CustomViewHolder(View view) {
             super(view);
@@ -53,6 +55,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             profitPerHr = view.findViewById (R.id.profitPerHr);
             image = view.findViewById (R.id.image);
             imageSkill = view.findViewById (R.id.imageSkill);
+            labelProfitPerHr = view.findViewById (R.id.labelProfitPerHr);
         }
     }
 
@@ -104,6 +107,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             holder.name.setTextColor (Color.rgb(33, 132, 38));
         }
 
+        if (process.getCategoryID () == 16 || process.getCategoryID () == 17 || process.getCategoryID () == 18){
+            holder.labelProfitPerHr.setText ("Buy Limit Profit(2000):");
+        }
+
         holder.name.setText (process.getProcessName ());
         holder.reqLvl.setText (String.format("%.0f", process.getReqLvl ()));
         holder.inputPrice.setText (numberFormat.format(process.getInputTradePrice ()) + "gp");
@@ -114,7 +121,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         Picasso.get().load(process.getIconUrl()).into(holder.image);
 
         //Temporary solution. Icon needs to be added to drawable and called
-        if (process.categoryID == 1 || process.categoryID == 2){
+        if (process.categoryID == 1 || process.categoryID == 2 || process.categoryID == 16 || process.categoryID == 17 || process.categoryID == 18){
             holder.imageSkill.setImageResource(R.drawable.herblore);
         }if (process.categoryID == 3){
             holder.imageSkill.setImageResource(R.drawable.farming);

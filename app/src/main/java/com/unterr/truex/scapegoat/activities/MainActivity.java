@@ -126,6 +126,11 @@ public class MainActivity extends AppCompatActivity {
                                 adapter = new CustomAdapter (dataTanningLeather ());
                                 recyclerView.setAdapter(adapter);
                                 break;
+                            }case R.id.nav_decantPotions:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataDecantPotions ());
+                                recyclerView.setAdapter(adapter);
+                                break;
                             }
                         }
                         menuItem.setChecked(true);
@@ -579,5 +584,168 @@ public class MainActivity extends AppCompatActivity {
 
 
         return(dataTanningLeather);
+    }
+
+    //CategoryID = 16, 17, 18 (Decanting Potions)
+    public ArrayList<MoneyProcess> dataDecantPotions(){
+
+        Item rangingPotion = APIWrapper.pullItem (2444.0);
+        MoneyProcess decantRanging1 = new MoneyProcess (APIWrapper.pullItem(173.0), rangingPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantRanging2 = new MoneyProcess (APIWrapper.pullItem(171.0), rangingPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantRanging3 = new MoneyProcess (APIWrapper.pullItem(169.0), rangingPotion, 18, 1.0, 0.0, testPlayer);
+
+        Item guthixRestPotion = APIWrapper.pullItem (4417.0);
+        MoneyProcess decantGuthixRest1 = new MoneyProcess (APIWrapper.pullItem(4423.0), guthixRestPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantGuthixRest2 = new MoneyProcess (APIWrapper.pullItem(4421.0), guthixRestPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantGuthixRest3 = new MoneyProcess (APIWrapper.pullItem(4419.0), guthixRestPotion, 18, 1.0, 0.0, testPlayer);
+
+        Item guthixBalancePotion = APIWrapper.pullItem (7660.0);
+        MoneyProcess decantGuthixBalance1 = new MoneyProcess (APIWrapper.pullItem(7666.0), guthixBalancePotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantGuthixBalance2 = new MoneyProcess (APIWrapper.pullItem(7664.0), guthixBalancePotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantGuthixBalance3 = new MoneyProcess (APIWrapper.pullItem(7662.0), guthixBalancePotion, 18, 1.0, 0.0, testPlayer);
+
+        Item energyPotion = APIWrapper.pullItem (3008.0);
+        MoneyProcess decantEnergy1 = new MoneyProcess (APIWrapper.pullItem(3014.0), energyPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantEnergy2 = new MoneyProcess (APIWrapper.pullItem(3012.0), energyPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantEnergy3 = new MoneyProcess (APIWrapper.pullItem(3010.0), energyPotion, 18, 1.0, 0.0, testPlayer);
+
+        Item superEnergyPotion = APIWrapper.pullItem (3016.0);
+        MoneyProcess decantSuperEnergy1 = new MoneyProcess (APIWrapper.pullItem(3022.0), superEnergyPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperEnergy2 = new MoneyProcess (APIWrapper.pullItem(3020.0), superEnergyPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperEnergy3 = new MoneyProcess (APIWrapper.pullItem(3018.0), superEnergyPotion, 18, 1.0, 0.0, testPlayer);
+
+        /*
+        Item prayerPotion = APIWrapper.pullItem (2434.0);
+        MoneyProcess decantPrayer1 = new MoneyProcess (APIWrapper.pullItem(143.0), prayerPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantPrayer2 = new MoneyProcess (APIWrapper.pullItem(141.0), prayerPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantPrayer3 = new MoneyProcess (APIWrapper.pullItem(139.0), prayerPotion, 18, 1.0, 0.0, testPlayer);
+        */
+
+        Item attackPotion = APIWrapper.pullItem (2428.0);
+        MoneyProcess decantAttack1 = new MoneyProcess (APIWrapper.pullItem(125.0), attackPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAttack2 = new MoneyProcess (APIWrapper.pullItem(123.0), attackPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAttack3 = new MoneyProcess (APIWrapper.pullItem(121.0), attackPotion, 18, 1.0, 0.0, testPlayer);
+
+        Item superAttackPotion = APIWrapper.pullItem (2436.0);
+        MoneyProcess decantSuperAttack1 = new MoneyProcess (APIWrapper.pullItem(149.0), superAttackPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperAttack2 = new MoneyProcess (APIWrapper.pullItem(147.0), superAttackPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperAttack3 = new MoneyProcess (APIWrapper.pullItem(145.0), superAttackPotion, 18, 1.0, 0.0, testPlayer);
+
+        Item superAntipoisonPotion = APIWrapper.pullItem (2448.0);
+        MoneyProcess decantSuperAntipoison1 = new MoneyProcess (APIWrapper.pullItem(185.0), superAntipoisonPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperAntipoison2 = new MoneyProcess (APIWrapper.pullItem(183.0), superAntipoisonPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperAntipoison3 = new MoneyProcess (APIWrapper.pullItem(181.0), superAntipoisonPotion, 18, 1.0, 0.0, testPlayer);
+
+        Item superStrengthPotion = APIWrapper.pullItem (2440.0);
+        MoneyProcess decantSuperStrength1 = new MoneyProcess (APIWrapper.pullItem(161.0), superStrengthPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperStrength2 = new MoneyProcess (APIWrapper.pullItem(159.0), superStrengthPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperStrength3 = new MoneyProcess (APIWrapper.pullItem(157.0), superStrengthPotion, 18, 1.0, 0.0, testPlayer);
+        /*
+        Item superRestorePotion = APIWrapper.pullItem (3024.0);
+        MoneyProcess decantSuperRestore1 = new MoneyProcess (APIWrapper.pullItem(3030.0), superRestorePotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperRestore2 = new MoneyProcess (APIWrapper.pullItem(3028.0), superRestorePotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperRestore3 = new MoneyProcess (APIWrapper.pullItem(3026.0), superRestorePotion, 18, 1.0, 0.0, testPlayer);
+        */
+
+        Item superDefencePotion = APIWrapper.pullItem (2442.0);
+        MoneyProcess decantSuperDefence1 = new MoneyProcess (APIWrapper.pullItem(167.0), superDefencePotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperDefence2 = new MoneyProcess (APIWrapper.pullItem(165.0), superDefencePotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperDefence3 = new MoneyProcess (APIWrapper.pullItem(163.0), superDefencePotion, 18, 1.0, 0.0, testPlayer);
+
+        Item zamorakBrew = APIWrapper.pullItem (2450.0);
+        MoneyProcess decantZamorakBrew1 = new MoneyProcess (APIWrapper.pullItem(193.0), zamorakBrew, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantZamorakBrew2 = new MoneyProcess (APIWrapper.pullItem(191.0), zamorakBrew, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantZamorakBrew3 = new MoneyProcess (APIWrapper.pullItem(189.0), zamorakBrew, 18, 1.0, 0.0, testPlayer);
+
+        Item saradominBrew = APIWrapper.pullItem (6685.0);
+        MoneyProcess decantSaradominBrew1 = new MoneyProcess (APIWrapper.pullItem(6691.0), saradominBrew, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSaradominBrew2 = new MoneyProcess (APIWrapper.pullItem(6689.0), saradominBrew, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSaradominBrew3 = new MoneyProcess (APIWrapper.pullItem(6687.0), saradominBrew, 18, 1.0, 0.0, testPlayer);
+
+        Item antiVenom = APIWrapper.pullItem (12905.0);
+        MoneyProcess decantAntiVenom1 = new MoneyProcess (APIWrapper.pullItem(12911.0), antiVenom, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAntiVenom2 = new MoneyProcess (APIWrapper.pullItem(12909.0), antiVenom, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAntiVenom3 = new MoneyProcess (APIWrapper.pullItem(12907.0), antiVenom, 18, 1.0, 0.0, testPlayer);
+
+        /*
+        Item antiVenomPlus = APIWrapper.pullItem (12913.0);
+        MoneyProcess decantAntiVenomPlus1 = new MoneyProcess (APIWrapper.pullItem(12919.0), antiVenomPlus, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAntiVenomPlus2 = new MoneyProcess (APIWrapper.pullItem(12917.0), antiVenomPlus, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAntiVenomPlus3 = new MoneyProcess (APIWrapper.pullItem(12915.0), antiVenomPlus, 18, 1.0, 0.0, testPlayer);
+        */
+
+        Item staminaPotion = APIWrapper.pullItem (12625.0);
+        MoneyProcess decantStamina1 = new MoneyProcess (APIWrapper.pullItem(12631.0), staminaPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantStamina2 = new MoneyProcess (APIWrapper.pullItem(12629.0), staminaPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantStamina3 = new MoneyProcess (APIWrapper.pullItem(12627.0), staminaPotion, 18, 1.0, 0.0, testPlayer);
+
+
+
+        ArrayList<MoneyProcess> dataDecantPotions = new ArrayList<MoneyProcess>();
+
+
+        dataDecantPotions.add (decantRanging1);
+        dataDecantPotions.add (decantRanging2);
+        dataDecantPotions.add (decantRanging3);
+        dataDecantPotions.add (decantGuthixRest1);
+        dataDecantPotions.add (decantGuthixRest2);
+        dataDecantPotions.add (decantGuthixRest3);
+        dataDecantPotions.add (decantGuthixBalance1);
+        dataDecantPotions.add (decantGuthixBalance2);
+        dataDecantPotions.add (decantGuthixBalance3);
+        dataDecantPotions.add (decantEnergy1);
+        dataDecantPotions.add (decantEnergy2);
+        dataDecantPotions.add (decantEnergy3);
+        dataDecantPotions.add (decantSuperEnergy1);
+        dataDecantPotions.add (decantSuperEnergy2);
+        dataDecantPotions.add (decantSuperEnergy3);
+
+        /*
+        //Causes Exception
+        dataDecantPotions.add (decantPrayer1);
+        dataDecantPotions.add (decantPrayer2);
+        dataDecantPotions.add (decantPrayer3);
+        */
+        dataDecantPotions.add (decantAttack1);
+        dataDecantPotions.add (decantAttack2);
+        dataDecantPotions.add (decantAttack3);
+        dataDecantPotions.add (decantSuperAttack1);
+        dataDecantPotions.add (decantSuperAttack2);
+        dataDecantPotions.add (decantSuperAttack3);
+        dataDecantPotions.add (decantSuperAntipoison1);
+        dataDecantPotions.add (decantSuperAntipoison2);
+        dataDecantPotions.add (decantSuperAntipoison3);
+        dataDecantPotions.add (decantSuperStrength1);
+        dataDecantPotions.add (decantSuperStrength2);
+        dataDecantPotions.add (decantSuperStrength3);
+        /*
+        //Causes Exception
+        dataDecantPotions.add (decantSuperRestore1);
+        dataDecantPotions.add (decantSuperRestore2);
+        dataDecantPotions.add (decantSuperRestore3);
+        */
+        dataDecantPotions.add (decantSuperDefence1);
+        dataDecantPotions.add (decantSuperDefence2);
+        dataDecantPotions.add (decantSuperDefence3);
+        dataDecantPotions.add (decantZamorakBrew1);
+        dataDecantPotions.add (decantZamorakBrew2);
+        dataDecantPotions.add (decantZamorakBrew3);
+        dataDecantPotions.add (decantSaradominBrew1);
+        dataDecantPotions.add (decantSaradominBrew2);
+        dataDecantPotions.add (decantSaradominBrew3);
+        dataDecantPotions.add (decantAntiVenom1);
+        dataDecantPotions.add (decantAntiVenom2);
+        dataDecantPotions.add (decantAntiVenom3);
+        /*
+        //Causes Exception
+        dataDecantPotions.add (decantAntiVenomPlus1);
+        dataDecantPotions.add (decantAntiVenomPlus2);
+        dataDecantPotions.add (decantAntiVenomPlus3);
+        */
+        dataDecantPotions.add (decantStamina1);
+        dataDecantPotions.add (decantStamina2);
+        dataDecantPotions.add (decantStamina3);
+
+        return(dataDecantPotions);
     }
 }

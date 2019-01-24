@@ -92,7 +92,7 @@ public class MoneyProcess {
         this.categoryID = _categoryID;
         this.reqLvl = _reqLvl;
         this.xpPer = _xpPer;
-        this.name = getItemName (_productItem);
+        this.name = getItemName (_inputItem, _productItem, _categoryID);
         this.inputTradePrice = getItemTradePrice (_inputItem);
         this.productTradePrice = getItemTradePrice (_productItem);
         this.profitPer = getProfitPer (_inputItem, _productItem, _categoryID);
@@ -102,7 +102,7 @@ public class MoneyProcess {
         this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
         //Alter ReqLvlMet
         this.reqLvlMet = false;
-        this.iconUrl = getIconUrl (_productItem);
+        this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
     }
 
     public MoneyProcess(Item _inputItem, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Player _player){
@@ -111,7 +111,7 @@ public class MoneyProcess {
         this.categoryID = _categoryID;
         this.reqLvl = _reqLvl;
         this.xpPer = _xpPer;
-        this.name = getItemName (_productItem);
+        this.name = getItemName (_inputItem, _productItem, _categoryID);
         this.inputTradePrice = getItemTradePrice (_inputItem);
         this.productTradePrice = getItemTradePrice (_productItem);
         this.profitPer = getProfitPer (_inputItem, _productItem, _categoryID);
@@ -121,7 +121,7 @@ public class MoneyProcess {
         this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
         //Alter ReqLvlMet
         this.reqLvlMet = setReqLvlMet (_player);
-        this.iconUrl = getIconUrl (_productItem);
+        this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
     }
 
     public MoneyProcess(Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Double _outputTotal, Player _player){
@@ -130,7 +130,7 @@ public class MoneyProcess {
         this.categoryID = _categoryID;
         this.reqLvl = _reqLvl;
         this.xpPer = _xpPer;
-        this.name = getItemName (_productItem);
+        this.name = getItemName (_inputItem, _productItem, _categoryID);
         this.inputTradePrice = getItemTradePrice (_inputItem);
         this.productTradePrice = getItemTradePrice (_productItem);
         this.profitPer = getProfitPer (_inputItem, _inputItem2, _productItem, _categoryID);
@@ -140,7 +140,7 @@ public class MoneyProcess {
         this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
         //Alter ReqLvlMet
         this.reqLvlMet = setReqLvlMet (_player);
-        this.iconUrl = getIconUrl (_productItem);
+        this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
     }
 
     public MoneyProcess(Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Player _player){
@@ -149,7 +149,7 @@ public class MoneyProcess {
         this.categoryID = _categoryID;
         this.reqLvl = _reqLvl;
         this.xpPer = _xpPer;
-        this.name = getItemName (_productItem);
+        this.name = getItemName (_inputItem, _productItem, _categoryID);
         this.inputTradePrice = getItemTradePrice (_inputItem);
         this.productTradePrice = getItemTradePrice (_productItem);
         this.profitPer = getProfitPer (_inputItem, _inputItem2, _productItem, _categoryID);
@@ -159,7 +159,7 @@ public class MoneyProcess {
         this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
         //Alter ReqLvlMet
         this.reqLvlMet = setReqLvlMet (_player);
-        this.iconUrl = getIconUrl (_productItem);
+        this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
     }
     //TODO: create other constructor methods with no _inputItem (mining, woodcutting)
 
@@ -171,8 +171,12 @@ public class MoneyProcess {
         return _item.getItemID ();
     }
 
-    public String getItemName (Item _item){
-        return _item.getName ();
+    public String getItemName (Item _inputItem, Item _productItem, int _categoryID){
+        if(_categoryID == 16 || _categoryID == 17 || _categoryID == 18){
+            return _inputItem.getName();
+        }else{
+            return _productItem.getName ();
+        }
     }
 
     public Double getItemTradePrice (Item _item){
@@ -192,6 +196,12 @@ public class MoneyProcess {
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 3.0));
         }if (_categoryID == 15){
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 20.0));
+        }if (_categoryID == 16){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice ()* 4.0));
+        }if (_categoryID == 17){
+            return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()/2.0)* 4.0));
+        }if (_categoryID == 18){
+            return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()/3.0)* 4.0));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -224,6 +234,7 @@ public class MoneyProcess {
             return 5000.0;
         } if(_categoryID == 2){
             //OutputTotal (PerHr) for making unfinished potions
+            //OutputTotal (Buy Limit) for decanting potions
             return 2000.0;
         }if(_categoryID == 3){
             //OutputTotal (PerHr) for growing saplings
@@ -250,6 +261,12 @@ public class MoneyProcess {
             return 2028.0;
         }if (_categoryID == 15){
             return 2800.0;
+        }if (_categoryID == 16){
+            return 500.0;
+        }if (_categoryID == 17){
+            return 1000.0;
+        }if (_categoryID == 18){
+            return 1500.0;
         }
         else{
             return 0.0;
@@ -279,7 +296,7 @@ public class MoneyProcess {
     //TODO: Alter method to check if player level is high enough
     public Boolean setReqLvlMet(Player _player){
         Double skillLvl = 0.0;
-        if (this.categoryID == 1 || this.categoryID == 2){
+        if (this.categoryID == 1 || this.categoryID == 2 || this.categoryID == 16 || this.categoryID == 17 || this.categoryID == 18){
             skillLvl = _player.getHerbLvl();
         }if (this.categoryID == 3){
             skillLvl = _player.getFarmingLvl();
@@ -305,7 +322,13 @@ public class MoneyProcess {
     }
 
 
-    public String getIconUrl(Item _item){ return _item.getIconURL ();}
+    public String getIconUrl(Item _inputItem, Item _productItem, int _categoryID){
+        if(_categoryID == 16 || _categoryID == 17 || _categoryID == 18){
+            return _inputItem.getIconURL ();
+        }else{
+            return _productItem.getIconURL ();
+        }
+    }
 
     //Getter Methods:
     public Double getInputID() {return inputID;}

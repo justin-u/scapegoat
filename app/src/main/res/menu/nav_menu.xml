@@ -41,5 +41,9 @@
             android:id="@+id/nav_tanningLeather"
             android:icon="@drawable/crafting"
             android:title="Tanning Leather" />
+        <item
+            android:id="@+id/nav_decantPotions"
+            android:icon="@drawable/herblore"
+            android:title="Decanting Potions" />
     </group>
 </menu>
