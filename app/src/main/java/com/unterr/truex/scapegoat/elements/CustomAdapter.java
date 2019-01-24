@@ -40,6 +40,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         public final ImageView image;
         public final ImageView imageSkill;
 
+        public final TextView labelProfitPer;
         public final TextView labelProfitPerHr;
 
 
@@ -55,6 +56,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             profitPerHr = view.findViewById (R.id.profitPerHr);
             image = view.findViewById (R.id.image);
             imageSkill = view.findViewById (R.id.imageSkill);
+
+            labelProfitPer = view.findViewById (R.id.labelProfitPer);
             labelProfitPerHr = view.findViewById (R.id.labelProfitPerHr);
         }
     }
@@ -109,6 +112,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         if (process.getCategoryID () == 16 || process.getCategoryID () == 17 || process.getCategoryID () == 18){
             holder.labelProfitPerHr.setText ("Buy Limit Profit(2000):");
+        }if (process.getCategoryID () == 10){
+            holder.labelProfitPer.setText ("Profit Per Patch:");
+            holder.labelProfitPerHr.setText ("Total Run Profit (7):");
         }
 
         holder.name.setText (process.getProcessName ());
@@ -123,7 +129,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         //Temporary solution. Icon needs to be added to drawable and called
         if (process.categoryID == 1 || process.categoryID == 2 || process.categoryID == 16 || process.categoryID == 17 || process.categoryID == 18){
             holder.imageSkill.setImageResource(R.drawable.herblore);
-        }if (process.categoryID == 3){
+        }if (process.categoryID == 3 || process.categoryID == 10){
             holder.imageSkill.setImageResource(R.drawable.farming);
         }if (process.categoryID == 4 || process.categoryID == 5 || process.categoryID == 6){
             holder.imageSkill.setImageResource(R.drawable.fletching);

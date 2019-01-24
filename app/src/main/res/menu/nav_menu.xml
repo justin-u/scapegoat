@@ -14,6 +14,10 @@
             android:icon="@drawable/farming"
             android:title="Growing Saplings" />
         <item
+            android:id="@+id/nav_farmingHerbs"
+            android:icon="@drawable/farming"
+            android:title="Farming Herbs" />
+        <item
             android:id="@+id/nav_fletchingBoltTips"
             android:icon="@drawable/fletching"
             android:title="Fletching Bolt Tips" />

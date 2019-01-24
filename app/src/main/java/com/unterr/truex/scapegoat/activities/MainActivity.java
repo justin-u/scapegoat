@@ -91,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
                                 adapter = new CustomAdapter (dataSaplings ());
                                 recyclerView.setAdapter(adapter);
                                 break;
+                            }case R.id.nav_farmingHerbs:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataHerbFarming ());
+                                recyclerView.setAdapter(adapter);
+                                break;
                             }case R.id.nav_fletchingBoltTips:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataBoltTips ());
@@ -322,14 +327,23 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess sapTeak = new MoneyProcess (APIWrapper.pullItem(21486.0), APIWrapper.pullItem(21477.0),  3, 35.0, 0.0, testPlayer);
         MoneyProcess sapOrange = new MoneyProcess (APIWrapper.pullItem(5285.0), APIWrapper.pullItem(5498.0), 3, 39.0, 0.0, testPlayer);
         MoneyProcess sapCurry = new MoneyProcess (APIWrapper.pullItem(5286.0), APIWrapper.pullItem(5499.0),  3, 42.0, 0.0, testPlayer);
+        //Causes Exceptions
         //MoneyProcess sapMaple = new MoneyProcess (APIWrapper.pullItem(5314.0), APIWrapper.pullItem(5372.0), 3, 45.0, 0.0, testPlayer);
         //Log.i ("DataSapling", sapMaple.toString ());
-        MoneyProcess sapPineapple = new MoneyProcess (APIWrapper.pullItem(5287.0), APIWrapper.pullItem(5500.0), 3, 51.0, 0.0, testPlayer);
-        MoneyProcess sapMahogany = new MoneyProcess (APIWrapper.pullItem(21488.0), APIWrapper.pullItem(21480.0),  3, 55.0, 0.0, testPlayer);
-        MoneyProcess sapPapaya = new MoneyProcess (APIWrapper.pullItem(5288.0), APIWrapper.pullItem(5501.0), 3, 57.0, 0.0, testPlayer);
+
+
+        //MoneyProcess sapPineapple = new MoneyProcess (APIWrapper.pullItem(5287.0), APIWrapper.pullItem(5500.0), 3, 51.0, 0.0, testPlayer);
+        //MoneyProcess sapMahogany = new MoneyProcess (APIWrapper.pullItem(21488.0), APIWrapper.pullItem(21480.0),  3, 55.0, 0.0, testPlayer);
+        //MoneyProcess sapPapaya = new MoneyProcess (APIWrapper.pullItem(5288.0), APIWrapper.pullItem(5501.0), 3, 57.0, 0.0, testPlayer);
+
+
+        //Causes Exceptions
         //MoneyProcess sapYew = new MoneyProcess (APIWrapper.pullItem(5315.0), APIWrapper.pullItem(5373.0),  3, 60.0, 0.0, testPlayer);
         //MoneyProcess sapPalm = new MoneyProcess (APIWrapper.pullItem(5289.0), APIWrapper.pullItem(5502.0),  3, 68.0, 0.0, testPlayer);
-        MoneyProcess sapCalquat = new MoneyProcess (APIWrapper.pullItem (5290.0), APIWrapper.pullItem (5503.0),  3, 72.0, 0.0, testPlayer);
+
+        //MoneyProcess sapCalquat = new MoneyProcess (APIWrapper.pullItem (5290.0), APIWrapper.pullItem (5503.0),  3, 72.0, 0.0, testPlayer);
+
+        //Causes Exceptions
         //MoneyProcess sapMagic = new MoneyProcess (APIWrapper.pullItem (5316.0), APIWrapper.pullItem (5374.0),  3, 75.0, 0.0, testPlayer);
 
         ArrayList<MoneyProcess> dataSaplings = new ArrayList<MoneyProcess>();
@@ -341,13 +355,23 @@ public class MainActivity extends AppCompatActivity {
         dataSaplings.add (sapTeak);
         dataSaplings.add (sapOrange);
         dataSaplings.add (sapCurry);
-       // dataSaplings.add (sapMaple);
+
+        //Causes Exceptions
+        //dataSaplings.add (sapMaple);
+
+        /*
         dataSaplings.add (sapPineapple);
         dataSaplings.add (sapMahogany);
         dataSaplings.add (sapPapaya);
+        */
+
+        //Causes Exceptions
         //dataSaplings.add (sapYew);
         //dataSaplings.add (sapPalm);
-        dataSaplings.add (sapCalquat);
+
+        //dataSaplings.add (sapCalquat);
+
+        //Causes Exceptions
         //dataSaplings.add (sapMagic);
 
 
@@ -487,6 +511,54 @@ public class MainActivity extends AppCompatActivity {
         return(dataSmithDarts);
     }
 
+    //CategoryID = 10 (Farming Herbs)
+    //Pulling data for farmingRanarr, farmingSnapdragon, and farmingTorstol causes exceptions and forces the app to close
+    public ArrayList<MoneyProcess> dataHerbFarming(){
+
+        Item ultracompost = APIWrapper.pullItem (21483.0);
+
+        MoneyProcess farmingGuam = new MoneyProcess (APIWrapper.pullItem(5291.0), ultracompost, APIWrapper.pullItem(199.0), 10, 9.0, 12.5, testPlayer);
+        MoneyProcess farmingMarrentil = new MoneyProcess (APIWrapper.pullItem(5292.0), ultracompost, APIWrapper.pullItem(201.0), 10, 14.0, 15.0, testPlayer);
+        MoneyProcess farmingTarromin = new MoneyProcess (APIWrapper.pullItem(5293.0), ultracompost, APIWrapper.pullItem(203.0), 10, 19.0, 18.0, testPlayer);
+        MoneyProcess farmingHarralander = new MoneyProcess (APIWrapper.pullItem(5294.0), ultracompost, APIWrapper.pullItem(205.0), 10, 26.0, 24.0, testPlayer);
+        //Causes Exceptions
+        //MoneyProcess farmingRanarr = new MoneyProcess (APIWrapper.pullItem(5295.0), ultracompost, APIWrapper.pullItem(207.0), 10, 32.0, 30.5, testPlayer);
+        MoneyProcess farmingToadflax = new MoneyProcess (APIWrapper.pullItem(5296.0), ultracompost, APIWrapper.pullItem(3049.0), 10, 38.0, 38.5, testPlayer);
+        MoneyProcess farmingIrit = new MoneyProcess (APIWrapper.pullItem(5297.0), ultracompost, APIWrapper.pullItem(209.0), 10, 44.0, 48.5, testPlayer);
+        MoneyProcess farmingAvantoe = new MoneyProcess (APIWrapper.pullItem(5298.0), ultracompost, APIWrapper.pullItem(211.0), 10, 50.0, 61.5, testPlayer);
+        MoneyProcess farmingKwuarm = new MoneyProcess (APIWrapper.pullItem(5299.0), ultracompost, APIWrapper.pullItem(213.0), 10, 56.0, 78.0, testPlayer);
+        //Caises Exceptions
+        //MoneyProcess farmingSnapdragon = new MoneyProcess (APIWrapper.pullItem(5300.0), ultracompost, APIWrapper.pullItem(3051.0), 10, 62.0, 98.5, testPlayer);
+        MoneyProcess farmingCadantine = new MoneyProcess (APIWrapper.pullItem(5301.0), ultracompost, APIWrapper.pullItem(215.0), 10, 67.0, 120.0, testPlayer);
+        MoneyProcess farmingLantadyme = new MoneyProcess (APIWrapper.pullItem(5302.0), ultracompost, APIWrapper.pullItem(2485.0), 10, 73.0, 151.5, testPlayer);
+        MoneyProcess farmingDwarfWeed = new MoneyProcess (APIWrapper.pullItem(5303.0), ultracompost, APIWrapper.pullItem(217.0), 10, 79.0, 192.0, testPlayer);
+        //Causes Exceptions
+        //MoneyProcess farmingTorstol = new MoneyProcess (APIWrapper.pullItem (5304.0), ultracompost, APIWrapper.pullItem (219.0), 10, 85.0, 224.5, testPlayer);
+
+        ArrayList<MoneyProcess> dataHerbFarming = new ArrayList<MoneyProcess>();
+
+        dataHerbFarming.add (farmingGuam);
+
+        dataHerbFarming.add (farmingMarrentil);
+        dataHerbFarming.add (farmingTarromin);
+        dataHerbFarming.add (farmingHarralander);
+        //Causes Exceptions
+        //dataHerbFarming.add (farmingRanarr);
+        dataHerbFarming.add (farmingToadflax);
+        dataHerbFarming.add (farmingIrit);
+        dataHerbFarming.add (farmingAvantoe);
+        dataHerbFarming.add (farmingKwuarm);
+        //Causes Exceptions
+        //dataHerbFarming.add (farmingSnapdragon);
+        dataHerbFarming.add (farmingCadantine);
+        dataHerbFarming.add (farmingLantadyme);
+        dataHerbFarming.add (farmingDwarfWeed);
+        //Causes Exceptions
+        //dataHerbFarming.add (farmingTorstol);
+
+        return(dataHerbFarming);
+    }
+
     //CategoryID = 11 (Cooking Fish)
     public ArrayList<MoneyProcess> dataCookingFish(){
 
@@ -587,6 +659,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CategoryID = 16, 17, 18 (Decanting Potions)
+    //Pulling data for decantPrayer, decantSuperRestore, and decantAntivenomPlus causes exceptions and forces the app to close
     public ArrayList<MoneyProcess> dataDecantPotions(){
 
         Item rangingPotion = APIWrapper.pullItem (2444.0);

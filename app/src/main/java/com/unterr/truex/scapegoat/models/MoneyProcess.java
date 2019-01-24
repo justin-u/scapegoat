@@ -211,6 +211,8 @@ public class MoneyProcess {
     public Double getProfitPer (Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID){
         if (_categoryID == 6){
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + _inputItem2.getTradePrice ()));
+        }if (_categoryID == 10){
+            return (Math.round(_productItem.getTradePrice ()*8.8) - (_inputItem.getTradePrice () + _inputItem2.getTradePrice ()));
         }if (_categoryID == 14){
             if (_inputItem.getItemID () == 1511.0){
                 return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 100.0 + Math.round(_inputItem2.getTradePrice ()/34.0)));
@@ -251,10 +253,12 @@ public class MoneyProcess {
         }if(_categoryID == 7){
             //OutputTotal (PerHr) for smithing dart tips
             return 950.0;
-        }if (_categoryID == 8 || getXpPer () == 12.5){
+        }if (_categoryID == 8 && getXpPer () == 12.5){
             return 4000.0;
-        }if (_categoryID == 8 || getXpPer () == 17.5){
+        }if (_categoryID == 8 && getXpPer () == 17.5){
             return 4600.0;
+        }if (_categoryID == 10){
+            return 7.0;
         }if (_categoryID == 11){
             return 1100.0;
         }if (_categoryID == 14){
@@ -298,7 +302,7 @@ public class MoneyProcess {
         Double skillLvl = 0.0;
         if (this.categoryID == 1 || this.categoryID == 2 || this.categoryID == 16 || this.categoryID == 17 || this.categoryID == 18){
             skillLvl = _player.getHerbLvl();
-        }if (this.categoryID == 3){
+        }if (this.categoryID == 3 || this.categoryID == 10){
             skillLvl = _player.getFarmingLvl();
         }if (this.categoryID == 4 || this.categoryID == 5 || this.categoryID == 6){
             skillLvl = _player.getFletchingLvl();
@@ -323,7 +327,7 @@ public class MoneyProcess {
 
 
     public String getIconUrl(Item _inputItem, Item _productItem, int _categoryID){
-        if(_categoryID == 16 || _categoryID == 17 || _categoryID == 18){
+        if(_categoryID == 3 || _categoryID == 16 || _categoryID == 17 || _categoryID == 18){
             return _inputItem.getIconURL ();
         }else{
             return _productItem.getIconURL ();
