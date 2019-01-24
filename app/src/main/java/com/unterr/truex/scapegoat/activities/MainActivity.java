@@ -236,8 +236,36 @@ public class MainActivity extends AppCompatActivity {
     }
     */
 
+    //Player Array to be called and used by the CharacterAdapter
+    public ArrayList<String> getPlayerArray(){
+        ArrayList<String> array = new ArrayList<> ();
 
+        array.add(testPlayer.getAttackLvl ().toString ());
+        array.add(testPlayer.getDefenceLvl ().toString ());
+        array.add(testPlayer.getStrengthLvl ().toString ());
+        array.add(testPlayer.getHitpointsLvl ().toString ());
+        array.add(testPlayer.getRangedLvl ().toString ());
+        array.add(testPlayer.getPrayerLvl ().toString ());
+        array.add(testPlayer.getMagicLvl ().toString ());
+        array.add(testPlayer.getCookingLvl ().toString ());
+        array.add(testPlayer.getWoodcuttingLvl ().toString ());
+        array.add(testPlayer.getFletchingLvl ().toString ());
+        array.add(testPlayer.getFishingLvl ().toString ());
+        array.add(testPlayer.getFiremakingLvl ().toString ());
+        array.add(testPlayer.getCraftingLvl ().toString ());
+        array.add(testPlayer.getSmithingLvl ().toString ());
+        array.add(testPlayer.getMiningLvl ().toString ());
+        array.add(testPlayer.getHerbLvl ().toString ());
+        array.add(testPlayer.getAgilityLvl ().toString ());
+        array.add(testPlayer.getThievingLvl ().toString ());
+        array.add(testPlayer.getSlayerLvl ().toString ());
+        array.add(testPlayer.getFarmingLvl ().toString ());
+        array.add(testPlayer.getRunecraftingLvl ().toString ());
+        array.add(testPlayer.getHunterLvl ().toString ());
+        array.add(testPlayer.getConstructionLvl ().toString ());
 
+        return(array);
+    }
 
     //CategoryID = 1 (Cleaning Herbs)
     public ArrayList<MoneyProcess> dataHerbCleaning(){

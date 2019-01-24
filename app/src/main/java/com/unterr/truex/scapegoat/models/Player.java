@@ -42,6 +42,7 @@ public class Player {
         if( _player != null ){ this.update(_player); }
     }
 
+
     //Second constructor method with every parameter to be called by the pullPlayer method (APIWrapper) in order to create a player object with the pulled API data
     public Player(String _username, Double _attackLvl, Double _defenceLvl, Double _strengthLvl, Double _hitpointsLvl, Double _rangedLvl,
                   Double _prayerLvl, Double _magicLvl, Double _cookingLvl, Double _woodcuttingLvl, Double _fletchingLvl, Double _fishingLvl,
@@ -75,8 +76,128 @@ public class Player {
 
     }
 
+    public Double getAttackLvl() {
+        return attackLvl;
+    }
+
+    public Double getDefenceLvl() {
+        return defenceLvl;
+    }
+
+    public Double getStrengthLvl() {
+        return strengthLvl;
+    }
+
+    public void setStrengthLvl(Double strengthLvl) {
+        this.strengthLvl = strengthLvl;
+    }
+
+    public Double getHitpointsLvl() {
+        return hitpointsLvl;
+    }
+
+    public void setHitpointsLvl(Double hitpointsLvl) {
+        this.hitpointsLvl = hitpointsLvl;
+    }
+
+    public Double getRangedLvl() {
+        return rangedLvl;
+    }
+
+    public void setRangedLvl(Double rangedLvl) {
+        this.rangedLvl = rangedLvl;
+    }
+
+    public Double getPrayerLvl() {
+        return prayerLvl;
+    }
+
+    public void setPrayerLvl(Double prayerLvl) {
+        this.prayerLvl = prayerLvl;
+    }
+
+    public Double getMagicLvl() {
+        return magicLvl;
+    }
+
+    public void setMagicLvl(Double magicLvl) {
+        this.magicLvl = magicLvl;
+    }
+
+    public Double getWoodcuttingLvl() {
+        return woodcuttingLvl;
+    }
+
+    public void setWoodcuttingLvl(Double woodcuttingLvl) {
+        this.woodcuttingLvl = woodcuttingLvl;
+    }
+
+    public Double getMiningLvl() {
+        return miningLvl;
+    }
+
+    public void setMiningLvl(Double miningLvl) {
+        this.miningLvl = miningLvl;
+    }
+
+    public Double getAgilityLvl() {
+        return agilityLvl;
+    }
+
+    public void setAgilityLvl(Double agilityLvl) {
+        this.agilityLvl = agilityLvl;
+    }
+
+    public Double getThievingLvl() {
+        return thievingLvl;
+    }
+
+    public void setThievingLvl(Double thievingLvl) {
+        this.thievingLvl = thievingLvl;
+    }
+
+    public Double getSlayerLvl() {
+        return slayerLvl;
+    }
+
+    public void setSlayerLvl(Double slayerLvl) {
+        this.slayerLvl = slayerLvl;
+    }
+
+    public Double getRunecraftingLvl() {
+        return runecraftingLvl;
+    }
+
+    public void setRunecraftingLvl(Double runecraftingLvl) {
+        this.runecraftingLvl = runecraftingLvl;
+    }
+
+    public Double getHunterLvl() {
+        return hunterLvl;
+    }
+
+    public void setHunterLvl(Double hunterLvl) {
+        this.hunterLvl = hunterLvl;
+    }
+
+    public Double getConstructionLvl() {
+        return constructionLvl;
+    }
+
+    public void setConstructionLvl(Double constructionLvl) {
+        this.constructionLvl = constructionLvl;
+    }
+
     private void setUsername( String _username ){
         this.username = _username;
+    }
+
+    private void setAttackLvl( Double _attackLvl ){
+        this.attackLvl = _attackLvl;
+    }
+
+    private void setDefenceLvl( Double _defenceLvl ){
+        this.defenceLvl = _defenceLvl;
     }
 
     private void setCookingLvl( Double _cookingLvl ){
@@ -110,8 +231,6 @@ public class Player {
     private void setSmithingLvl ( Double _smithingLvl){
         this.smithingLvl = _smithingLvl;
     }
-
-    //TODO: create void set(Skill)Lvl methods for all skills
 
     public String getUsername(){
         return this.username;
@@ -148,6 +267,7 @@ public class Player {
     public Double getSmithingLvl() {
         return this.smithingLvl;
     }
+
 
     //TODO: create Double get(Skill)Lvl methods for all skills
 

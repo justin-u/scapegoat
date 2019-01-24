@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/charSkillLvl"
+        android:id="@+id/playerSkillLvl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

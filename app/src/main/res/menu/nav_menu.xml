@@ -4,11 +4,15 @@
         <item
             android:id="@+id/nav_herbCleaning"
             android:icon="@drawable/herblore"
-            android:title="Herb Cleaning" />
+            android:title="Cleaning Grimy Herbs" />
         <item
             android:id="@+id/nav_unfPotions"
             android:icon="@drawable/herblore"
-            android:title="Unfinished Potions" />
+            android:title="Making Unfinished Potions" />
+        <item
+            android:id="@+id/nav_decantPotions"
+            android:icon="@drawable/herblore"
+            android:title="Decanting Potions" />
         <item
             android:id="@+id/nav_growingSaplings"
             android:icon="@drawable/farming"
@@ -20,7 +24,7 @@
         <item
             android:id="@+id/nav_fletchingBoltTips"
             android:icon="@drawable/fletching"
-            android:title="Fletching Bolt Tips" />
+            android:title="Cutting Bolt Tips" />
         <item
             android:id="@+id/nav_fletchingBows"
             android:icon="@drawable/fletching"
@@ -45,9 +49,5 @@
             android:id="@+id/nav_tanningLeather"
             android:icon="@drawable/crafting"
             android:title="Tanning Leather" />
-        <item
-            android:id="@+id/nav_decantPotions"
-            android:icon="@drawable/herblore"
-            android:title="Decanting Potions" />
     </group>
 </menu>
