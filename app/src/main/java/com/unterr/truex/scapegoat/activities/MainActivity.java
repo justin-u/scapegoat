@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 
 import com.unterr.truex.scapegoat.R;
+import com.unterr.truex.scapegoat.elements.CharacterAdapter;
 import com.unterr.truex.scapegoat.elements.CustomAdapter;
 import com.unterr.truex.scapegoat.methods.APIWrapper;
 import com.unterr.truex.scapegoat.models.Item;
@@ -76,7 +77,12 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // set item as selected to persist highlight
                         switch (menuItem.getItemId ()){
-                            case R.id.nav_herbCleaning:{
+                            case R.id.nav_character:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CharacterAdapter (getPlayerArray ());
+                                recyclerView.setAdapter(adapter);
+                                break;
+                            }case R.id.nav_herbCleaning:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataHerbCleaning ());
                                 recyclerView.setAdapter(adapter);
