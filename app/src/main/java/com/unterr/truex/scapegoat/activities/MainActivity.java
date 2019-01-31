@@ -922,4 +922,21 @@ public class MainActivity extends AppCompatActivity {
 
         return(dataDecantPotions);
     }
+
+    public ArrayList<MoneyProcess> dataBarrowsRepair(){
+
+        MoneyProcess repairDharokHelm = new MoneyProcess (APIWrapper.pullItem(4884.0), APIWrapper.pullItem(4716.0), 19, 1.0, 0.0, testPlayer);
+        MoneyProcess repairDharokBody = new MoneyProcess (APIWrapper.pullItem(4896.0), APIWrapper.pullItem(4720.0), 20, 1.0, 0.0, testPlayer);
+        MoneyProcess repairDharokLegs = new MoneyProcess (APIWrapper.pullItem(4902.0), APIWrapper.pullItem(4722.0), 21, 1.0, 0.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataBarrowsRepair = new ArrayList<MoneyProcess>();
+
+
+        dataBarrowsRepair.add (repairDharokHelm);
+        dataBarrowsRepair.add (repairDharokBody);
+        dataBarrowsRepair.add (repairDharokLegs);
+
+
+        return(dataBarrowsRepair);
+    }
 }
