@@ -1,6 +1,8 @@
 package com.unterr.truex.scapegoat.activities;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -26,8 +28,19 @@ import com.unterr.truex.scapegoat.models.Item;
 import com.unterr.truex.scapegoat.models.MoneyProcess;
 import com.unterr.truex.scapegoat.models.Player;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,9 +54,102 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
 
+    final static Handler dataHandler = new Handler();
+
+    public static HashMap <Double,Item>         dataItems = new HashMap<>();
+
+    public static final Double[] SET_VALUES = new Double[]{
+
+        // Herblore
+
+            // Unf Potion   // Dirty        // Clean
+            91d,            199d,           249d,       //  Guam
+            93d,            201d,           251d,       //  Marrentil
+            95d,            203d,           253d,       //  Tarromin
+            97d,            205d,           255d,       //  Harralander
+            99d,            207d,           257d,       //  Ranarr
+            101d,           209d,           259d,       //  Trit
+            103d,           211d,           261d,       //  Avantoe
+            105d,           213d,           263d,       //  Kwuarm
+            107d,           215d,           265d,       //  Cadantine
+            109d,           217d,           267d,       //  Dwarf Weed
+            111d,           219d,           269d,       //  Torstol
+            3002d,          3049d,          2998d,      //  Toadflax
+            3004d,          3051d,          3000d,      //  Snapdragon
+            2483d,          2485d,          2481d,      //  Lantadyme
+
+        // Saplings
+
+            // Seed         // Sapling
+            5283d,          5496d,      //  Apple
+            5284d,          5497d,      //  Banana
+            5285d,          5498d,      //  Orange
+            5286d,          5499d,      //  Curry
+            5287d,          5500d,      //  Pineapple
+            5288d,          5501d,      //  Papaya
+            5289d,          5502d,      //  Palm
+            5290d,          5503d,      //  Culquat
+            5312d,          5370d,      //  Oak
+            5313d,          5371d,      //  Willow
+            5314d,          5372d,      //  Maple
+            5315d,          5373d,      //  Yew
+            5316d,          5374d,      //  Magic
+    };
+    public static HashSet<Double>               itemsToLoad = new HashSet<>(Arrays.asList(SET_VALUES));
+
+    private HashMap <String,MoneyProcess> dataHerbCleaning;
+    private HashMap <String,MoneyProcess> dataHerbUnfinished;
+    private HashMap <String,MoneyProcess> dataSaplings;
+    private HashMap <String,MoneyProcess> dataBoltTips;
+    private HashMap <String,MoneyProcess> dataFletchBows;
+    private HashMap <String,MoneyProcess> dataStringBows;
+    private HashMap <String,MoneyProcess> dataSmithDarts;
+
+    private final Long SECONDS_PER_PULL = 5l;
+    private final Double ITEMS_PER_PULL = 1d;
+    private final Long MINUTES_PER_REFRESH = 5l;
 
     // Objects
     public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
+
+    private void initPullLoop(){
+        dataHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("dataHandler", "Initializing pull loop");
+                pullAllItems();
+                pullLoop();
+            }
+        });
+    }
+
+    private void pullLoop(){
+        dataHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("dataHandler", "Item Refresh");
+                pullAllItems();
+                pullLoop();
+            }
+        },60000*MINUTES_PER_REFRESH);
+    }
+
+    private void pullAllItems(){
+
+        for( int i = 0; i < SET_VALUES.length; i++) {
+            dataHandler.postDelayed(new DownloadSingleItem(SET_VALUES[i]),
+                                    i*1000*SECONDS_PER_PULL);
+        }
+    }
+
+    class DownloadSingleItem implements Runnable{
+        Double id;
+        DownloadSingleItem(Double id) { this.id = id; }
+        public void run() {
+            Log.d("dataHandler", "Downloading Item #"+id);
+            new DownloadItem(MainActivity.this, this.id);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        itemsToLoad.add(5312d);
 
         toolbar = findViewById (R.id.toolBar);
         setSupportActionBar (toolbar);
@@ -59,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
         //Used for setupDrawerContent
         NavigationView navigationView = findViewById (R.id.nav_view);
         //setupDrawerContent (navigationView);
+
+        initPullLoop();
 
 
 
@@ -70,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        navigationView.setNavigationItemSelectedListener(
+        /*navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -119,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
                         return false;
                     }
-                });
+                }); */
 
 
 
@@ -214,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //CategoryID = 1 (Cleaning Herbs)
+    /*
     public ArrayList<MoneyProcess> dataHerbCleaning(){
 
         MoneyProcess cleaningGuam = new MoneyProcess (APIWrapper.pullItem(199.0), APIWrapper.pullItem(249.0), 1, 3.0, 2.5, testPlayer);
@@ -466,6 +575,111 @@ public class MainActivity extends AppCompatActivity {
 
         return(dataSmithDarts);
     }
+    */
+
+    static class DownloadItem extends AsyncTask<String, Void, String> {
+
+        private WeakReference<MainActivity> activityReference;
+
+        String rawItem = "";
+
+        String iconURL = new String();
+        String iconLargeURL = new String();
+        Double itemID = 0.0;
+        Boolean memberOnly = false;
+        String name = new String();
+        Double tradePrice = 0.0;
+
+        DownloadItem(MainActivity context, Double itemID){
+            this.itemID = itemID;
+            this.activityReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            String result = "";
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+                url = new URL("http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=" + String.format("%.0f",itemID) );
+                urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = urlConnection.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+
+                int data = reader.read();
+
+                while (data != -1) {
+
+                    char current = (char) data;
+                    result += current;
+                    data = reader.read();
+
+                }
+
+                return result;
+
+            } catch (Exception e) {
+
+                Log.e("JSONException","JSON Download Error:" + e.getMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if(result == null){
+                return;
+            }
+
+            try {
+                JSONObject reader = new JSONObject(result);
+
+                JSONObject itemObj = reader.getJSONObject ("item");
+
+                this.iconURL = itemObj.getString ("icon");
+                Log.i("ItemDataReturn","Icon Url:" + this.iconURL);
+
+                this.iconLargeURL = itemObj.getString ("icon_large");
+                Log.i("ItemDataReturn","Large Icon Url:" + this.iconLargeURL);
+
+                this.itemID = Double.parseDouble(itemObj.getString ("id"));
+                Log.i("ItemDataReturn","Item ID:" + this.itemID.toString ());
+
+                this.memberOnly = Boolean.valueOf(itemObj.getString ("members"));
+                Log.i("ItemDataReturn","Members Only:" + this.memberOnly.toString ());
+
+                this.name = itemObj.getString ("name");
+                Log.i("ItemDataReturn","Item Name:" + this.name);
 
 
+                //TODO: Return proper trade price (need to convert 1,111 to Double)
+                //JSON might not return _tradePrice properly
+
+                JSONObject currentObj = itemObj.getJSONObject ("current");
+                String tradePrice = currentObj.getString ("price");
+                tradePrice = tradePrice.replace (",","");
+                this.tradePrice = Double.parseDouble (tradePrice);
+                Log.i("ItemDataReturn","Trade Price:" + tradePrice.toString ());
+
+            } catch (final JSONException e) {
+                Log.e("JSONException","JSON Parsing Error:" + e.getMessage());
+
+            }
+
+            Item newItemObject = new Item( this.iconURL,
+                                           this.iconLargeURL,
+                                           this.itemID,
+                                           this.memberOnly,
+                                           this.name,
+                                           this.tradePrice);
+
+            MainActivity.dataItems.put( newItemObject.getItemID(), newItemObject );
+
+            this.cancel(true);
+        }
+    }
 }

@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.unterr.truex.scapegoat.activities.MainActivity;
 import  com.unterr.truex.scapegoat.models.Item;
 import  com.unterr.truex.scapegoat.models.Player;
 
@@ -211,122 +212,6 @@ public class APIWrapper {
         int[] categoryArray = new int[30];
 
         return categoryArray;
-    }
-
-    public static Item pullItem(final Double itemID ){
-
-        String rawItem = "";
-
-        String _iconURL = new String();
-        String _iconLargeURL = new String();
-        Double _itemID = 0.0;
-        Boolean _memberOnly = false;
-        String _name = new String();
-        Double _tradePrice = 0.0;
-
-        //TODO: return item data from AsyncTask (array?) and then call Item constructor method
-
-        //Have AsyncTask return Item object instead of String
-        class DownloadItem extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected String doInBackground(String... urls) {
-
-                String result = "";
-                URL url;
-                HttpURLConnection urlConnection = null;
-
-                try {
-                    url = new URL(urls[0]);
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    InputStream in = urlConnection.getInputStream();
-                    InputStreamReader reader = new InputStreamReader(in);
-
-                    int data = reader.read();
-
-                    while (data != -1) {
-
-                        char current = (char) data;
-
-                        result += current;
-
-                        data = reader.read();
-
-                    }
-
-                    return result;
-
-                } catch (Exception e) {
-
-                    Log.e("JSONException","JSON Download Error:" + e.getMessage());
-                }
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-
-
-            }
-        }
-
-        try{
-            String urlItemID = String.format("%.0f", itemID);
-            rawItem = new DownloadItem().execute("http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=" + urlItemID).get();
-        }catch(InterruptedException e){
-            Log.e("AsyncException","Interrupted Exception:" + e.getMessage());
-        }catch (ExecutionException e){
-            Log.e("AsyncException","Execution Exception:" + e.getMessage());
-        }
-
-        try {
-            JSONObject reader = new JSONObject(rawItem);
-            JSONObject itemObj = reader.getJSONObject ("item");
-
-            _iconURL = itemObj.getString ("icon");
-            Log.i("ItemDataReturn","Icon Url:" + _iconURL);
-
-            _iconLargeURL = itemObj.getString ("icon_large");
-            Log.i("ItemDataReturn","Large Icon Url:" + _iconLargeURL);
-
-            _itemID = Double.parseDouble(itemObj.getString ("id"));
-            Log.i("ItemDataReturn","Item ID:" + _itemID.toString ());
-
-            _memberOnly = Boolean.valueOf(itemObj.getString ("members"));
-            Log.i("ItemDataReturn","Members Only:" + _memberOnly.toString ());
-
-            _name = itemObj.getString ("name");
-            Log.i("ItemDataReturn","Item Name:" + _name);
-
-
-            //TODO: Return proper trade price (need to convert 1,111 to Double)
-            //JSON might not return _tradePrice properly
-            JSONObject currentObj = itemObj.getJSONObject ("current");
-            String tradePrice = currentObj.getString ("price");
-            tradePrice = tradePrice.replace (",","");
-            _tradePrice = Double.parseDouble (tradePrice);
-            Log.i("ItemDataReturn","Trade Price:" + _tradePrice.toString ());
-
-        } catch (final JSONException e) {
-            Log.e("JSONException","JSON Parsing Error:" + e.getMessage());
-
-        }
-
-        Item newItemObject = new Item(_iconURL, _iconLargeURL, _itemID, _memberOnly, _name, _tradePrice);
-
-        //TODO: Create check to validate if the given (perameter) itemID matches the itemID pulled from the ge API
-
-        //Double itemID converted to String urlItemID with formatting to remove the decimal point and decimal values. (decimal point causes url to not return data)
-        //String urlItemID = String.format("%.0f", itemID);
-
-        //DownloadItem task = new DownloadItem();
-        //task.execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + urlItemID);
-
-        //TODO: create new Item object with the pulled JSON data
-
-        return newItemObject;
     }
 
     public static Drawable pullIcon( String iconURL ){
