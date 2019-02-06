@@ -1,6 +1,9 @@
 package com.unterr.truex.scapegoat.activities;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,31 +23,189 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 
 import com.unterr.truex.scapegoat.R;
-import com.unterr.truex.scapegoat.elements.CharacterAdapter;
 import com.unterr.truex.scapegoat.elements.CustomAdapter;
 import com.unterr.truex.scapegoat.methods.APIWrapper;
 import com.unterr.truex.scapegoat.models.Item;
 import com.unterr.truex.scapegoat.models.MoneyProcess;
 import com.unterr.truex.scapegoat.models.Player;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     // Android Elements
     private Toolbar                     toolbar;
     private DrawerLayout                mDrawer;
-    private NavigationView              navigationView;
+    //private NavigationView              nvDrawer;
 
     private RecyclerView                recyclerView;
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
+    private FileOutputStream outputStream;
 
+
+
+
+    final static Handler dataHandler = new Handler();
+
+    public static HashMap <Double,Item>         dataItems = new HashMap<>();
+
+    public static final Double[] SET_VALUES = new Double[]{
+
+        // Herblore
+
+            // Unf Potion   // Dirty        // Clean
+            91d,            199d,           249d,       //  Guam
+            /*
+            93d,            201d,           251d,       //  Marrentil
+            95d,            203d,           253d,       //  Tarromin
+            97d,            205d,           255d,       //  Harralander
+            99d,            207d,           257d,       //  Ranarr
+            101d,           209d,           259d,       //  Trit
+            103d,           211d,           261d,       //  Avantoe
+            105d,           213d,           263d,       //  Kwuarm
+            107d,           215d,           265d,       //  Cadantine
+            109d,           217d,           267d,       //  Dwarf Weed
+            111d,           219d,           269d,       //  Torstol
+            3002d,          3049d,          2998d,      //  Toadflax
+            3004d,          3051d,          3000d,      //  Snapdragon
+            2483d,          2485d,          2481d,      //  Lantadyme
+
+        // Saplings
+
+            // Seed         // Sapling
+            5283d,          5496d,      //  Apple
+            5284d,          5497d,      //  Banana
+            5285d,          5498d,      //  Orange
+            5286d,          5499d,      //  Curry
+            5287d,          5500d,      //  Pineapple
+            5288d,          5501d,      //  Papaya
+            5289d,          5502d,      //  Palm
+            5290d,          5503d,      //  Culquat
+            5312d,          5370d,      //  Oak
+            5313d,          5371d,      //  Willow
+            5314d,          5372d,      //  Maple
+            5315d,          5373d,      //  Yew
+            5316d,          5374d,      //  Magic
+
+            */
+
+    };
+    public static HashSet<Double>               itemsToLoad = new HashSet<>(Arrays.asList(SET_VALUES));
+
+    private HashMap <String,MoneyProcess> dataHerbCleaning;
+    private HashMap <String,MoneyProcess> dataHerbUnfinished;
+    private HashMap <String,MoneyProcess> dataSaplings;
+    private HashMap <String,MoneyProcess> dataBoltTips;
+    private HashMap <String,MoneyProcess> dataFletchBows;
+    private HashMap <String,MoneyProcess> dataStringBows;
+    private HashMap <String,MoneyProcess> dataSmithDarts;
+
+    private final Long SECONDS_PER_PULL = 5l;
+    private final Double ITEMS_PER_PULL = 1d;
+    private final Long MINUTES_PER_REFRESH = 5l;
 
     // Objects
     public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
+
+    private void initPullLoop(){
+        dataHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("dataHandler", "Initializing pull loop");
+                pullAllItems();
+
+                saveData ();
+
+                pullLoop();
+            }
+        });
+    }
+
+    private void pullLoop(){
+        dataHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("dataHandler", "Item Refresh");
+                pullAllItems();
+                pullLoop();
+            }
+        },60000*MINUTES_PER_REFRESH);
+    }
+
+    private void pullAllItems(){
+
+        for( int i = 0; i < SET_VALUES.length; i++) {
+            dataHandler.postDelayed(new DownloadSingleItem(SET_VALUES[i]),
+                                    i*1000*SECONDS_PER_PULL);
+        }
+
+    }
+
+    class DownloadSingleItem implements Runnable{
+        Double id;
+        DownloadSingleItem(Double id) { this.id = id; }
+        public void run() {
+            Log.d("dataHandler", "Downloading Item #"+id);
+            new DownloadItem(MainActivity.this, this.id);
+        }
+    }
+
+    private void saveData(){
+        dataHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try
+                {
+                    outputStream = openFileOutput("DataItems.txt", Context.MODE_PRIVATE);
+                    ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+                    oos.writeObject(dataItems);
+                    Log.d("dataHandler", "dataItems added to FileOutputStream");
+                    oos.flush ();
+
+                    outputStream.close ();
+
+                    oos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                try
+                {
+                    //TODO: Add Jackson parser to code to create ObjectMapper
+                    FileInputStream fileInputStream = new FileInputStream(getFilesDir()+"/DataItems.txt");
+                    ObjectInputStream objectInputStream = new ObjectInputStream (fileInputStream);
+                    Map myHashMap = (HashMap)objectInputStream.readObject();
+                    Log.d("dataHandler", "dataItems returned: " + myHashMap.toString ());
+                }
+                catch(ClassNotFoundException | IOException | ClassCastException e) {
+                    e.printStackTrace();
+                }
+            }
+        },10000*SECONDS_PER_PULL);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +213,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        itemsToLoad.add(5312d);
 
         toolbar = findViewById (R.id.toolBar);
         setSupportActionBar (toolbar);
 
         mDrawer = findViewById(R.id.drawer_layout);
         //Used for setupDrawerContent
-        navigationView = findViewById (R.id.nav_view);
+        NavigationView navigationView = findViewById (R.id.nav_view);
         //setupDrawerContent (navigationView);
+
+        initPullLoop();
+
+
 
 
 
@@ -71,139 +237,46 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        navigationView.setNavigationItemSelectedListener(
+        /*navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // set item as selected to persist highlight
                         switch (menuItem.getItemId ()){
-                            case R.id.nav_character:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CharacterAdapter (getPlayerArray ());
-                                recyclerView.setAdapter(adapter);
-                                if (testPlayer.getUsername () != null){
-                                    setToolbar (testPlayer.getUsername ());
-                                }
-                                break;
-                            }case R.id.nav_herbCleaning:{
+                            case R.id.nav_herbCleaning:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataHerbCleaning ());
                                 recyclerView.setAdapter(adapter);
-                                if (testPlayer.getHerbLvl () != null){
-                                    setToolbar ("Cleaning Grimy Herbs" + " (lvl:" + (String.format("%.0f", testPlayer.getHerbLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Cleaning Grimy Herbs");
-                                }
                                 break;
                             }case R.id.nav_unfPotions:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataHerbUnfinished ());
                                 recyclerView.setAdapter(adapter);
-                                if (testPlayer.getHerbLvl () != null){
-                                    setToolbar ("Making Unf Potions" + " (lvl:" + (String.format("%.0f", testPlayer.getHerbLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Making Unf Potions");
-                                }
-                                break;
-                            }case R.id.nav_decantPotions:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataDecantPotions ());
-                                recyclerView.setAdapter(adapter);
-                                if (testPlayer.getHerbLvl () != null){
-                                    setToolbar ("Decanting Potions" + " (lvl:" + (String.format("%.0f", testPlayer.getHerbLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Decanting Potions");
-                                }
                                 break;
                             }case R.id.nav_growingSaplings:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataSaplings ());
                                 recyclerView.setAdapter(adapter);
-                                if (testPlayer.getFarmingLvl () != null){
-                                    setToolbar ("Growing Saplings" + " (lvl:" + (String.format("%.0f", testPlayer.getFarmingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Growing Saplings");
-                                }
-                                break;
-                            }case R.id.nav_farmingHerbs:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataHerbFarming ());
-                                recyclerView.setAdapter(adapter);
-                                if (testPlayer.getFarmingLvl () != null){
-                                    setToolbar ("Farming Herbs" + " (lvl:" + (String.format("%.0f", testPlayer.getFarmingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Farming Herbs");
-                                }
                                 break;
                             }case R.id.nav_fletchingBoltTips:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataBoltTips ());
                                 recyclerView.setAdapter(adapter);
-                                if (testPlayer.getFletchingLvl () != null){
-                                    setToolbar ("Cutting Bolt Tips" + " (lvl:" + (String.format("%.0f", testPlayer.getFletchingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Cutting Bolt Tips");
-                                }
                                 break;
                             }case R.id.nav_fletchingBows:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataFletchBows ());
                                 recyclerView.setAdapter(adapter);
-                                if (testPlayer.getFletchingLvl () != null){
-                                    setToolbar ("Fletching Bows" + " (lvl:" + (String.format("%.0f", testPlayer.getFletchingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Fletching Bows");
-                                }
                                 break;
                             }case R.id.nav_stringingBows:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataStringBows ());
                                 recyclerView.setAdapter(adapter);
-                                if (testPlayer.getFletchingLvl () != null){
-                                    setToolbar ("Stringing Bows" + " (lvl:" + (String.format("%.0f", testPlayer.getFletchingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Stringing Bows");
-                                }
                                 break;
                             }case R.id.nav_smithingDartTips:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataSmithDarts ());
                                 recyclerView.setAdapter(adapter);
-                                if (testPlayer.getSmithingLvl () != null){
-                                    setToolbar ("Smithing Dart Tips" + " (lvl:" + (String.format("%.0f", testPlayer.getSmithingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Smithing Dart Tips");
-                                }
-                                break;
-                            }case R.id.nav_cookingFish:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataCookingFish ());
-                                recyclerView.setAdapter(adapter);
-                                if (testPlayer.getCookingLvl () != null){
-                                    setToolbar ("Cooking Fish" + " (lvl:" + (String.format("%.0f", testPlayer.getCookingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Cooking Fish");
-                                }
-                                break;
-                            }case R.id.nav_makingPlanks:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataMakingPlanks ());
-                                recyclerView.setAdapter(adapter);
-                                if (testPlayer.getFiremakingLvl () != null){
-                                    setToolbar ("Making Planks" + " (lvl:" + (String.format("%.0f", testPlayer.getFiremakingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Making Planks");
-                                }
-                                break;
-                            }case R.id.nav_tanningLeather:{
-                                mDrawer.closeDrawer (GravityCompat.START);
-                                adapter = new CustomAdapter (dataTanningLeather ());
-                                recyclerView.setAdapter(adapter);
-                                if (testPlayer.getCraftingLvl () != null){
-                                    setToolbar ("Tanning Leather" + " (lvl:" + (String.format("%.0f", testPlayer.getCraftingLvl ())) + ")");
-                                }else{
-                                    setToolbar ("Tanning Leather");
-                                }
                                 break;
                             }
                         }
@@ -213,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
 
                         return false;
                     }
-                });
+                }); */
 
 
 
@@ -258,10 +331,6 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
-    }
-
-    public void setToolbar(String heading) {
-        toolbar.setTitle(heading);
     }
 
     /*
@@ -309,38 +378,10 @@ public class MainActivity extends AppCompatActivity {
     }
     */
 
-    //Player Array to be called and used by the CharacterAdapter
-    public ArrayList<String> getPlayerArray(){
-        ArrayList<String> array = new ArrayList<> ();
 
-        array.add(testPlayer.getAttackLvl ().toString ());
-        array.add(testPlayer.getDefenceLvl ().toString ());
-        array.add(testPlayer.getStrengthLvl ().toString ());
-        array.add(testPlayer.getHitpointsLvl ().toString ());
-        array.add(testPlayer.getRangedLvl ().toString ());
-        array.add(testPlayer.getPrayerLvl ().toString ());
-        array.add(testPlayer.getMagicLvl ().toString ());
-        array.add(testPlayer.getCookingLvl ().toString ());
-        array.add(testPlayer.getWoodcuttingLvl ().toString ());
-        array.add(testPlayer.getFletchingLvl ().toString ());
-        array.add(testPlayer.getFishingLvl ().toString ());
-        array.add(testPlayer.getFiremakingLvl ().toString ());
-        array.add(testPlayer.getCraftingLvl ().toString ());
-        array.add(testPlayer.getSmithingLvl ().toString ());
-        array.add(testPlayer.getMiningLvl ().toString ());
-        array.add(testPlayer.getHerbLvl ().toString ());
-        array.add(testPlayer.getAgilityLvl ().toString ());
-        array.add(testPlayer.getThievingLvl ().toString ());
-        array.add(testPlayer.getSlayerLvl ().toString ());
-        array.add(testPlayer.getFarmingLvl ().toString ());
-        array.add(testPlayer.getRunecraftingLvl ().toString ());
-        array.add(testPlayer.getHunterLvl ().toString ());
-        array.add(testPlayer.getConstructionLvl ().toString ());
 
-        return(array);
-    }
 
-    //CategoryID = 1 (Cleaning Herbs)
+    /*
     public ArrayList<MoneyProcess> dataHerbCleaning(){
 
         MoneyProcess cleaningGuam = new MoneyProcess (APIWrapper.pullItem(199.0), APIWrapper.pullItem(249.0), 1, 3.0, 2.5, testPlayer);
@@ -428,23 +469,14 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess sapTeak = new MoneyProcess (APIWrapper.pullItem(21486.0), APIWrapper.pullItem(21477.0),  3, 35.0, 0.0, testPlayer);
         MoneyProcess sapOrange = new MoneyProcess (APIWrapper.pullItem(5285.0), APIWrapper.pullItem(5498.0), 3, 39.0, 0.0, testPlayer);
         MoneyProcess sapCurry = new MoneyProcess (APIWrapper.pullItem(5286.0), APIWrapper.pullItem(5499.0),  3, 42.0, 0.0, testPlayer);
-        //Causes Exceptions
         //MoneyProcess sapMaple = new MoneyProcess (APIWrapper.pullItem(5314.0), APIWrapper.pullItem(5372.0), 3, 45.0, 0.0, testPlayer);
         //Log.i ("DataSapling", sapMaple.toString ());
-
-
-        //MoneyProcess sapPineapple = new MoneyProcess (APIWrapper.pullItem(5287.0), APIWrapper.pullItem(5500.0), 3, 51.0, 0.0, testPlayer);
-        //MoneyProcess sapMahogany = new MoneyProcess (APIWrapper.pullItem(21488.0), APIWrapper.pullItem(21480.0),  3, 55.0, 0.0, testPlayer);
-        //MoneyProcess sapPapaya = new MoneyProcess (APIWrapper.pullItem(5288.0), APIWrapper.pullItem(5501.0), 3, 57.0, 0.0, testPlayer);
-
-
-        //Causes Exceptions
+        MoneyProcess sapPineapple = new MoneyProcess (APIWrapper.pullItem(5287.0), APIWrapper.pullItem(5500.0), 3, 51.0, 0.0, testPlayer);
+        MoneyProcess sapMahogany = new MoneyProcess (APIWrapper.pullItem(21488.0), APIWrapper.pullItem(21480.0),  3, 55.0, 0.0, testPlayer);
+        MoneyProcess sapPapaya = new MoneyProcess (APIWrapper.pullItem(5288.0), APIWrapper.pullItem(5501.0), 3, 57.0, 0.0, testPlayer);
         //MoneyProcess sapYew = new MoneyProcess (APIWrapper.pullItem(5315.0), APIWrapper.pullItem(5373.0),  3, 60.0, 0.0, testPlayer);
         //MoneyProcess sapPalm = new MoneyProcess (APIWrapper.pullItem(5289.0), APIWrapper.pullItem(5502.0),  3, 68.0, 0.0, testPlayer);
-
-        //MoneyProcess sapCalquat = new MoneyProcess (APIWrapper.pullItem (5290.0), APIWrapper.pullItem (5503.0),  3, 72.0, 0.0, testPlayer);
-
-        //Causes Exceptions
+        MoneyProcess sapCalquat = new MoneyProcess (APIWrapper.pullItem (5290.0), APIWrapper.pullItem (5503.0),  3, 72.0, 0.0, testPlayer);
         //MoneyProcess sapMagic = new MoneyProcess (APIWrapper.pullItem (5316.0), APIWrapper.pullItem (5374.0),  3, 75.0, 0.0, testPlayer);
 
         ArrayList<MoneyProcess> dataSaplings = new ArrayList<MoneyProcess>();
@@ -456,23 +488,13 @@ public class MainActivity extends AppCompatActivity {
         dataSaplings.add (sapTeak);
         dataSaplings.add (sapOrange);
         dataSaplings.add (sapCurry);
-
-        //Causes Exceptions
-        //dataSaplings.add (sapMaple);
-
-        /*
+       // dataSaplings.add (sapMaple);
         dataSaplings.add (sapPineapple);
         dataSaplings.add (sapMahogany);
         dataSaplings.add (sapPapaya);
-        */
-
-        //Causes Exceptions
         //dataSaplings.add (sapYew);
         //dataSaplings.add (sapPalm);
-
-        //dataSaplings.add (sapCalquat);
-
-        //Causes Exceptions
+        dataSaplings.add (sapCalquat);
         //dataSaplings.add (sapMagic);
 
 
@@ -611,332 +633,111 @@ public class MainActivity extends AppCompatActivity {
 
         return(dataSmithDarts);
     }
+    */
 
-    //CategoryID = 10 (Farming Herbs)
-    //Pulling data for farmingRanarr, farmingSnapdragon, and farmingTorstol causes exceptions and forces the app to close
-    public ArrayList<MoneyProcess> dataHerbFarming(){
+    static class DownloadItem extends AsyncTask<String, Void, String> {
 
-        Item ultracompost = APIWrapper.pullItem (21483.0);
+        private WeakReference<MainActivity> activityReference;
 
-        MoneyProcess farmingGuam = new MoneyProcess (APIWrapper.pullItem(5291.0), ultracompost, APIWrapper.pullItem(199.0), 10, 9.0, 12.5, testPlayer);
-        MoneyProcess farmingMarrentil = new MoneyProcess (APIWrapper.pullItem(5292.0), ultracompost, APIWrapper.pullItem(201.0), 10, 14.0, 15.0, testPlayer);
-        MoneyProcess farmingTarromin = new MoneyProcess (APIWrapper.pullItem(5293.0), ultracompost, APIWrapper.pullItem(203.0), 10, 19.0, 18.0, testPlayer);
-        MoneyProcess farmingHarralander = new MoneyProcess (APIWrapper.pullItem(5294.0), ultracompost, APIWrapper.pullItem(205.0), 10, 26.0, 24.0, testPlayer);
-        //Causes Exceptions
-        //MoneyProcess farmingRanarr = new MoneyProcess (APIWrapper.pullItem(5295.0), ultracompost, APIWrapper.pullItem(207.0), 10, 32.0, 30.5, testPlayer);
-        MoneyProcess farmingToadflax = new MoneyProcess (APIWrapper.pullItem(5296.0), ultracompost, APIWrapper.pullItem(3049.0), 10, 38.0, 38.5, testPlayer);
-        MoneyProcess farmingIrit = new MoneyProcess (APIWrapper.pullItem(5297.0), ultracompost, APIWrapper.pullItem(209.0), 10, 44.0, 48.5, testPlayer);
-        MoneyProcess farmingAvantoe = new MoneyProcess (APIWrapper.pullItem(5298.0), ultracompost, APIWrapper.pullItem(211.0), 10, 50.0, 61.5, testPlayer);
-        MoneyProcess farmingKwuarm = new MoneyProcess (APIWrapper.pullItem(5299.0), ultracompost, APIWrapper.pullItem(213.0), 10, 56.0, 78.0, testPlayer);
-        //Caises Exceptions
-        //MoneyProcess farmingSnapdragon = new MoneyProcess (APIWrapper.pullItem(5300.0), ultracompost, APIWrapper.pullItem(3051.0), 10, 62.0, 98.5, testPlayer);
-        MoneyProcess farmingCadantine = new MoneyProcess (APIWrapper.pullItem(5301.0), ultracompost, APIWrapper.pullItem(215.0), 10, 67.0, 120.0, testPlayer);
-        MoneyProcess farmingLantadyme = new MoneyProcess (APIWrapper.pullItem(5302.0), ultracompost, APIWrapper.pullItem(2485.0), 10, 73.0, 151.5, testPlayer);
-        MoneyProcess farmingDwarfWeed = new MoneyProcess (APIWrapper.pullItem(5303.0), ultracompost, APIWrapper.pullItem(217.0), 10, 79.0, 192.0, testPlayer);
-        //Causes Exceptions
-        //MoneyProcess farmingTorstol = new MoneyProcess (APIWrapper.pullItem (5304.0), ultracompost, APIWrapper.pullItem (219.0), 10, 85.0, 224.5, testPlayer);
+        String rawItem = "";
 
-        ArrayList<MoneyProcess> dataHerbFarming = new ArrayList<MoneyProcess>();
+        String iconURL = new String();
+        String iconLargeURL = new String();
+        Double itemID = 0.0;
+        Boolean memberOnly = false;
+        String name = new String();
+        Double tradePrice = 0.0;
 
-        dataHerbFarming.add (farmingGuam);
+        DownloadItem(MainActivity context, Double itemID){
+            this.itemID = itemID;
+            this.activityReference = new WeakReference<>(context);
+        }
 
-        dataHerbFarming.add (farmingMarrentil);
-        dataHerbFarming.add (farmingTarromin);
-        dataHerbFarming.add (farmingHarralander);
-        //Causes Exceptions
-        //dataHerbFarming.add (farmingRanarr);
-        dataHerbFarming.add (farmingToadflax);
-        dataHerbFarming.add (farmingIrit);
-        dataHerbFarming.add (farmingAvantoe);
-        dataHerbFarming.add (farmingKwuarm);
-        //Causes Exceptions
-        //dataHerbFarming.add (farmingSnapdragon);
-        dataHerbFarming.add (farmingCadantine);
-        dataHerbFarming.add (farmingLantadyme);
-        dataHerbFarming.add (farmingDwarfWeed);
-        //Causes Exceptions
-        //dataHerbFarming.add (farmingTorstol);
+        @Override
+        protected String doInBackground(String... urls) {
 
-        return(dataHerbFarming);
-    }
+            String result = "";
+            URL url;
+            HttpURLConnection urlConnection = null;
 
-    //CategoryID = 11 (Cooking Fish)
-    public ArrayList<MoneyProcess> dataCookingFish(){
+            try {
+                url = new URL("http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=" + String.format("%.0f",itemID) );
+                urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = urlConnection.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
 
-        MoneyProcess cookingShrimp = new MoneyProcess (APIWrapper.pullItem(317.0), APIWrapper.pullItem(315.0), 11, 1.0, 30.0, testPlayer);
-        MoneyProcess cookingSardine = new MoneyProcess (APIWrapper.pullItem(327.0), APIWrapper.pullItem(325.0), 11, 1.0, 40.0, testPlayer);
-        MoneyProcess cookingAnchovies = new MoneyProcess (APIWrapper.pullItem(321.0), APIWrapper.pullItem(319.0), 11, 1.0, 30.0, testPlayer);
-        MoneyProcess cookingHerring = new MoneyProcess (APIWrapper.pullItem(345.0), APIWrapper.pullItem(347.0), 11, 5.0, 50.0, testPlayer);
-        MoneyProcess cookingMackerel = new MoneyProcess (APIWrapper.pullItem(353.0), APIWrapper.pullItem(355.0), 11, 10.0, 60.0, testPlayer);
-        MoneyProcess cookingTrout = new MoneyProcess (APIWrapper.pullItem(335.0), APIWrapper.pullItem(333.0), 11, 15.0, 70.0, testPlayer);
-        MoneyProcess cookingCod = new MoneyProcess (APIWrapper.pullItem(341.0), APIWrapper.pullItem(339.0), 11, 18.0, 75.0, testPlayer);
-        MoneyProcess cookingPike = new MoneyProcess (APIWrapper.pullItem(349.0), APIWrapper.pullItem(351.0), 11, 20.0, 80.0, testPlayer);
-        MoneyProcess cookingSalmon = new MoneyProcess (APIWrapper.pullItem(331.0), APIWrapper.pullItem(329.0), 11, 25.0, 90.0, testPlayer);
-        MoneyProcess cookingSlimyEel = new MoneyProcess (APIWrapper.pullItem(3379.0), APIWrapper.pullItem(3381.0), 11, 28.0, 95.0, testPlayer);
-        MoneyProcess cookingTuna = new MoneyProcess (APIWrapper.pullItem(359.0), APIWrapper.pullItem(361.0), 11, 30.0, 100.0, testPlayer);
-        MoneyProcess cookingRainbowFish = new MoneyProcess (APIWrapper.pullItem(10138.0), APIWrapper.pullItem(10136.0), 11, 35.0, 110.0, testPlayer);
-        MoneyProcess cookingCaveEel = new MoneyProcess (APIWrapper.pullItem(5001.0), APIWrapper.pullItem(5003.0), 11, 38.0, 115.0, testPlayer);
-        MoneyProcess cookingLobster = new MoneyProcess (APIWrapper.pullItem (377.0), APIWrapper.pullItem (379.0), 11, 40.0, 120.0, testPlayer);
-        MoneyProcess cookingBass = new MoneyProcess (APIWrapper.pullItem (363.0), APIWrapper.pullItem (365.0), 11, 43.0, 130.0, testPlayer);
-        MoneyProcess cookingSwordfish = new MoneyProcess (APIWrapper.pullItem (371.0), APIWrapper.pullItem (373.0), 11, 45.0, 140.0, testPlayer);
-        MoneyProcess cookingMonkfish = new MoneyProcess (APIWrapper.pullItem (7944.0), APIWrapper.pullItem (7946.0), 11, 62.0, 150.0, testPlayer);
-        MoneyProcess cookingKarambwan = new MoneyProcess (APIWrapper.pullItem (3142.0), APIWrapper.pullItem (3144.0), 11, 30.0, 190.0, testPlayer);
-        MoneyProcess cookingShark = new MoneyProcess (APIWrapper.pullItem (383.0), APIWrapper.pullItem (385.0), 11, 80.0, 210.0, testPlayer);
-        MoneyProcess cookingSeaTurtle = new MoneyProcess (APIWrapper.pullItem (395.0), APIWrapper.pullItem (397.0), 11, 82.0, 212.0, testPlayer);
-        MoneyProcess cookingMantaRay = new MoneyProcess (APIWrapper.pullItem (389.0), APIWrapper.pullItem (391.0), 11, 91.0, 216.0, testPlayer);
-        MoneyProcess cookingAnglerfish = new MoneyProcess (APIWrapper.pullItem (13439.0), APIWrapper.pullItem (13441.0), 11, 84.0, 230.0, testPlayer);
-        MoneyProcess cookingDarkCrab = new MoneyProcess (APIWrapper.pullItem (11934.0), APIWrapper.pullItem (11936.0), 11, 90.0, 215.0, testPlayer);
+                int data = reader.read();
 
-        ArrayList<MoneyProcess> dataCookingFish = new ArrayList<MoneyProcess>();
+                while (data != -1) {
 
-        dataCookingFish.add (cookingShrimp);
-        dataCookingFish.add (cookingSardine);
-        dataCookingFish.add (cookingAnchovies);
-        dataCookingFish.add (cookingHerring);
-        dataCookingFish.add (cookingMackerel);
-        dataCookingFish.add (cookingTrout);
-        dataCookingFish.add (cookingCod);
-        dataCookingFish.add (cookingPike);
-        dataCookingFish.add (cookingSalmon);
-        dataCookingFish.add (cookingSlimyEel);
-        dataCookingFish.add (cookingTuna);
-        dataCookingFish.add (cookingRainbowFish);
-        dataCookingFish.add (cookingCaveEel);
-        dataCookingFish.add (cookingLobster);
-        dataCookingFish.add (cookingBass);
-        dataCookingFish.add (cookingSwordfish);
-        dataCookingFish.add (cookingMonkfish);
-        dataCookingFish.add (cookingKarambwan);
-        dataCookingFish.add (cookingShark);
-        dataCookingFish.add (cookingSeaTurtle);
-        dataCookingFish.add (cookingMantaRay);
-        dataCookingFish.add (cookingAnglerfish);
-        dataCookingFish.add (cookingDarkCrab);
+                    char current = (char) data;
+                    result += current;
+                    data = reader.read();
 
-        return(dataCookingFish);
-    }
+                }
 
-    //CategoryID = 14 (Making Planks)
-    public ArrayList<MoneyProcess> dataMakingPlanks(){
-        Item ringOfDueling = APIWrapper.pullItem (2552.0);
+                return result;
 
-        MoneyProcess makingPlank = new MoneyProcess (APIWrapper.pullItem(1511.0), ringOfDueling, APIWrapper.pullItem(960.0), 14, 50.0, 0.0, testPlayer);
-        MoneyProcess makingOakPlank = new MoneyProcess (APIWrapper.pullItem(1521.0), ringOfDueling, APIWrapper.pullItem(8778.0), 14, 50.0, 0.0, testPlayer);
-        MoneyProcess makingTeakPlank = new MoneyProcess (APIWrapper.pullItem(6333.0), ringOfDueling, APIWrapper.pullItem(8780.0), 14, 50.0, 0.0, testPlayer);
-        MoneyProcess makingMahoganyPlank = new MoneyProcess (APIWrapper.pullItem(6332.0), ringOfDueling, APIWrapper.pullItem(8782.0), 14, 50.0, 0.0, testPlayer);
+            } catch (Exception e) {
 
-        ArrayList<MoneyProcess> dataMakingPlanks = new ArrayList<MoneyProcess>();
+                Log.e("JSONException","JSON Download Error:" + e.getMessage());
+            }
 
-        dataMakingPlanks.add (makingPlank);
-        dataMakingPlanks.add (makingOakPlank);
-        dataMakingPlanks.add (makingTeakPlank);
-        dataMakingPlanks.add (makingMahoganyPlank);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if(result == null){
+                return;
+            }
+
+            try {
+                JSONObject reader = new JSONObject(result);
+
+                JSONObject itemObj = reader.getJSONObject ("item");
+
+                this.iconURL = itemObj.getString ("icon");
+                Log.i("ItemDataReturn","Icon Url:" + this.iconURL);
+
+                this.iconLargeURL = itemObj.getString ("icon_large");
+                Log.i("ItemDataReturn","Large Icon Url:" + this.iconLargeURL);
+
+                this.itemID = Double.parseDouble(itemObj.getString ("id"));
+                Log.i("ItemDataReturn","Item ID:" + this.itemID.toString ());
+
+                this.memberOnly = Boolean.valueOf(itemObj.getString ("members"));
+                Log.i("ItemDataReturn","Members Only:" + this.memberOnly.toString ());
+
+                this.name = itemObj.getString ("name");
+                Log.i("ItemDataReturn","Item Name:" + this.name);
 
 
-        return(dataMakingPlanks);
-    }
+                //TODO: Return proper trade price (need to convert 1,111 to Double)
+                //JSON might not return _tradePrice properly
 
-    //CategoryID = 15 (Tanning Leather)
-    public ArrayList<MoneyProcess> dataTanningLeather(){
+                JSONObject currentObj = itemObj.getJSONObject ("current");
+                String tradePrice = currentObj.getString ("price");
+                tradePrice = tradePrice.replace (",","");
+                this.tradePrice = Double.parseDouble (tradePrice);
+                Log.i("ItemDataReturn","Trade Price:" + tradePrice.toString ());
 
-        MoneyProcess tanningLeather = new MoneyProcess (APIWrapper.pullItem(1739.0), APIWrapper.pullItem(1741.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningHardLeather = new MoneyProcess (APIWrapper.pullItem(1739.0), APIWrapper.pullItem(1743.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningGreenDragon = new MoneyProcess (APIWrapper.pullItem(1753.0), APIWrapper.pullItem(1745.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningBlueDragon = new MoneyProcess (APIWrapper.pullItem(1751.0), APIWrapper.pullItem(2505.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningRedDragon = new MoneyProcess (APIWrapper.pullItem(1749.0), APIWrapper.pullItem(2507.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningBlackDragon = new MoneyProcess (APIWrapper.pullItem(1747.0), APIWrapper.pullItem(2509.0), 15, 1.0, 0.0, testPlayer);
+            } catch (final JSONException e) {
+                Log.e("JSONException","JSON Parsing Error:" + e.getMessage());
 
-        ArrayList<MoneyProcess> dataTanningLeather = new ArrayList<MoneyProcess>();
+            }
 
-        dataTanningLeather.add (tanningLeather);
-        dataTanningLeather.add (tanningHardLeather);
-        dataTanningLeather.add (tanningGreenDragon);
-        dataTanningLeather.add (tanningBlueDragon);
-        dataTanningLeather.add (tanningRedDragon);
-        dataTanningLeather.add (tanningBlackDragon);
+            Item newItemObject = new Item( this.iconURL,
+                                           this.iconLargeURL,
+                                           this.itemID,
+                                           this.memberOnly,
+                                           this.name,
+                                           this.tradePrice);
 
+            MainActivity.dataItems.put( newItemObject.getItemID(), newItemObject );
 
-        return(dataTanningLeather);
-    }
-
-    //CategoryID = 16, 17, 18 (Decanting Potions)
-    //Pulling data for decantPrayer, decantSuperRestore, and decantAntivenomPlus causes exceptions and forces the app to close
-    public ArrayList<MoneyProcess> dataDecantPotions(){
-
-        Item rangingPotion = APIWrapper.pullItem (2444.0);
-        MoneyProcess decantRanging1 = new MoneyProcess (APIWrapper.pullItem(173.0), rangingPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantRanging2 = new MoneyProcess (APIWrapper.pullItem(171.0), rangingPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantRanging3 = new MoneyProcess (APIWrapper.pullItem(169.0), rangingPotion, 18, 1.0, 0.0, testPlayer);
-
-        Item guthixRestPotion = APIWrapper.pullItem (4417.0);
-        MoneyProcess decantGuthixRest1 = new MoneyProcess (APIWrapper.pullItem(4423.0), guthixRestPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantGuthixRest2 = new MoneyProcess (APIWrapper.pullItem(4421.0), guthixRestPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantGuthixRest3 = new MoneyProcess (APIWrapper.pullItem(4419.0), guthixRestPotion, 18, 1.0, 0.0, testPlayer);
-
-        Item guthixBalancePotion = APIWrapper.pullItem (7660.0);
-        MoneyProcess decantGuthixBalance1 = new MoneyProcess (APIWrapper.pullItem(7666.0), guthixBalancePotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantGuthixBalance2 = new MoneyProcess (APIWrapper.pullItem(7664.0), guthixBalancePotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantGuthixBalance3 = new MoneyProcess (APIWrapper.pullItem(7662.0), guthixBalancePotion, 18, 1.0, 0.0, testPlayer);
-
-        Item energyPotion = APIWrapper.pullItem (3008.0);
-        MoneyProcess decantEnergy1 = new MoneyProcess (APIWrapper.pullItem(3014.0), energyPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantEnergy2 = new MoneyProcess (APIWrapper.pullItem(3012.0), energyPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantEnergy3 = new MoneyProcess (APIWrapper.pullItem(3010.0), energyPotion, 18, 1.0, 0.0, testPlayer);
-
-        Item superEnergyPotion = APIWrapper.pullItem (3016.0);
-        MoneyProcess decantSuperEnergy1 = new MoneyProcess (APIWrapper.pullItem(3022.0), superEnergyPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperEnergy2 = new MoneyProcess (APIWrapper.pullItem(3020.0), superEnergyPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperEnergy3 = new MoneyProcess (APIWrapper.pullItem(3018.0), superEnergyPotion, 18, 1.0, 0.0, testPlayer);
-
-        /*
-        Item prayerPotion = APIWrapper.pullItem (2434.0);
-        MoneyProcess decantPrayer1 = new MoneyProcess (APIWrapper.pullItem(143.0), prayerPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantPrayer2 = new MoneyProcess (APIWrapper.pullItem(141.0), prayerPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantPrayer3 = new MoneyProcess (APIWrapper.pullItem(139.0), prayerPotion, 18, 1.0, 0.0, testPlayer);
-        */
-
-        Item attackPotion = APIWrapper.pullItem (2428.0);
-        MoneyProcess decantAttack1 = new MoneyProcess (APIWrapper.pullItem(125.0), attackPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAttack2 = new MoneyProcess (APIWrapper.pullItem(123.0), attackPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAttack3 = new MoneyProcess (APIWrapper.pullItem(121.0), attackPotion, 18, 1.0, 0.0, testPlayer);
-
-        Item superAttackPotion = APIWrapper.pullItem (2436.0);
-        MoneyProcess decantSuperAttack1 = new MoneyProcess (APIWrapper.pullItem(149.0), superAttackPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperAttack2 = new MoneyProcess (APIWrapper.pullItem(147.0), superAttackPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperAttack3 = new MoneyProcess (APIWrapper.pullItem(145.0), superAttackPotion, 18, 1.0, 0.0, testPlayer);
-
-        Item superAntipoisonPotion = APIWrapper.pullItem (2448.0);
-        MoneyProcess decantSuperAntipoison1 = new MoneyProcess (APIWrapper.pullItem(185.0), superAntipoisonPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperAntipoison2 = new MoneyProcess (APIWrapper.pullItem(183.0), superAntipoisonPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperAntipoison3 = new MoneyProcess (APIWrapper.pullItem(181.0), superAntipoisonPotion, 18, 1.0, 0.0, testPlayer);
-
-        Item superStrengthPotion = APIWrapper.pullItem (2440.0);
-        MoneyProcess decantSuperStrength1 = new MoneyProcess (APIWrapper.pullItem(161.0), superStrengthPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperStrength2 = new MoneyProcess (APIWrapper.pullItem(159.0), superStrengthPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperStrength3 = new MoneyProcess (APIWrapper.pullItem(157.0), superStrengthPotion, 18, 1.0, 0.0, testPlayer);
-        /*
-        Item superRestorePotion = APIWrapper.pullItem (3024.0);
-        MoneyProcess decantSuperRestore1 = new MoneyProcess (APIWrapper.pullItem(3030.0), superRestorePotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperRestore2 = new MoneyProcess (APIWrapper.pullItem(3028.0), superRestorePotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperRestore3 = new MoneyProcess (APIWrapper.pullItem(3026.0), superRestorePotion, 18, 1.0, 0.0, testPlayer);
-        */
-
-        Item superDefencePotion = APIWrapper.pullItem (2442.0);
-        MoneyProcess decantSuperDefence1 = new MoneyProcess (APIWrapper.pullItem(167.0), superDefencePotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperDefence2 = new MoneyProcess (APIWrapper.pullItem(165.0), superDefencePotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperDefence3 = new MoneyProcess (APIWrapper.pullItem(163.0), superDefencePotion, 18, 1.0, 0.0, testPlayer);
-
-        Item zamorakBrew = APIWrapper.pullItem (2450.0);
-        MoneyProcess decantZamorakBrew1 = new MoneyProcess (APIWrapper.pullItem(193.0), zamorakBrew, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantZamorakBrew2 = new MoneyProcess (APIWrapper.pullItem(191.0), zamorakBrew, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantZamorakBrew3 = new MoneyProcess (APIWrapper.pullItem(189.0), zamorakBrew, 18, 1.0, 0.0, testPlayer);
-
-        Item saradominBrew = APIWrapper.pullItem (6685.0);
-        MoneyProcess decantSaradominBrew1 = new MoneyProcess (APIWrapper.pullItem(6691.0), saradominBrew, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSaradominBrew2 = new MoneyProcess (APIWrapper.pullItem(6689.0), saradominBrew, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSaradominBrew3 = new MoneyProcess (APIWrapper.pullItem(6687.0), saradominBrew, 18, 1.0, 0.0, testPlayer);
-
-        Item antiVenom = APIWrapper.pullItem (12905.0);
-        MoneyProcess decantAntiVenom1 = new MoneyProcess (APIWrapper.pullItem(12911.0), antiVenom, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAntiVenom2 = new MoneyProcess (APIWrapper.pullItem(12909.0), antiVenom, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAntiVenom3 = new MoneyProcess (APIWrapper.pullItem(12907.0), antiVenom, 18, 1.0, 0.0, testPlayer);
-
-        /*
-        Item antiVenomPlus = APIWrapper.pullItem (12913.0);
-        MoneyProcess decantAntiVenomPlus1 = new MoneyProcess (APIWrapper.pullItem(12919.0), antiVenomPlus, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAntiVenomPlus2 = new MoneyProcess (APIWrapper.pullItem(12917.0), antiVenomPlus, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAntiVenomPlus3 = new MoneyProcess (APIWrapper.pullItem(12915.0), antiVenomPlus, 18, 1.0, 0.0, testPlayer);
-        */
-
-        Item staminaPotion = APIWrapper.pullItem (12625.0);
-        MoneyProcess decantStamina1 = new MoneyProcess (APIWrapper.pullItem(12631.0), staminaPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantStamina2 = new MoneyProcess (APIWrapper.pullItem(12629.0), staminaPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantStamina3 = new MoneyProcess (APIWrapper.pullItem(12627.0), staminaPotion, 18, 1.0, 0.0, testPlayer);
-
-
-
-        ArrayList<MoneyProcess> dataDecantPotions = new ArrayList<MoneyProcess>();
-
-
-        dataDecantPotions.add (decantRanging1);
-        dataDecantPotions.add (decantRanging2);
-        dataDecantPotions.add (decantRanging3);
-        dataDecantPotions.add (decantGuthixRest1);
-        dataDecantPotions.add (decantGuthixRest2);
-        dataDecantPotions.add (decantGuthixRest3);
-        dataDecantPotions.add (decantGuthixBalance1);
-        dataDecantPotions.add (decantGuthixBalance2);
-        dataDecantPotions.add (decantGuthixBalance3);
-        dataDecantPotions.add (decantEnergy1);
-        dataDecantPotions.add (decantEnergy2);
-        dataDecantPotions.add (decantEnergy3);
-        dataDecantPotions.add (decantSuperEnergy1);
-        dataDecantPotions.add (decantSuperEnergy2);
-        dataDecantPotions.add (decantSuperEnergy3);
-
-        /*
-        //Causes Exception
-        dataDecantPotions.add (decantPrayer1);
-        dataDecantPotions.add (decantPrayer2);
-        dataDecantPotions.add (decantPrayer3);
-        */
-        dataDecantPotions.add (decantAttack1);
-        dataDecantPotions.add (decantAttack2);
-        dataDecantPotions.add (decantAttack3);
-        dataDecantPotions.add (decantSuperAttack1);
-        dataDecantPotions.add (decantSuperAttack2);
-        dataDecantPotions.add (decantSuperAttack3);
-        dataDecantPotions.add (decantSuperAntipoison1);
-        dataDecantPotions.add (decantSuperAntipoison2);
-        dataDecantPotions.add (decantSuperAntipoison3);
-        dataDecantPotions.add (decantSuperStrength1);
-        dataDecantPotions.add (decantSuperStrength2);
-        dataDecantPotions.add (decantSuperStrength3);
-        /*
-        //Causes Exception
-        dataDecantPotions.add (decantSuperRestore1);
-        dataDecantPotions.add (decantSuperRestore2);
-        dataDecantPotions.add (decantSuperRestore3);
-        */
-        dataDecantPotions.add (decantSuperDefence1);
-        dataDecantPotions.add (decantSuperDefence2);
-        dataDecantPotions.add (decantSuperDefence3);
-        dataDecantPotions.add (decantZamorakBrew1);
-        dataDecantPotions.add (decantZamorakBrew2);
-        dataDecantPotions.add (decantZamorakBrew3);
-        dataDecantPotions.add (decantSaradominBrew1);
-        dataDecantPotions.add (decantSaradominBrew2);
-        dataDecantPotions.add (decantSaradominBrew3);
-        dataDecantPotions.add (decantAntiVenom1);
-        dataDecantPotions.add (decantAntiVenom2);
-        dataDecantPotions.add (decantAntiVenom3);
-        /*
-        //Causes Exception
-        dataDecantPotions.add (decantAntiVenomPlus1);
-        dataDecantPotions.add (decantAntiVenomPlus2);
-        dataDecantPotions.add (decantAntiVenomPlus3);
-        */
-        dataDecantPotions.add (decantStamina1);
-        dataDecantPotions.add (decantStamina2);
-        dataDecantPotions.add (decantStamina3);
-
-        return(dataDecantPotions);
-    }
-
-    public ArrayList<MoneyProcess> dataBarrowsRepair(){
-
-        MoneyProcess repairDharokHelm = new MoneyProcess (APIWrapper.pullItem(4884.0), APIWrapper.pullItem(4716.0), 19, 1.0, 0.0, testPlayer);
-        MoneyProcess repairDharokBody = new MoneyProcess (APIWrapper.pullItem(4896.0), APIWrapper.pullItem(4720.0), 20, 1.0, 0.0, testPlayer);
-        MoneyProcess repairDharokLegs = new MoneyProcess (APIWrapper.pullItem(4902.0), APIWrapper.pullItem(4722.0), 21, 1.0, 0.0, testPlayer);
-
-        ArrayList<MoneyProcess> dataBarrowsRepair = new ArrayList<MoneyProcess>();
-
-
-        //dataBarrowsRepair.add (repairDharokHelm);
-        dataBarrowsRepair.add (repairDharokBody);
-        dataBarrowsRepair.add (repairDharokLegs);
-
-
-        return(dataBarrowsRepair);
+            this.cancel(true);
+        }
     }
 }

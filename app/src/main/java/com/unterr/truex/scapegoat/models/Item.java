@@ -4,7 +4,7 @@ import com.unterr.truex.scapegoat.methods.APIWrapper;
 
 import android.graphics.drawable.Drawable;
 
-public class Item {
+public class Item implements java.io.Serializable {
 
     private String  iconURL;
     private String  iconLargeURL;
