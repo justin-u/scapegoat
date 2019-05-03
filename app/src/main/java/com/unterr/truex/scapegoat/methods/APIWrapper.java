@@ -200,17 +200,10 @@ public class APIWrapper {
         return newPlayerObject;
     }
 
-    //Method to pull all itemIDs from a given category from the OSRS API and return the itemIDs in an int[] array
-    public static int[] pullCategory( String categoryID ){
+    public static String pullAWS(final String AWSUrl){
+        String JsonData = "";
 
-        //Could look through and pull from a specific category for each starting letter
-        //Method could prove to be more of a hassle than useful (categories are very broad)
-
-        //TODO: pull itemID data from Runescape API and return it in an array
-        //User array or arraylist?
-        int[] categoryArray = new int[30];
-
-        return categoryArray;
+        return JsonData;
     }
 
     public static Item pullItem(final Double itemID ){
@@ -272,6 +265,8 @@ public class APIWrapper {
             }
         }
 
+        //TODO: Alter API pull to AWS server (or create different method)
+
         try{
             String urlItemID = String.format("%.0f", itemID);
             rawItem = new DownloadItem().execute("http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=" + urlItemID).get();
@@ -294,6 +289,7 @@ public class APIWrapper {
             _itemID = Double.parseDouble(itemObj.getString ("id"));
             Log.i("ItemDataReturn","Item ID:" + _itemID.toString ());
 
+            //TODO: Alter members to isMember
             _memberOnly = Boolean.valueOf(itemObj.getString ("members"));
             Log.i("ItemDataReturn","Members Only:" + _memberOnly.toString ());
 

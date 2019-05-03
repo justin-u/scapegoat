@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
 
+    //TODO: Create String value to store all JSON data from AWS pull
+
 
     // Objects
     public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
