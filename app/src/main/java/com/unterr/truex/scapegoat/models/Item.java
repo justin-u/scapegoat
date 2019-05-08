@@ -16,10 +16,12 @@ public class Item {
     public Item(){}
 
     //Constructor method to call the pullItem method (APIWrapper) that pulls JSON data and uses the second constructor to create a new Item object.
+    /*
     public Item( Double _itemID ){
         Item _item = APIWrapper.pullItem( _itemID );
         if( _item != null ){ this.update(_item); }
     }
+    */
 
     //Second constructor method with every parameter to be called by the pullItem method (APIWrapper) in order to create an item object with the pulled JSON data
     public Item(String _iconURL, String _iconLargeURL, Double _itemID, Boolean _ifMemberOnly, String _name, Double _tradePrice){
@@ -88,10 +90,12 @@ public class Item {
         return this.tradePrice;
     }
 
+    /*
     public boolean update(){
 
         return this.update( APIWrapper.pullItem( this.itemID ) );
     }
+    */
 
     private boolean update( Item _item ){
 

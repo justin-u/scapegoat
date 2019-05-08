@@ -262,60 +262,7 @@ public class APIWrapper {
     }
 
 
-    //TODO: Alter parameters to only include itemID. JsonData can be pulled from public variable
-    public static Item pullItem(final Double itemID, String JsonData){
 
-        String _iconURL = new String();
-        String _iconLargeURL = new String();
-        Double _itemID = 0.0;
-        Boolean _memberOnly = false;
-        String _name = new String();
-        Double _tradePrice = 0.0;
-
-        try {
-            JSONObject reader = new JSONObject(JsonData);
-            String urlItemID = String.format("%.0f", itemID);
-            JSONObject itemObj = reader.getJSONObject ("\"" + urlItemID + "\"");
-
-            _iconURL = itemObj.getString ("icon");
-            Log.i("ItemDataReturn","Icon Url:" + _iconURL);
-
-            _iconLargeURL = itemObj.getString ("icon_large");
-            Log.i("ItemDataReturn","Large Icon Url:" + _iconLargeURL);
-
-            _itemID = Double.parseDouble(itemObj.getString ("id"));
-            Log.i("ItemDataReturn","Item ID:" + _itemID.toString ());
-
-            _memberOnly = Boolean.valueOf(itemObj.getString ("isMember"));
-            Log.i("ItemDataReturn","Members Only:" + _memberOnly.toString ());
-
-            _name = itemObj.getString ("name");
-            Log.i("ItemDataReturn","Item Name:" + _name);
-
-            String tradePrice = itemObj.getString ("currentPrice");
-            tradePrice = tradePrice.replace (",","");
-            _tradePrice = Double.parseDouble (tradePrice);
-            Log.i("ItemDataReturn","Trade Price:" + _tradePrice.toString ());
-
-        } catch (final JSONException e) {
-            Log.e("JSONException","JSON Parsing Error:" + e.getMessage());
-
-        }
-
-        Item newItemObject = new Item(_iconURL, _iconLargeURL, _itemID, _memberOnly, _name, _tradePrice);
-
-        //TODO: Create check to validate if the given (perameter) itemID matches the itemID pulled from the ge API
-
-        //Double itemID converted to String urlItemID with formatting to remove the decimal point and decimal values. (decimal point causes url to not return data)
-        //String urlItemID = String.format("%.0f", itemID);
-
-        //DownloadItem task = new DownloadItem();
-        //task.execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + urlItemID);
-
-        //TODO: create new Item object with the pulled JSON data
-
-        return newItemObject;
-    }
 
     public static Drawable pullIcon( String iconURL ){
 
