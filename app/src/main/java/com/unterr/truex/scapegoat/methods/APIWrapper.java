@@ -200,26 +200,9 @@ public class APIWrapper {
         return newPlayerObject;
     }
 
-    public static String pullAWS(final String AWSUrl){
+    public static String pullAWSJson(){
         String JsonData = "";
 
-        return JsonData;
-    }
-
-    public static Item pullItem(final Double itemID ){
-
-        String rawItem = "";
-
-        String _iconURL = new String();
-        String _iconLargeURL = new String();
-        Double _itemID = 0.0;
-        Boolean _memberOnly = false;
-        String _name = new String();
-        Double _tradePrice = 0.0;
-
-        //TODO: return item data from AsyncTask (array?) and then call Item constructor method
-
-        //Have AsyncTask return Item object instead of String
         class DownloadItem extends AsyncTask<String, Void, String> {
 
             @Override
@@ -265,20 +248,34 @@ public class APIWrapper {
             }
         }
 
-        //TODO: Alter API pull to AWS server (or create different method)
-
         try{
-            String urlItemID = String.format("%.0f", itemID);
-            rawItem = new DownloadItem().execute("http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=" + urlItemID).get();
+            JsonData = new DownloadItem().execute("https://0ennap82fi.execute-api.us-east-2.amazonaws.com/stable/getAll").get();
         }catch(InterruptedException e){
             Log.e("AsyncException","Interrupted Exception:" + e.getMessage());
+            return null;
         }catch (ExecutionException e){
             Log.e("AsyncException","Execution Exception:" + e.getMessage());
+            return null;
         }
 
+        return JsonData;
+    }
+
+
+    //TODO: Alter parameters to only include itemID. JsonData can be pulled from public variable
+    public static Item pullItem(final Double itemID, String JsonData){
+
+        String _iconURL = new String();
+        String _iconLargeURL = new String();
+        Double _itemID = 0.0;
+        Boolean _memberOnly = false;
+        String _name = new String();
+        Double _tradePrice = 0.0;
+
         try {
-            JSONObject reader = new JSONObject(rawItem);
-            JSONObject itemObj = reader.getJSONObject ("item");
+            JSONObject reader = new JSONObject(JsonData);
+            String urlItemID = String.format("%.0f", itemID);
+            JSONObject itemObj = reader.getJSONObject ("\"" + urlItemID + "\"");
 
             _iconURL = itemObj.getString ("icon");
             Log.i("ItemDataReturn","Icon Url:" + _iconURL);
@@ -289,18 +286,13 @@ public class APIWrapper {
             _itemID = Double.parseDouble(itemObj.getString ("id"));
             Log.i("ItemDataReturn","Item ID:" + _itemID.toString ());
 
-            //TODO: Alter members to isMember
-            _memberOnly = Boolean.valueOf(itemObj.getString ("members"));
+            _memberOnly = Boolean.valueOf(itemObj.getString ("isMember"));
             Log.i("ItemDataReturn","Members Only:" + _memberOnly.toString ());
 
             _name = itemObj.getString ("name");
             Log.i("ItemDataReturn","Item Name:" + _name);
 
-
-            //TODO: Return proper trade price (need to convert 1,111 to Double)
-            //JSON might not return _tradePrice properly
-            JSONObject currentObj = itemObj.getJSONObject ("current");
-            String tradePrice = currentObj.getString ("price");
+            String tradePrice = itemObj.getString ("currentPrice");
             tradePrice = tradePrice.replace (",","");
             _tradePrice = Double.parseDouble (tradePrice);
             Log.i("ItemDataReturn","Trade Price:" + _tradePrice.toString ());

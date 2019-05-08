@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
 
-    //TODO: Create String value to store all JSON data from AWS pull
-
 
     // Objects
     public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
+    //TODO: Ensure that JsonData value is not null when making pullItem calls (onCreate)
+    public String JsonData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager (this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+
+        APIWrapper.pullAWSJson ();
 
 
 
@@ -421,6 +423,7 @@ public class MainActivity extends AppCompatActivity {
 
     //CategoryID = 3 (Growing Saplings)
     //Pulling data for sapMaple, sapYew, sapPalm, and sapMagic causes exceptions and forces the app to close
+    //TODO: Include noted money processes in API pull
     public ArrayList<MoneyProcess> dataSaplings(){
 
         MoneyProcess sapOak = new MoneyProcess (APIWrapper.pullItem(5312.0), APIWrapper.pullItem(5370.0), 3, 15.0, 0.0, testPlayer);
@@ -483,6 +486,7 @@ public class MainActivity extends AppCompatActivity {
 
     //CategoryID = 4 (Making Bolt Tips)
     //Pulling data for cuttingDragonTips and cuttingOnyxTips causes exceptions and forces the app to close
+    //TODO: Do not include noted MoneyProcesses until MoneyProcess is altered to half their amount per input
     public ArrayList<MoneyProcess> dataBoltTips(){
         MoneyProcess cuttingOpalTips = new MoneyProcess (APIWrapper.pullItem(1609.0), APIWrapper.pullItem(45.0), 4, 11.0, 1.6, testPlayer);
         MoneyProcess cuttingJadeTips = new MoneyProcess (APIWrapper.pullItem(1611.0), APIWrapper.pullItem(9187.0), 4, 26.0, 2.4, testPlayer);
@@ -491,6 +495,8 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess cuttingEmeraldTips = new MoneyProcess (APIWrapper.pullItem(1605.0), APIWrapper.pullItem(9190.0), 4, 58.0, 5.5, testPlayer);
         MoneyProcess cuttingRubyTips = new MoneyProcess (APIWrapper.pullItem(1603.0), APIWrapper.pullItem(9191.0), 4, 63.0, 6.0, testPlayer);
         MoneyProcess cuttingDiamondTips = new MoneyProcess (APIWrapper.pullItem(1601.0), APIWrapper.pullItem(9192.0), 4, 65.0, 7.0, testPlayer);
+
+        //TODO
         //cuttingDragonTips and cuttingOnyxTips causes the app to crash
         //MoneyProcess cuttingDragonTips = new MoneyProcess (APIWrapper.pullItem(1615.0), APIWrapper.pullItem(9193.0), 4, 71.0, 8.2, testPlayer);
         //MoneyProcess cuttingOnyxTips = new MoneyProcess (APIWrapper.pullItem(6573.0), APIWrapper.pullItem(9194.0), 4, 73.0, 9.4, testPlayer);
