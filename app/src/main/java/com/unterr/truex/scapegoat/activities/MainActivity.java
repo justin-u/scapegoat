@@ -998,7 +998,8 @@ public class MainActivity extends AppCompatActivity {
         return(dataDecantPotions);
     }
 
-    //TODO: Finish BarrowsRepair ArrayList
+    //CategoryID = 19, 20, 21
+    //TODO: Test BarrowsRepair profit calculation methods
     public ArrayList<MoneyProcess> dataBarrowsRepair(){
 
         //Required level for Barrows repair is 55 construction
@@ -1006,13 +1007,46 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess repairDharokBody = new MoneyProcess (pullItem(4896.0), pullItem(4720.0), 20, 55.0, testPlayer);
         MoneyProcess repairDharokLegs = new MoneyProcess (pullItem(4902.0), pullItem(4722.0), 21, 55.0, testPlayer);
 
-        ArrayList<MoneyProcess> dataBarrowsRepair = new ArrayList<MoneyProcess>();
+        MoneyProcess repairToragHelm = new MoneyProcess (pullItem(4956.0), pullItem(4745.0), 19, 55.0, testPlayer);
+        MoneyProcess repairToragBody = new MoneyProcess (pullItem(4968.0), pullItem(4749.0), 20, 55.0, testPlayer);
+        MoneyProcess repairToragLegs = new MoneyProcess (pullItem(4974.0), pullItem(4751.0), 21, 55.0, testPlayer);
 
+        MoneyProcess repairGuthanHelm = new MoneyProcess (pullItem(4908.0), pullItem(4724.0), 19, 55.0, testPlayer);
+        MoneyProcess repairGuthanBody = new MoneyProcess (pullItem(4920.0), pullItem(4728.0), 20, 55.0, testPlayer);
+        MoneyProcess repairGuthanLegs = new MoneyProcess (pullItem(4926.0), pullItem(4730.0), 21, 55.0, testPlayer);
+
+        MoneyProcess repairVeracHelm = new MoneyProcess (pullItem(4980.0), pullItem(4753.0), 19, 55.0, testPlayer);
+        MoneyProcess repairVeracBody = new MoneyProcess (pullItem(4992.0), pullItem(4755.0), 20, 55.0, testPlayer);
+        MoneyProcess repairVeracLegs = new MoneyProcess (pullItem(4998.0), pullItem(4757.0), 21, 55.0, testPlayer);
+
+        MoneyProcess repairKarilHelm = new MoneyProcess (pullItem(4932.0), pullItem(4732.0), 19, 55.0, testPlayer);
+        MoneyProcess repairKarilBody = new MoneyProcess (pullItem(4944.0), pullItem(4736.0), 20, 55.0, testPlayer);
+        MoneyProcess repairKarilLegs = new MoneyProcess (pullItem(4950.0), pullItem(4738.0), 21, 55.0, testPlayer);
+
+        MoneyProcess repairAhrimHelm = new MoneyProcess (pullItem(4860.0), pullItem(4708.0), 19, 55.0, testPlayer);
+        MoneyProcess repairAhrimBody = new MoneyProcess (pullItem(4872.0), pullItem(4712.0), 20, 55.0, testPlayer);
+        MoneyProcess repairAhrimLegs = new MoneyProcess (pullItem(4878.0), pullItem(4714.0), 21, 55.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataBarrowsRepair = new ArrayList<MoneyProcess>();
 
         dataBarrowsRepair.add (repairDharokHelm);
         dataBarrowsRepair.add (repairDharokBody);
         dataBarrowsRepair.add (repairDharokLegs);
-
+        dataBarrowsRepair.add (repairToragHelm);
+        dataBarrowsRepair.add (repairToragBody);
+        dataBarrowsRepair.add (repairToragLegs);
+        dataBarrowsRepair.add (repairGuthanHelm);
+        dataBarrowsRepair.add (repairGuthanBody);
+        dataBarrowsRepair.add (repairGuthanLegs);
+        dataBarrowsRepair.add (repairVeracHelm);
+        dataBarrowsRepair.add (repairVeracBody);
+        dataBarrowsRepair.add (repairVeracLegs);
+        dataBarrowsRepair.add (repairKarilHelm);
+        dataBarrowsRepair.add (repairKarilBody);
+        dataBarrowsRepair.add (repairKarilLegs);
+        dataBarrowsRepair.add (repairAhrimHelm);
+        dataBarrowsRepair.add (repairAhrimBody);
+        dataBarrowsRepair.add (repairAhrimLegs);
 
         return(dataBarrowsRepair);
     }
