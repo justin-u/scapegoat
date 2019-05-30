@@ -998,6 +998,7 @@ public class MainActivity extends AppCompatActivity {
         return(dataDecantPotions);
     }
 
+    //TODO: Finish BarrowsRepair ArrayList
     public ArrayList<MoneyProcess> dataBarrowsRepair(){
 
         MoneyProcess repairDharokHelm = new MoneyProcess (pullItem(4884.0), pullItem(4716.0), 19, 1.0, 0.0, testPlayer);

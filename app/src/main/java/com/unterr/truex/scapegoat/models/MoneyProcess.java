@@ -334,6 +334,22 @@ public class MoneyProcess {
         }
     }
 
+    public Double getBarrowsCalc(Player _player, int _categoryID){
+        Double smithingLvl = 1.0;
+        smithingLvl = _player.getSmithingLvl();
+        Double barrowsCalc = 0.9;
+
+        if (_categoryID == 19){
+            barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 60000.0);
+        } else if (_categoryID == 20){
+            barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 90000.0);
+        } else if (_categoryID == 21){
+            barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 80000.0);
+        }
+
+        return barrowsCalc;
+    }
+
 
 
     //Getter Methods:
