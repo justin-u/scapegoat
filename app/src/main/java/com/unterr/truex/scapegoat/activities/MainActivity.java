@@ -1001,9 +1001,10 @@ public class MainActivity extends AppCompatActivity {
     //TODO: Finish BarrowsRepair ArrayList
     public ArrayList<MoneyProcess> dataBarrowsRepair(){
 
-        MoneyProcess repairDharokHelm = new MoneyProcess (pullItem(4884.0), pullItem(4716.0), 19, 1.0, 0.0, testPlayer);
-        MoneyProcess repairDharokBody = new MoneyProcess (pullItem(4896.0), pullItem(4720.0), 20, 1.0, 0.0, testPlayer);
-        MoneyProcess repairDharokLegs = new MoneyProcess (pullItem(4902.0), pullItem(4722.0), 21, 1.0, 0.0, testPlayer);
+        //Required level for Barrows repair is 55 construction
+        MoneyProcess repairDharokHelm = new MoneyProcess (pullItem(4884.0), pullItem(4716.0), 19, 55.0, testPlayer);
+        MoneyProcess repairDharokBody = new MoneyProcess (pullItem(4896.0), pullItem(4720.0), 20, 55.0, testPlayer);
+        MoneyProcess repairDharokLegs = new MoneyProcess (pullItem(4902.0), pullItem(4722.0), 21, 55.0, testPlayer);
 
         ArrayList<MoneyProcess> dataBarrowsRepair = new ArrayList<MoneyProcess>();
 

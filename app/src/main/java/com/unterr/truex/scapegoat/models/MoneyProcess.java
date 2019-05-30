@@ -124,6 +124,27 @@ public class MoneyProcess {
         this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
     }
 
+    //Constructor used when player skill lvl is factored into profit (ex: Barrows Repair)
+    //TODO: Review constructor to see if it is the most efficient
+    public MoneyProcess(Item _inputItem, Item _productItem, int _categoryID, Double _reqLvl, Player _player){
+        this.inputID = getItemID (_inputItem);
+        this.productID = getItemID (_productItem);
+        this.categoryID = _categoryID;
+        this.reqLvl = _reqLvl;
+        this.xpPer = 0.0;
+        this.name = getItemName (_inputItem, _productItem, _categoryID);
+        this.inputTradePrice = getItemTradePrice (_inputItem);
+        this.productTradePrice = getItemTradePrice (_productItem);
+        this.profitPer = getProfitPer (_inputItem, _productItem, _categoryID, _player);
+        this.outputTotal = getOutputTotal (_categoryID);
+        this.profitTotal = this.profitPer;
+        this.xpTotal = 0.0;
+        this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
+        //Alter ReqLvlMet
+        this.reqLvlMet = setReqLvlMet (_player);
+        this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
+    }
+
     public MoneyProcess(Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Double _outputTotal, Player _player){
         this.inputID = getItemID (_inputItem);
         this.productID = getItemID (_productItem);
@@ -208,6 +229,16 @@ public class MoneyProcess {
 
     }
 
+    //TODO: Review this method to see if it is the most efficient
+    public Double getProfitPer (Item _inputItem, Item _productItem, int _categoryID, Player _player){
+        if (_categoryID == 19 || _categoryID == 20 || _categoryID == 21){
+            return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()) + getBarrowsCalc(_player, _categoryID)));
+        }else{
+            return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
+        }
+
+    }
+
     public Double getProfitPer (Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID){
         if (_categoryID == 6){
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + _inputItem2.getTradePrice ()));
@@ -273,7 +304,7 @@ public class MoneyProcess {
             return 1500.0;
         }
         else{
-            return 0.0;
+            return 1.0;
         }
     }
 
@@ -316,6 +347,8 @@ public class MoneyProcess {
             skillLvl = _player.getFiremakingLvl ();
         }if (this.categoryID == 15){
             skillLvl = _player.getCraftingLvl ();
+        }if (this.categoryID == 19 || this.categoryID == 20 || this.categoryID == 21){
+            skillLvl = _player.getConstructionLvl();
         }
 
         if (skillLvl >= this.reqLvl){
@@ -340,10 +373,13 @@ public class MoneyProcess {
         Double barrowsCalc = 0.9;
 
         if (_categoryID == 19){
+            //CategoryID 19 is Barrows repair for Helm
             barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 60000.0);
         } else if (_categoryID == 20){
+            //CategoryID 20 is Barrows repair for Body
             barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 90000.0);
         } else if (_categoryID == 21){
+            //CategoryID 21 is Barrows repair for Legs
             barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 80000.0);
         }
 
