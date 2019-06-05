@@ -366,9 +366,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             //TODO: Alter AWSJson data to a universal variable
             JSONObject reader = new JSONObject(JsonData);
-            reader = reader.getJSONObject ("data");
             String urlItemID = String.format("%.0f", itemID);
-            JSONObject itemObj = reader.getJSONObject ("\"" + urlItemID + "\"");
+            JSONObject itemObj = reader.getJSONObject (urlItemID);
 
             _iconURL = itemObj.getString ("icon");
             Log.i("ItemDataReturn","Icon Url:" + _iconURL);
@@ -1065,6 +1064,11 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess blastAdamantite = new MoneyProcess (coalOre, pullItem(449.0), pullItem (2361.0), 25, 70.0, 37.5, testPlayer);
         MoneyProcess blastRunite = new MoneyProcess (coalOre, pullItem(451.0), pullItem (2363.0), 26, 85.0, 50.0, testPlayer);
 
+        blastSteel.setIfMemberOnly (true);
+        blastGold.setIfMemberOnly (true);
+        blastMithril.setIfMemberOnly (true);
+        blastAdamantite.setIfMemberOnly (true);
+        blastRunite.setIfMemberOnly (true);
 
         ArrayList<MoneyProcess> dataBlastFurnace = new ArrayList<MoneyProcess>();
 
@@ -1075,6 +1079,18 @@ public class MainActivity extends AppCompatActivity {
         dataBlastFurnace.add (blastRunite);
 
         return(dataBlastFurnace);
+    }
+
+    //CategoryID = 27
+    //TODO: Test HighAlch method
+    public ArrayList<MoneyProcess> dataHighAlch(){
+        Item natureRune = pullItem (561.0);
+
+        MoneyProcess alchBlackDHide = new MoneyProcess (natureRune, pullItem (2353.0), 27, 55.0, 65.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataHighAlch = new ArrayList<> ();
+
+        return(dataHighAlch);
     }
 
 }

@@ -324,8 +324,7 @@ public class MoneyProcess {
             return 2700.0;
         }if (_categoryID == 26){
             return 2150.0;
-        }
-        else{
+        }else{
             return 1.0;
         }
     }
