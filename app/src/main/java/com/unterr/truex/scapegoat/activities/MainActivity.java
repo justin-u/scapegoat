@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        //TODO: Add navigation bar options for DecantPotions() and BarrowsRepair()
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -366,6 +366,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             //TODO: Alter AWSJson data to a universal variable
             JSONObject reader = new JSONObject(JsonData);
+            reader = reader.getJSONObject ("data");
             String urlItemID = String.format("%.0f", itemID);
             JSONObject itemObj = reader.getJSONObject ("\"" + urlItemID + "\"");
 
@@ -998,7 +999,7 @@ public class MainActivity extends AppCompatActivity {
         return(dataDecantPotions);
     }
 
-    //CategoryID = 19, 20, 21
+    //CategoryID = 19, 20, 21 (Barrows Repair)
     //TODO: Test BarrowsRepair profit calculation methods
     public ArrayList<MoneyProcess> dataBarrowsRepair(){
 
@@ -1049,6 +1050,31 @@ public class MainActivity extends AppCompatActivity {
         dataBarrowsRepair.add (repairAhrimLegs);
 
         return(dataBarrowsRepair);
+    }
+
+    //CategoryID = 22, 23, 24, 25, 26
+    //Alter MoneyProcesses to make sure that they are listed as MemberOnly
+    //TODO: Test BlastFurnace profit calculation methods
+    public ArrayList<MoneyProcess> dataBlastFurnace(){
+
+        Item coalOre = pullItem (453.0);
+
+        MoneyProcess blastSteel = new MoneyProcess (coalOre, pullItem(440.0), pullItem (2353.0), 22, 30.0, 17.5, testPlayer);
+        MoneyProcess blastGold = new MoneyProcess (pullItem(444.0), pullItem (2357.0), 23, 40.0, 56.2, testPlayer);
+        MoneyProcess blastMithril = new MoneyProcess (coalOre, pullItem(447.0), pullItem (2359.0), 24, 50.0, 30.0, testPlayer);
+        MoneyProcess blastAdamantite = new MoneyProcess (coalOre, pullItem(449.0), pullItem (2361.0), 25, 70.0, 37.5, testPlayer);
+        MoneyProcess blastRunite = new MoneyProcess (coalOre, pullItem(451.0), pullItem (2363.0), 26, 85.0, 50.0, testPlayer);
+
+
+        ArrayList<MoneyProcess> dataBlastFurnace = new ArrayList<MoneyProcess>();
+
+        dataBlastFurnace.add (blastSteel);
+        dataBlastFurnace.add(blastGold);
+        dataBlastFurnace.add (blastMithril);
+        dataBlastFurnace.add (blastAdamantite);
+        dataBlastFurnace.add (blastRunite);
+
+        return(dataBlastFurnace);
     }
 
 }

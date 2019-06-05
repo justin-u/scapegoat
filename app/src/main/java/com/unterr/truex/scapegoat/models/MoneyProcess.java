@@ -145,6 +145,7 @@ public class MoneyProcess {
         this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
     }
 
+    //Check if this constructor is necessary
     public MoneyProcess(Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Double _outputTotal, Player _player){
         this.inputID = getItemID (_inputItem);
         this.productID = getItemID (_productItem);
@@ -223,6 +224,8 @@ public class MoneyProcess {
             return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()/2.0)* 4.0));
         }if (_categoryID == 18){
             return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()/3.0)* 4.0));
+        }if (_categoryID == 23){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 12.4));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -255,6 +258,15 @@ public class MoneyProcess {
                 return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 1500.0 + Math.round(_inputItem2.getTradePrice ()/34.0)));
             }
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 100.0 + Math.round(_inputItem2.getTradePrice ()/34.0)));
+        }if (_categoryID == 22){
+            //Calculations take into account the ammount of coal ore needed for each bar as well as the amount of GP spent per bar based on the 72k cost per hour
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + _inputItem2.getTradePrice () + 13.3));
+        }if (_categoryID == 24){
+            return ((_productItem.getTradePrice ()) - ((_inputItem.getTradePrice () * 2.0) + _inputItem2.getTradePrice () + 20.0));
+        }if (_categoryID == 25){
+            return ((_productItem.getTradePrice ()) - ((_inputItem.getTradePrice () * 3.0) + _inputItem2.getTradePrice () + 26.6));
+        }if (_categoryID == 26){
+            return ((_productItem.getTradePrice ()) - ((_inputItem.getTradePrice () * 4.0) + _inputItem2.getTradePrice () + 33.5));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -302,6 +314,16 @@ public class MoneyProcess {
             return 1000.0;
         }if (_categoryID == 18){
             return 1500.0;
+        }if (_categoryID == 22){
+            return 5400.0;
+        }if (_categoryID == 23){
+            return 5800.0;
+        }if (_categoryID == 24){
+            return 3600.0;
+        }if (_categoryID == 25){
+            return 2700.0;
+        }if (_categoryID == 26){
+            return 2150.0;
         }
         else{
             return 1.0;
@@ -337,7 +359,7 @@ public class MoneyProcess {
             skillLvl = _player.getFarmingLvl();
         }if (this.categoryID == 4 || this.categoryID == 5 || this.categoryID == 6){
             skillLvl = _player.getFletchingLvl();
-        }if (this.categoryID == 7 || this.categoryID == 8){
+        }if (this.categoryID == 7 || this.categoryID == 8 || this.categoryID == 22 || this.categoryID == 23 || this.categoryID == 24 || this.categoryID == 25 || this.categoryID == 26){
             skillLvl = _player.getSmithingLvl();
         }if (this.categoryID == 9){
             skillLvl = _player.getFishingLvl ();
