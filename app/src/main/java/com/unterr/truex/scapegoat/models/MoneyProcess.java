@@ -393,15 +393,20 @@ public class MoneyProcess {
         smithingLvl = _player.getSmithingLvl();
         Double barrowsCalc = 0.9;
 
-        if (_categoryID == 19){
-            //CategoryID 19 is Barrows repair for Helm
-            barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 60000.0);
-        } else if (_categoryID == 20){
-            //CategoryID 20 is Barrows repair for Body
-            barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 90000.0);
-        } else if (_categoryID == 21){
-            //CategoryID 21 is Barrows repair for Legs
-            barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 80000.0);
+        try{
+            if (_categoryID == 19){
+                //CategoryID 19 is Barrows repair for Helm
+                barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 60000.0);
+            } else if (_categoryID == 20){
+                //CategoryID 20 is Barrows repair for Body
+                barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 90000.0);
+            } else if (_categoryID == 21){
+                //CategoryID 21 is Barrows repair for Legs
+                barrowsCalc = ((1.0 - (smithingLvl/200.0)) * 80000.0);
+            }
+        }catch (Exception e){
+            System.out.println("Barrows Error: " + e.getMessage());
+            return null;
         }
 
         return barrowsCalc;

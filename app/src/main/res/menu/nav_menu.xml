@@ -42,6 +42,14 @@
             android:icon="@drawable/smithing"
             android:title="Smithing Dart Tips" />
         <item
+            android:id="@+id/nav_barrowsRepair"
+            android:icon="@drawable/smithing"
+            android:title="Barrows Repair" />
+        <item
+            android:id="@+id/nav_blastFurnace"
+            android:icon="@drawable/smithing"
+            android:title="Blast Furnace" />
+        <item
             android:id="@+id/nav_cookingFish"
             android:icon="@drawable/cooking"
             android:title="Cooking Fish" />

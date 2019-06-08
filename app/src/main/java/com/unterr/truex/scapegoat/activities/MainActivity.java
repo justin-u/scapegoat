@@ -189,6 +189,26 @@ public class MainActivity extends AppCompatActivity {
                                     setToolbar ("Smithing Dart Tips");
                                 }
                                 break;
+                            }case R.id.nav_barrowsRepair:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataBarrowsRepair ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getCraftingLvl () != null){
+                                    setToolbar ("Barrows Repair" + " (lvl:" + (String.format("%.0f", testPlayer.getSmithingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Barrows Repair");
+                                }
+                                break;
+                            }case R.id.nav_blastFurnace:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataBlastFurnace ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getCraftingLvl () != null){
+                                    setToolbar ("Blast Furnace" + " (lvl:" + (String.format("%.0f", testPlayer.getSmithingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Blast Furnace");
+                                }
+                                break;
                             }case R.id.nav_cookingFish:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataCookingFish ());
