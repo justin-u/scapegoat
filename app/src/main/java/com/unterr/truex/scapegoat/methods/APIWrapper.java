@@ -261,6 +261,66 @@ public class APIWrapper {
         return JsonData;
     }
 
+    public static String pullAWSJson(String itemIDs){
+        String JsonData = "";
+
+        class DownloadItem extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... urls) {
+
+                String result = "";
+                URL url;
+                HttpURLConnection urlConnection = null;
+
+                try {
+                    url = new URL(urls[0]);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    InputStream in = urlConnection.getInputStream();
+                    InputStreamReader reader = new InputStreamReader(in);
+
+                    int data = reader.read();
+
+                    while (data != -1) {
+
+                        char current = (char) data;
+
+                        result += current;
+
+                        data = reader.read();
+
+                    }
+
+                    return result;
+
+                } catch (Exception e) {
+
+                    Log.e("JSONException","JSON Download Error:" + e.getMessage());
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+
+            }
+        }
+
+        try{
+            JsonData = new DownloadItem().execute("https://0ennap82fi.execute-api.us-east-2.amazonaws.com/stable/getSelect?ids=" + itemIDs).get();
+        }catch(InterruptedException e){
+            Log.e("AsyncException","Interrupted Exception:" + e.getMessage());
+            return null;
+        }catch (ExecutionException e){
+            Log.e("AsyncException","Execution Exception:" + e.getMessage());
+            return null;
+        }
+
+        return JsonData;
+    }
 
 
 

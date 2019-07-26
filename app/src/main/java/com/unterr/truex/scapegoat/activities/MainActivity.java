@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Objects
+    //TODO: Add
     public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
 
 
@@ -75,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         //TODO: Ensure that JsonData value is not null when making pullItem calls (onCreate)
-        JsonData = APIWrapper.pullAWSJson();
-        Log.d ("AWS Data", JsonData);
-        MoneyProcess cleaningGuam = new MoneyProcess (pullItem(199.0), pullItem(249.0), 1, 3.0, 2.5, testPlayer);
-        Log.d("AWS Data", cleaningGuam.toString ());
+        //JsonData = APIWrapper.pullAWSJson();
+        //Log.d ("AWS Data", JsonData);
+        //MoneyProcess cleaningGuam = new MoneyProcess (pullItem(199.0), pullItem(249.0), 1, 3.0, 2.5, testPlayer);
+        //Log.d("AWS Data", cleaningGuam.toString ());
 
         //JsonData = APIWrapper.pullAWSJson ();
 
@@ -429,23 +430,80 @@ public class MainActivity extends AppCompatActivity {
         return newItemObject;
     }
 
+    public Item pullItem(final Double itemID, String json){
+
+        String _iconURL = new String();
+        String _iconLargeURL = new String();
+        Double _itemID = 0.0;
+        Boolean _memberOnly = false;
+        String _name = new String();
+        Double _tradePrice = 0.0;
+
+        try {
+            //TODO: Alter AWSJson data to a universal variable
+            JSONObject reader = new JSONObject(json);
+            String urlItemID = String.format("%.0f", itemID);
+            JSONObject itemObj = reader.getJSONObject (urlItemID);
+
+            _iconURL = itemObj.getString ("icon");
+            Log.i("ItemDataReturn","Icon Url:" + _iconURL);
+
+            _iconLargeURL = itemObj.getString ("icon_large");
+            Log.i("ItemDataReturn","Large Icon Url:" + _iconLargeURL);
+
+            _itemID = Double.parseDouble(itemObj.getString ("id"));
+            Log.i("ItemDataReturn","Item ID:" + _itemID.toString ());
+
+            _memberOnly = Boolean.valueOf(itemObj.getString ("isMember"));
+            Log.i("ItemDataReturn","Members Only:" + _memberOnly.toString ());
+
+            _name = itemObj.getString ("name");
+            Log.i("ItemDataReturn","Item Name:" + _name);
+
+            String tradePrice = itemObj.getString ("currentPrice");
+            tradePrice = tradePrice.replace (",","");
+            _tradePrice = Double.parseDouble (tradePrice);
+            Log.i("ItemDataReturn","Trade Price:" + _tradePrice.toString ());
+
+        } catch (final JSONException e) {
+            Log.e("JSONException","JSON Parsing Error:" + e.getMessage());
+
+        }
+
+        Item newItemObject = new Item(_iconURL, _iconLargeURL, _itemID, _memberOnly, _name, _tradePrice);
+
+        //TODO: Create check to validate if the given (perameter) itemID matches the itemID pulled from the ge API
+
+        //Double itemID converted to String urlItemID with formatting to remove the decimal point and decimal values. (decimal point causes url to not return data)
+        //String urlItemID = String.format("%.0f", itemID);
+
+        //DownloadItem task = new DownloadItem();
+        //task.execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + urlItemID);
+
+        //TODO: create new Item object with the pulled JSON data
+
+        return newItemObject;
+    }
+
     //CategoryID = 1 (Cleaning Herbs)
     public ArrayList<MoneyProcess> dataHerbCleaning(){
 
-        MoneyProcess cleaningGuam = new MoneyProcess (pullItem(199.0), pullItem(249.0), 1, 3.0, 2.5, testPlayer);
-        MoneyProcess cleaningMarrentil = new MoneyProcess (pullItem(201.0), pullItem(251.0), 1, 5.0, 3.75, testPlayer);
-        MoneyProcess cleaningTarromin = new MoneyProcess (pullItem(203.0), pullItem(253.0), 1, 11.0, 5.0, testPlayer);
-        MoneyProcess cleaningHarralander = new MoneyProcess (pullItem(205.0), pullItem(255.0), 1, 20.0, 6.25, testPlayer);
-        MoneyProcess cleaningRanarr = new MoneyProcess (pullItem(207.0), pullItem(257.0), 1, 25.0, 7.5, testPlayer);
-        MoneyProcess cleaningToadflax = new MoneyProcess (pullItem(3049.0), pullItem(2998.0), 1, 30.0, 8.0, testPlayer);
-        MoneyProcess cleaningIrit = new MoneyProcess (pullItem(209.0), pullItem(259.0), 1, 40.0, 8.75, testPlayer);
-        MoneyProcess cleaningAvantoe = new MoneyProcess (pullItem(211.0), pullItem(261.0), 1, 48.0, 10.0, testPlayer);
-        MoneyProcess cleaningKwuarm = new MoneyProcess (pullItem(213.0), pullItem(263.0), 1, 54.0, 11.25, testPlayer);
-        MoneyProcess cleaningSnapdragon = new MoneyProcess (pullItem(3051.0), pullItem(3000.0), 1, 59.0, 11.75, testPlayer);
-        MoneyProcess cleaningCadantine = new MoneyProcess (pullItem(215.0), pullItem(265.0), 1, 65.0, 12.5, testPlayer);
-        MoneyProcess cleaningLantadyme = new MoneyProcess (pullItem(2485.0), pullItem(2481.0), 1, 67.0, 13.125, testPlayer);
-        MoneyProcess cleaningDwarfWeed = new MoneyProcess (pullItem(217.0), pullItem(267.0), 1, 70.0, 13.75, testPlayer);
-        MoneyProcess cleaningTorstol = new MoneyProcess (pullItem (219.0), pullItem (269.0), 1, 75.0, 15.0, testPlayer);
+        String j = APIWrapper.pullAWSJson("199,249,201,251,203,253,205,255,207,257,3049,2998,209,259,211,261,213,263,3051,3000,215,265,2485,2481,217,267,219,269");
+
+        MoneyProcess cleaningGuam = new MoneyProcess (pullItem(199.0,j), pullItem(249.0,j), 1, 3.0, 2.5, testPlayer);
+        MoneyProcess cleaningMarrentil = new MoneyProcess (pullItem(201.0,j), pullItem(251.0,j), 1, 5.0, 3.75, testPlayer);
+        MoneyProcess cleaningTarromin = new MoneyProcess (pullItem(203.0,j), pullItem(253.0,j), 1, 11.0, 5.0, testPlayer);
+        MoneyProcess cleaningHarralander = new MoneyProcess (pullItem(205.0,j), pullItem(255.0,j), 1, 20.0, 6.25, testPlayer);
+        MoneyProcess cleaningRanarr = new MoneyProcess (pullItem(207.0,j), pullItem(257.0,j), 1, 25.0, 7.5, testPlayer);
+        MoneyProcess cleaningToadflax = new MoneyProcess (pullItem(3049.0,j), pullItem(2998.0,j), 1, 30.0, 8.0, testPlayer);
+        MoneyProcess cleaningIrit = new MoneyProcess (pullItem(209.0,j), pullItem(259.0,j), 1, 40.0, 8.75, testPlayer);
+        MoneyProcess cleaningAvantoe = new MoneyProcess (pullItem(211.0,j), pullItem(261.0,j), 1, 48.0, 10.0, testPlayer);
+        MoneyProcess cleaningKwuarm = new MoneyProcess (pullItem(213.0,j), pullItem(263.0,j), 1, 54.0, 11.25, testPlayer);
+        MoneyProcess cleaningSnapdragon = new MoneyProcess (pullItem(3051.0,j), pullItem(3000.0,j), 1, 59.0, 11.75, testPlayer);
+        MoneyProcess cleaningCadantine = new MoneyProcess (pullItem(215.0,j), pullItem(265.0,j), 1, 65.0, 12.5, testPlayer);
+        MoneyProcess cleaningLantadyme = new MoneyProcess (pullItem(2485.0,j), pullItem(2481.0,j), 1, 67.0, 13.125, testPlayer);
+        MoneyProcess cleaningDwarfWeed = new MoneyProcess (pullItem(217.0,j), pullItem(267.0,j), 1, 70.0, 13.75, testPlayer);
+        MoneyProcess cleaningTorstol = new MoneyProcess (pullItem (219.0,j), pullItem (269.0,j), 1, 75.0, 15.0, testPlayer);
 
         ArrayList<MoneyProcess> dataCleaning = new ArrayList<MoneyProcess>();
 
@@ -466,8 +524,6 @@ public class MainActivity extends AppCompatActivity {
 
         return(dataCleaning);
     }
-
-
 
     //Could add data for using unclean herbs
     //CategoryID = 2 (Making Unfinished Potions)
