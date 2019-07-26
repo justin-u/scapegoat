@@ -529,20 +529,22 @@ public class MainActivity extends AppCompatActivity {
     //CategoryID = 2 (Making Unfinished Potions)
     public ArrayList<MoneyProcess> dataHerbUnfinished(){
 
-        MoneyProcess unfGuam = new MoneyProcess (pullItem(249.0), pullItem(91.0), 2, 3.0, 0.0, testPlayer);
-        MoneyProcess unfMarrentil = new MoneyProcess (pullItem(251.0), pullItem(93.0), 2, 5.0, 0.0, testPlayer);
-        MoneyProcess unfTarromin = new MoneyProcess (pullItem(253.0), pullItem(95.0), 2, 11.0, 0.0, testPlayer);
-        MoneyProcess unfHarralander = new MoneyProcess (pullItem(255.0), pullItem(97.0), 2, 20.0, 0.0, testPlayer);
-        MoneyProcess unfRanarr = new MoneyProcess (pullItem(257.0), pullItem(99.0), 2, 25.0, 0.0, testPlayer);
-        MoneyProcess unfToadflax = new MoneyProcess (pullItem(2998.0), pullItem(3002.0), 2, 30.0, 0.0, testPlayer);
-        MoneyProcess unfIrit = new MoneyProcess (pullItem(259.0), pullItem(101.0), 2, 40.0, 0.0, testPlayer);
-        MoneyProcess unfAvantoe = new MoneyProcess (pullItem(261.0), pullItem(103.0), 2, 48.0, 0.0, testPlayer);
-        MoneyProcess unfKwuarm = new MoneyProcess (pullItem(263.0), pullItem(105.0), 2, 54.0, 0.0, testPlayer);
-        MoneyProcess unfSnapdragon = new MoneyProcess (pullItem(3000.0), pullItem(3004.0), 2, 59.0, 0.0, testPlayer);
-        MoneyProcess unfCadantine = new MoneyProcess (pullItem(265.0), pullItem(107.0), 2, 65.0, 0.0, testPlayer);
-        MoneyProcess unfLantadyme = new MoneyProcess (pullItem(2481.0), pullItem(2483.0), 2, 67.0, 0.0, testPlayer);
-        MoneyProcess unfDwarfWeed = new MoneyProcess (pullItem(267.0), pullItem(109.0), 2, 70.0, 0.0, testPlayer);
-        MoneyProcess unfTorstol = new MoneyProcess (pullItem (269.0), pullItem (111.0), 2, 75.0, 0.0, testPlayer);
+        String j = APIWrapper.pullAWSJson("91,93,95,97,99,3002,101,103,105,3004,107,2483,109,111,249,251,253,253,255,257,2998,259,261,263,3000,265,2481,267,269");
+
+        MoneyProcess unfGuam = new MoneyProcess (pullItem(249.0,j), pullItem(91.0,j), 2, 3.0, 0.0, testPlayer);
+        MoneyProcess unfMarrentil = new MoneyProcess (pullItem(251.0,j), pullItem(93.0,j), 2, 5.0, 0.0, testPlayer);
+        MoneyProcess unfTarromin = new MoneyProcess (pullItem(253.0,j), pullItem(95.0,j), 2, 11.0, 0.0, testPlayer);
+        MoneyProcess unfHarralander = new MoneyProcess (pullItem(255.0,j), pullItem(97.0,j), 2, 20.0, 0.0, testPlayer);
+        MoneyProcess unfRanarr = new MoneyProcess (pullItem(257.0,j), pullItem(99.0,j), 2, 25.0, 0.0, testPlayer);
+        MoneyProcess unfToadflax = new MoneyProcess (pullItem(2998.0,j), pullItem(3002.0,j), 2, 30.0, 0.0, testPlayer);
+        MoneyProcess unfIrit = new MoneyProcess (pullItem(259.0,j), pullItem(101.0,j), 2, 40.0, 0.0, testPlayer);
+        MoneyProcess unfAvantoe = new MoneyProcess (pullItem(261.0,j), pullItem(103.0,j), 2, 48.0, 0.0, testPlayer);
+        MoneyProcess unfKwuarm = new MoneyProcess (pullItem(263.0,j), pullItem(105.0,j), 2, 54.0, 0.0, testPlayer);
+        MoneyProcess unfSnapdragon = new MoneyProcess (pullItem(3000.0,j), pullItem(3004.0,j), 2, 59.0, 0.0, testPlayer);
+        MoneyProcess unfCadantine = new MoneyProcess (pullItem(265.0,j), pullItem(107.0,j), 2, 65.0, 0.0, testPlayer);
+        MoneyProcess unfLantadyme = new MoneyProcess (pullItem(2481.0,j), pullItem(2483.0,j), 2, 67.0, 0.0, testPlayer);
+        MoneyProcess unfDwarfWeed = new MoneyProcess (pullItem(267.0,j), pullItem(109.0,j), 2, 70.0, 0.0, testPlayer);
+        MoneyProcess unfTorstol = new MoneyProcess (pullItem (269.0,j), pullItem (111.0,j), 2, 75.0, 0.0, testPlayer);
 
         ArrayList<MoneyProcess> dataHerbUnfinished = new ArrayList<MoneyProcess>();
 
@@ -569,13 +571,16 @@ public class MainActivity extends AppCompatActivity {
     //TODO: Include noted money processes in API pull
     public ArrayList<MoneyProcess> dataSaplings(){
 
-        MoneyProcess sapOak = new MoneyProcess (pullItem(5312.0), pullItem(5370.0), 3, 15.0, 0.0, testPlayer);
-        MoneyProcess sapApple = new MoneyProcess (pullItem(5283.0), pullItem(5496.0), 3, 27.0, 0.0, testPlayer);
-        MoneyProcess sapWillow = new MoneyProcess (pullItem(5313.0), pullItem(5371.0), 3, 30.0, 0.0, testPlayer);
-        MoneyProcess sapBanana = new MoneyProcess (pullItem(5284.0), pullItem(5497.0),  3, 33.0, 0.0, testPlayer);
-        MoneyProcess sapTeak = new MoneyProcess (pullItem(21486.0), pullItem(21477.0),  3, 35.0, 0.0, testPlayer);
-        MoneyProcess sapOrange = new MoneyProcess (pullItem(5285.0), pullItem(5498.0), 3, 39.0, 0.0, testPlayer);
-        MoneyProcess sapCurry = new MoneyProcess (pullItem(5286.0), pullItem(5499.0),  3, 42.0, 0.0, testPlayer);
+        String j = APIWrapper.pullAWSJson("5312,5370,5283,5496,5313,5371,5284,5497,21486,21477,5285,5498,5286,5499,5314,5372,5287,5500,21488,21480,5288,5501,5315,5373,5289,5502,5290,5503,5316,5374");
+
+
+        MoneyProcess sapOak = new MoneyProcess (pullItem(5312.0,j), pullItem(5370.0,j), 3, 15.0, 0.0, testPlayer);
+        MoneyProcess sapApple = new MoneyProcess (pullItem(5283.0,j), pullItem(5496.0,j), 3, 27.0, 0.0, testPlayer);
+        MoneyProcess sapWillow = new MoneyProcess (pullItem(5313.0,j), pullItem(5371.0,j), 3, 30.0, 0.0, testPlayer);
+        MoneyProcess sapBanana = new MoneyProcess (pullItem(5284.0,j), pullItem(5497.0,j),  3, 33.0, 0.0, testPlayer);
+        MoneyProcess sapTeak = new MoneyProcess (pullItem(21486.0,j), pullItem(21477.0,j),  3, 35.0, 0.0, testPlayer);
+        MoneyProcess sapOrange = new MoneyProcess (pullItem(5285.0,j), pullItem(5498.0,j), 3, 39.0, 0.0, testPlayer);
+        MoneyProcess sapCurry = new MoneyProcess (pullItem(5286.0,j), pullItem(5499.0,j),  3, 42.0, 0.0, testPlayer);
         //Causes Exceptions
         //MoneyProcess sapMaple = new MoneyProcess (pullItem(5314.0), pullItem(5372.0), 3, 45.0, 0.0, testPlayer);
         //Log.i ("DataSapling", sapMaple.toString ());
@@ -631,13 +636,17 @@ public class MainActivity extends AppCompatActivity {
     //Pulling data for cuttingDragonTips and cuttingOnyxTips causes exceptions and forces the app to close
     //TODO: Do not include noted MoneyProcesses until MoneyProcess is altered to half their amount per input
     public ArrayList<MoneyProcess> dataBoltTips(){
-        MoneyProcess cuttingOpalTips = new MoneyProcess (pullItem(1609.0), pullItem(45.0), 4, 11.0, 1.6, testPlayer);
-        MoneyProcess cuttingJadeTips = new MoneyProcess (pullItem(1611.0), pullItem(9187.0), 4, 26.0, 2.4, testPlayer);
-        MoneyProcess cuttingRedTopazTips = new MoneyProcess (pullItem(1613.0), pullItem(9188.0), 4, 48.0, 4.0, testPlayer);
-        MoneyProcess cuttingSapphireTips = new MoneyProcess (pullItem(1607.0), pullItem(9189.0), 4, 56.0, 4.0, testPlayer);
-        MoneyProcess cuttingEmeraldTips = new MoneyProcess (pullItem(1605.0), pullItem(9190.0), 4, 58.0, 5.5, testPlayer);
-        MoneyProcess cuttingRubyTips = new MoneyProcess (pullItem(1603.0), pullItem(9191.0), 4, 63.0, 6.0, testPlayer);
-        MoneyProcess cuttingDiamondTips = new MoneyProcess (pullItem(1601.0), pullItem(9192.0), 4, 65.0, 7.0, testPlayer);
+
+        String j = APIWrapper.pullAWSJson("1609,45,1611,9187,1613,9188,1607,9189,1605,9190,1603,9191,1601,9192,1615,9193,6573,9194");
+
+
+        MoneyProcess cuttingOpalTips = new MoneyProcess (pullItem(1609.0,j), pullItem(45.0,j), 4, 11.0, 1.6, testPlayer);
+        MoneyProcess cuttingJadeTips = new MoneyProcess (pullItem(1611.0,j), pullItem(9187.0,j), 4, 26.0, 2.4, testPlayer);
+        MoneyProcess cuttingRedTopazTips = new MoneyProcess (pullItem(1613.0,j), pullItem(9188.0,j), 4, 48.0, 4.0, testPlayer);
+        MoneyProcess cuttingSapphireTips = new MoneyProcess (pullItem(1607.0,j), pullItem(9189.0,j), 4, 56.0, 4.0, testPlayer);
+        MoneyProcess cuttingEmeraldTips = new MoneyProcess (pullItem(1605.0,j), pullItem(9190.0,j), 4, 58.0, 5.5, testPlayer);
+        MoneyProcess cuttingRubyTips = new MoneyProcess (pullItem(1603.0,j), pullItem(9191.0,j), 4, 63.0, 6.0, testPlayer);
+        MoneyProcess cuttingDiamondTips = new MoneyProcess (pullItem(1601.0,j), pullItem(9192.0,j), 4, 65.0, 7.0, testPlayer);
 
         //TODO
         //cuttingDragonTips and cuttingOnyxTips causes the app to crash
@@ -670,18 +679,21 @@ public class MainActivity extends AppCompatActivity {
     //CategoryID = 5 (Fletching Bows)
     //TODO: Change method so it stores the logs in an item so it doesn't call each log type twice
     public ArrayList<MoneyProcess> dataFletchBows(){
-        MoneyProcess fletchSB = new MoneyProcess (pullItem(1511.0), pullItem(50.0), 5, 5.0, 5.0, testPlayer);
-        MoneyProcess fletchLB = new MoneyProcess (pullItem(1511.0), pullItem(48.0), 5, 10.0, 10.0, testPlayer);
-        MoneyProcess fletchOakSB = new MoneyProcess (pullItem(1521.0), pullItem(54.0), 5, 20.0, 16.5, testPlayer);
-        MoneyProcess fletchOakLB = new MoneyProcess (pullItem(1521.0), pullItem(56.0), 5, 25.0, 25.0, testPlayer);
-        MoneyProcess fletchWillowSB = new MoneyProcess (pullItem(1519.0), pullItem(60.0), 5, 35.0, 33.3, testPlayer);
-        MoneyProcess fletchWillowLB = new MoneyProcess (pullItem(1519.0), pullItem(58.0), 5, 40.0, 41.5, testPlayer);
-        MoneyProcess fletchMapleSB = new MoneyProcess (pullItem(1517.0), pullItem(64.0), 5, 50.0, 50.0, testPlayer);
-        MoneyProcess fletchMapleLB = new MoneyProcess (pullItem(1517.0), pullItem(62.0), 5, 55.0, 58.3, testPlayer);
-        MoneyProcess fletchYewSB = new MoneyProcess (pullItem(1515.0), pullItem(68.0), 5, 65.0, 67.5, testPlayer);
-        MoneyProcess fletchYewLB = new MoneyProcess (pullItem(1515.0), pullItem(66.0), 5, 70.0, 75.5, testPlayer);
-        MoneyProcess fletchMagicSB = new MoneyProcess (pullItem(1513.0), pullItem(72.0), 5, 80.0, 83.3, testPlayer);
-        MoneyProcess fletchMagicLB = new MoneyProcess (pullItem(1513.0), pullItem(70.0), 5, 85.0, 91.5, testPlayer);
+
+        String j = APIWrapper.pullAWSJson("1511,1521,1519,1517,1515,1513,50,48,54,56,60,58,64,62,68,66,72,70");
+
+        MoneyProcess fletchSB = new MoneyProcess (pullItem(1511.0,j), pullItem(50.0,j), 5, 5.0, 5.0, testPlayer);
+        MoneyProcess fletchLB = new MoneyProcess (pullItem(1511.0,j), pullItem(48.0,j), 5, 10.0, 10.0, testPlayer);
+        MoneyProcess fletchOakSB = new MoneyProcess (pullItem(1521.0,j), pullItem(54.0,j), 5, 20.0, 16.5, testPlayer);
+        MoneyProcess fletchOakLB = new MoneyProcess (pullItem(1521.0,j), pullItem(56.0,j), 5, 25.0, 25.0, testPlayer);
+        MoneyProcess fletchWillowSB = new MoneyProcess (pullItem(1519.0,j), pullItem(60.0,j), 5, 35.0, 33.3, testPlayer);
+        MoneyProcess fletchWillowLB = new MoneyProcess (pullItem(1519.0,j), pullItem(58.0,j), 5, 40.0, 41.5, testPlayer);
+        MoneyProcess fletchMapleSB = new MoneyProcess (pullItem(1517.0,j), pullItem(64.0,j), 5, 50.0, 50.0, testPlayer);
+        MoneyProcess fletchMapleLB = new MoneyProcess (pullItem(1517.0,j), pullItem(62.0,j), 5, 55.0, 58.3, testPlayer);
+        MoneyProcess fletchYewSB = new MoneyProcess (pullItem(1515.0,j), pullItem(68.0,j), 5, 65.0, 67.5, testPlayer);
+        MoneyProcess fletchYewLB = new MoneyProcess (pullItem(1515.0,j), pullItem(66.0,j), 5, 70.0, 75.5, testPlayer);
+        MoneyProcess fletchMagicSB = new MoneyProcess (pullItem(1513.0,j), pullItem(72.0,j), 5, 80.0, 83.3, testPlayer);
+        MoneyProcess fletchMagicLB = new MoneyProcess (pullItem(1513.0,j), pullItem(70.0,j), 5, 85.0, 91.5, testPlayer);
 
 
         ArrayList<MoneyProcess> dataFletchBows = new ArrayList<MoneyProcess>();
@@ -705,19 +717,23 @@ public class MainActivity extends AppCompatActivity {
 
     //CategoryID = 6 (Stringing Bows)
     public ArrayList<MoneyProcess> dataStringBows(){
+
+        String j = APIWrapper.pullAWSJson("841,839,843,845,849,847,853,859,857,855,861,859,50,48,54,56,60,58,64,62,68,66,72,70");
+
         Item bowString = pullItem (1777.0);
-        MoneyProcess stringSB = new MoneyProcess (pullItem(50.0), bowString, pullItem(841.0), 5, 5.0, 5.0, testPlayer);
-        MoneyProcess stringLB = new MoneyProcess (pullItem(48.0), bowString, pullItem(839.0), 5, 10.0, 10.0, testPlayer);
-        MoneyProcess stringOakSB = new MoneyProcess (pullItem(54.0), bowString, pullItem(843.0), 5, 20.0, 16.5, testPlayer);
-        MoneyProcess stringOakLB = new MoneyProcess (pullItem(56.0), bowString, pullItem(845.0), 5, 25.0, 25.0, testPlayer);
-        MoneyProcess stringWillowSB = new MoneyProcess (pullItem(60.0), bowString, pullItem(849.0), 5, 35.0, 33.3, testPlayer);
-        MoneyProcess stringWillowLB = new MoneyProcess (pullItem(58.0), bowString, pullItem(847.0), 5, 40.0, 41.5, testPlayer);
-        MoneyProcess stringMapleSB = new MoneyProcess (pullItem(64.0), bowString, pullItem(853.0), 5, 50.0, 50.0, testPlayer);
-        MoneyProcess stringMapleLB = new MoneyProcess (pullItem(62.0), bowString, pullItem(859.0), 5, 55.0, 58.3, testPlayer);
-        MoneyProcess stringYewSB = new MoneyProcess (pullItem(68.0), bowString, pullItem(857.0), 5, 65.0, 67.5, testPlayer);
-        MoneyProcess stringYewLB = new MoneyProcess (pullItem(66.0), bowString, pullItem(855.0), 5, 70.0, 75.5, testPlayer);
-        MoneyProcess stringMagicSB = new MoneyProcess (pullItem(72.0), bowString, pullItem(861.0), 5, 80.0, 83.3, testPlayer);
-        MoneyProcess stringMagicLB = new MoneyProcess (pullItem(70.0), bowString, pullItem(859.0), 5, 85.0, 91.5, testPlayer);
+
+        MoneyProcess stringSB = new MoneyProcess (pullItem(50.0,j), bowString, pullItem(841.0,j), 5, 5.0, 5.0, testPlayer);
+        MoneyProcess stringLB = new MoneyProcess (pullItem(48.0,j), bowString, pullItem(839.0,j), 5, 10.0, 10.0, testPlayer);
+        MoneyProcess stringOakSB = new MoneyProcess (pullItem(54.0,j), bowString, pullItem(843.0,j), 5, 20.0, 16.5, testPlayer);
+        MoneyProcess stringOakLB = new MoneyProcess (pullItem(56.0,j), bowString, pullItem(845.0,j), 5, 25.0, 25.0, testPlayer);
+        MoneyProcess stringWillowSB = new MoneyProcess (pullItem(60.0,j), bowString, pullItem(849.0,j), 5, 35.0, 33.3, testPlayer);
+        MoneyProcess stringWillowLB = new MoneyProcess (pullItem(58.0,j), bowString, pullItem(847.0,j), 5, 40.0, 41.5, testPlayer);
+        MoneyProcess stringMapleSB = new MoneyProcess (pullItem(64.0,j), bowString, pullItem(853.0,j), 5, 50.0, 50.0, testPlayer);
+        MoneyProcess stringMapleLB = new MoneyProcess (pullItem(62.0,j), bowString, pullItem(859.0,j), 5, 55.0, 58.3, testPlayer);
+        MoneyProcess stringYewSB = new MoneyProcess (pullItem(68.0,j), bowString, pullItem(857.0,j), 5, 65.0, 67.5, testPlayer);
+        MoneyProcess stringYewLB = new MoneyProcess (pullItem(66.0,j), bowString, pullItem(855.0,j), 5, 70.0, 75.5, testPlayer);
+        MoneyProcess stringMagicSB = new MoneyProcess (pullItem(72.0,j), bowString, pullItem(861.0,j), 5, 80.0, 83.3, testPlayer);
+        MoneyProcess stringMagicLB = new MoneyProcess (pullItem(70.0,j), bowString, pullItem(859.0,j), 5, 85.0, 91.5, testPlayer);
 
 
         ArrayList<MoneyProcess> dataStringBows = new ArrayList<MoneyProcess>();
@@ -743,11 +759,13 @@ public class MainActivity extends AppCompatActivity {
     //Pulling data for smithRuneTips causes exceptions and forces the app to close
     public ArrayList<MoneyProcess> dataSmithDarts(){
 
-        MoneyProcess smithBronzeTips = new MoneyProcess (pullItem(2349.0), pullItem(819.0), 7, 4.0, 12.5, testPlayer);
-        MoneyProcess smithIronTips = new MoneyProcess (pullItem(2351.0), pullItem(820.0), 7, 19.0, 25.0, testPlayer);
-        MoneyProcess smithSteelTips = new MoneyProcess (pullItem(2353.0), pullItem(821.0), 7, 34.0, 37.5, testPlayer);
-        MoneyProcess smithMithrilTips = new MoneyProcess (pullItem(2359.0), pullItem(822.0), 7, 54.0, 50.0, testPlayer);
-        MoneyProcess smithAdamantTips = new MoneyProcess (pullItem(2361.0), pullItem(823.0), 7, 74.0, 62.5, testPlayer);
+        String j = APIWrapper.pullAWSJson("2349,819,2351,820,2351,821,2359,822,2361,823,2363,824");
+
+        MoneyProcess smithBronzeTips = new MoneyProcess (pullItem(2349.0,j), pullItem(819.0,j), 7, 4.0, 12.5, testPlayer);
+        MoneyProcess smithIronTips = new MoneyProcess (pullItem(2351.0,j), pullItem(820.0,j), 7, 19.0, 25.0, testPlayer);
+        MoneyProcess smithSteelTips = new MoneyProcess (pullItem(2353.0,j), pullItem(821.0,j), 7, 34.0, 37.5, testPlayer);
+        MoneyProcess smithMithrilTips = new MoneyProcess (pullItem(2359.0,j), pullItem(822.0,j), 7, 54.0, 50.0, testPlayer);
+        MoneyProcess smithAdamantTips = new MoneyProcess (pullItem(2361.0,j), pullItem(823.0,j), 7, 74.0, 62.5, testPlayer);
         //MoneyProcess smithRuneTips = new MoneyProcess (pullItem(2363.0), pullItem(824.0), 7, 89.0, 75.0, testPlayer);
 
         ArrayList<MoneyProcess> dataSmithDarts = new ArrayList<MoneyProcess>();
@@ -767,23 +785,25 @@ public class MainActivity extends AppCompatActivity {
     //Pulling data for farmingRanarr, farmingSnapdragon, and farmingTorstol causes exceptions and forces the app to close
     public ArrayList<MoneyProcess> dataHerbFarming(){
 
+        String j = APIWrapper.pullAWSJson("5291,5292,5293,5294,5295,5296,5297,5298,5299,5300,5301,5302,5303,5304,199,201,203,205,207,3049,209,211,213,3051,215,2485,217,219");
+
         Item ultracompost = pullItem (21483.0);
 
-        MoneyProcess farmingGuam = new MoneyProcess (pullItem(5291.0), ultracompost, pullItem(199.0), 10, 9.0, 12.5, testPlayer);
-        MoneyProcess farmingMarrentil = new MoneyProcess (pullItem(5292.0), ultracompost, pullItem(201.0), 10, 14.0, 15.0, testPlayer);
-        MoneyProcess farmingTarromin = new MoneyProcess (pullItem(5293.0), ultracompost, pullItem(203.0), 10, 19.0, 18.0, testPlayer);
-        MoneyProcess farmingHarralander = new MoneyProcess (pullItem(5294.0), ultracompost, pullItem(205.0), 10, 26.0, 24.0, testPlayer);
+        MoneyProcess farmingGuam = new MoneyProcess (pullItem(5291.0,j), ultracompost, pullItem(199.0,j), 10, 9.0, 12.5, testPlayer);
+        MoneyProcess farmingMarrentil = new MoneyProcess (pullItem(5292.0,j), ultracompost, pullItem(201.0,j), 10, 14.0, 15.0, testPlayer);
+        MoneyProcess farmingTarromin = new MoneyProcess (pullItem(5293.0,j), ultracompost, pullItem(203.0,j), 10, 19.0, 18.0, testPlayer);
+        MoneyProcess farmingHarralander = new MoneyProcess (pullItem(5294.0,j), ultracompost, pullItem(205.0,j), 10, 26.0, 24.0, testPlayer);
         //Causes Exceptions
         //MoneyProcess farmingRanarr = new MoneyProcess (pullItem(5295.0), ultracompost, pullItem(207.0), 10, 32.0, 30.5, testPlayer);
-        MoneyProcess farmingToadflax = new MoneyProcess (pullItem(5296.0), ultracompost, pullItem(3049.0), 10, 38.0, 38.5, testPlayer);
-        MoneyProcess farmingIrit = new MoneyProcess (pullItem(5297.0), ultracompost, pullItem(209.0), 10, 44.0, 48.5, testPlayer);
-        MoneyProcess farmingAvantoe = new MoneyProcess (pullItem(5298.0), ultracompost, pullItem(211.0), 10, 50.0, 61.5, testPlayer);
-        MoneyProcess farmingKwuarm = new MoneyProcess (pullItem(5299.0), ultracompost, pullItem(213.0), 10, 56.0, 78.0, testPlayer);
+        MoneyProcess farmingToadflax = new MoneyProcess (pullItem(5296.0,j), ultracompost, pullItem(3049.0,j), 10, 38.0, 38.5, testPlayer);
+        MoneyProcess farmingIrit = new MoneyProcess (pullItem(5297.0,j), ultracompost, pullItem(209.0,j), 10, 44.0, 48.5, testPlayer);
+        MoneyProcess farmingAvantoe = new MoneyProcess (pullItem(5298.0,j), ultracompost, pullItem(211.0,j), 10, 50.0, 61.5, testPlayer);
+        MoneyProcess farmingKwuarm = new MoneyProcess (pullItem(5299.0,j), ultracompost, pullItem(213.0,j), 10, 56.0, 78.0, testPlayer);
         //Caises Exceptions
         //MoneyProcess farmingSnapdragon = new MoneyProcess (pullItem(5300.0), ultracompost, pullItem(3051.0), 10, 62.0, 98.5, testPlayer);
-        MoneyProcess farmingCadantine = new MoneyProcess (pullItem(5301.0), ultracompost, pullItem(215.0), 10, 67.0, 120.0, testPlayer);
-        MoneyProcess farmingLantadyme = new MoneyProcess (pullItem(5302.0), ultracompost, pullItem(2485.0), 10, 73.0, 151.5, testPlayer);
-        MoneyProcess farmingDwarfWeed = new MoneyProcess (pullItem(5303.0), ultracompost, pullItem(217.0), 10, 79.0, 192.0, testPlayer);
+        MoneyProcess farmingCadantine = new MoneyProcess (pullItem(5301.0,j), ultracompost, pullItem(215.0,j), 10, 67.0, 120.0, testPlayer);
+        MoneyProcess farmingLantadyme = new MoneyProcess (pullItem(5302.0,j), ultracompost, pullItem(2485.0,j), 10, 73.0, 151.5, testPlayer);
+        MoneyProcess farmingDwarfWeed = new MoneyProcess (pullItem(5303.0,j), ultracompost, pullItem(217.0,j), 10, 79.0, 192.0, testPlayer);
         //Causes Exceptions
         //MoneyProcess farmingTorstol = new MoneyProcess (pullItem (5304.0), ultracompost, pullItem (219.0), 10, 85.0, 224.5, testPlayer);
 
@@ -814,29 +834,31 @@ public class MainActivity extends AppCompatActivity {
     //CategoryID = 11 (Cooking Fish)
     public ArrayList<MoneyProcess> dataCookingFish(){
 
-        MoneyProcess cookingShrimp = new MoneyProcess (pullItem(317.0), pullItem(315.0), 11, 1.0, 30.0, testPlayer);
-        MoneyProcess cookingSardine = new MoneyProcess (pullItem(327.0), pullItem(325.0), 11, 1.0, 40.0, testPlayer);
-        MoneyProcess cookingAnchovies = new MoneyProcess (pullItem(321.0), pullItem(319.0), 11, 1.0, 30.0, testPlayer);
-        MoneyProcess cookingHerring = new MoneyProcess (pullItem(345.0), pullItem(347.0), 11, 5.0, 50.0, testPlayer);
-        MoneyProcess cookingMackerel = new MoneyProcess (pullItem(353.0), pullItem(355.0), 11, 10.0, 60.0, testPlayer);
-        MoneyProcess cookingTrout = new MoneyProcess (pullItem(335.0), pullItem(333.0), 11, 15.0, 70.0, testPlayer);
-        MoneyProcess cookingCod = new MoneyProcess (pullItem(341.0), pullItem(339.0), 11, 18.0, 75.0, testPlayer);
-        MoneyProcess cookingPike = new MoneyProcess (pullItem(349.0), pullItem(351.0), 11, 20.0, 80.0, testPlayer);
-        MoneyProcess cookingSalmon = new MoneyProcess (pullItem(331.0), pullItem(329.0), 11, 25.0, 90.0, testPlayer);
-        MoneyProcess cookingSlimyEel = new MoneyProcess (pullItem(3379.0), pullItem(3381.0), 11, 28.0, 95.0, testPlayer);
-        MoneyProcess cookingTuna = new MoneyProcess (pullItem(359.0), pullItem(361.0), 11, 30.0, 100.0, testPlayer);
-        MoneyProcess cookingRainbowFish = new MoneyProcess (pullItem(10138.0), pullItem(10136.0), 11, 35.0, 110.0, testPlayer);
-        MoneyProcess cookingCaveEel = new MoneyProcess (pullItem(5001.0), pullItem(5003.0), 11, 38.0, 115.0, testPlayer);
-        MoneyProcess cookingLobster = new MoneyProcess (pullItem (377.0), pullItem (379.0), 11, 40.0, 120.0, testPlayer);
-        MoneyProcess cookingBass = new MoneyProcess (pullItem (363.0), pullItem (365.0), 11, 43.0, 130.0, testPlayer);
-        MoneyProcess cookingSwordfish = new MoneyProcess (pullItem (371.0), pullItem (373.0), 11, 45.0, 140.0, testPlayer);
-        MoneyProcess cookingMonkfish = new MoneyProcess (pullItem (7944.0), pullItem (7946.0), 11, 62.0, 150.0, testPlayer);
-        MoneyProcess cookingKarambwan = new MoneyProcess (pullItem (3142.0), pullItem (3144.0), 11, 30.0, 190.0, testPlayer);
-        MoneyProcess cookingShark = new MoneyProcess (pullItem (383.0), pullItem (385.0), 11, 80.0, 210.0, testPlayer);
-        MoneyProcess cookingSeaTurtle = new MoneyProcess (pullItem (395.0), pullItem (397.0), 11, 82.0, 212.0, testPlayer);
-        MoneyProcess cookingMantaRay = new MoneyProcess (pullItem (389.0), pullItem (391.0), 11, 91.0, 216.0, testPlayer);
-        MoneyProcess cookingAnglerfish = new MoneyProcess (pullItem (13439.0), pullItem (13441.0), 11, 84.0, 230.0, testPlayer);
-        MoneyProcess cookingDarkCrab = new MoneyProcess (pullItem (11934.0), pullItem (11936.0), 11, 90.0, 215.0, testPlayer);
+        String j = APIWrapper.pullAWSJson("317,315,327,325,321,319,345,347,353,355,335,333,341,339,349,351,331,329,3379,3381,359,361,10138,10136,5001,5003,377,379,363,365,371,373,7944,7946,3142,3144,383,385,395,397,389,391,13439,13441,11934,11936");
+
+        MoneyProcess cookingShrimp = new MoneyProcess (pullItem(317.0,j), pullItem(315.0,j), 11, 1.0, 30.0, testPlayer);
+        MoneyProcess cookingSardine = new MoneyProcess (pullItem(327.0,j), pullItem(325.0,j), 11, 1.0, 40.0, testPlayer);
+        MoneyProcess cookingAnchovies = new MoneyProcess (pullItem(321.0,j), pullItem(319.0,j), 11, 1.0, 30.0, testPlayer);
+        MoneyProcess cookingHerring = new MoneyProcess (pullItem(345.0,j), pullItem(347.0,j), 11, 5.0, 50.0, testPlayer);
+        MoneyProcess cookingMackerel = new MoneyProcess (pullItem(353.0,j), pullItem(355.0,j), 11, 10.0, 60.0, testPlayer);
+        MoneyProcess cookingTrout = new MoneyProcess (pullItem(335.0,j), pullItem(333.0,j), 11, 15.0, 70.0, testPlayer);
+        MoneyProcess cookingCod = new MoneyProcess (pullItem(341.0,j), pullItem(339.0,j), 11, 18.0, 75.0, testPlayer);
+        MoneyProcess cookingPike = new MoneyProcess (pullItem(349.0,j), pullItem(351.0,j), 11, 20.0, 80.0, testPlayer);
+        MoneyProcess cookingSalmon = new MoneyProcess (pullItem(331.0,j), pullItem(329.0,j), 11, 25.0, 90.0, testPlayer);
+        MoneyProcess cookingSlimyEel = new MoneyProcess (pullItem(3379.0,j), pullItem(3381.0,j), 11, 28.0, 95.0, testPlayer);
+        MoneyProcess cookingTuna = new MoneyProcess (pullItem(359.0,j), pullItem(361.0,j), 11, 30.0, 100.0, testPlayer);
+        MoneyProcess cookingRainbowFish = new MoneyProcess (pullItem(10138.0,j), pullItem(10136.0,j), 11, 35.0, 110.0, testPlayer);
+        MoneyProcess cookingCaveEel = new MoneyProcess (pullItem(5001.0,j), pullItem(5003.0,j), 11, 38.0, 115.0, testPlayer);
+        MoneyProcess cookingLobster = new MoneyProcess (pullItem (377.0,j), pullItem (379.0,j), 11, 40.0, 120.0, testPlayer);
+        MoneyProcess cookingBass = new MoneyProcess (pullItem (363.0,j), pullItem (365.0,j), 11, 43.0, 130.0, testPlayer);
+        MoneyProcess cookingSwordfish = new MoneyProcess (pullItem (371.0,j), pullItem (373.0,j), 11, 45.0, 140.0, testPlayer);
+        MoneyProcess cookingMonkfish = new MoneyProcess (pullItem (7944.0,j), pullItem (7946.0,j), 11, 62.0, 150.0, testPlayer);
+        MoneyProcess cookingKarambwan = new MoneyProcess (pullItem (3142.0,j), pullItem (3144.0,j), 11, 30.0, 190.0, testPlayer);
+        MoneyProcess cookingShark = new MoneyProcess (pullItem (383.0,j), pullItem (385.0,j), 11, 80.0, 210.0, testPlayer);
+        MoneyProcess cookingSeaTurtle = new MoneyProcess (pullItem (395.0,j), pullItem (397.0,j), 11, 82.0, 212.0, testPlayer);
+        MoneyProcess cookingMantaRay = new MoneyProcess (pullItem (389.0,j), pullItem (391.0,j), 11, 91.0, 216.0, testPlayer);
+        MoneyProcess cookingAnglerfish = new MoneyProcess (pullItem (13439.0,j), pullItem (13441.0,j), 11, 84.0, 230.0, testPlayer);
+        MoneyProcess cookingDarkCrab = new MoneyProcess (pullItem (11934.0,j), pullItem (11936.0,j), 11, 90.0, 215.0, testPlayer);
 
         ArrayList<MoneyProcess> dataCookingFish = new ArrayList<MoneyProcess>();
 
@@ -869,12 +891,15 @@ public class MainActivity extends AppCompatActivity {
 
     //CategoryID = 14 (Making Planks)
     public ArrayList<MoneyProcess> dataMakingPlanks(){
+
+        String j = APIWrapper.pullAWSJson("1511,960,1521,8778,6333,8780,6332,8782");
+
         Item ringOfDueling = pullItem (2552.0);
 
-        MoneyProcess makingPlank = new MoneyProcess (pullItem(1511.0), ringOfDueling, pullItem(960.0), 14, 50.0, 0.0, testPlayer);
-        MoneyProcess makingOakPlank = new MoneyProcess (pullItem(1521.0), ringOfDueling, pullItem(8778.0), 14, 50.0, 0.0, testPlayer);
-        MoneyProcess makingTeakPlank = new MoneyProcess (pullItem(6333.0), ringOfDueling, pullItem(8780.0), 14, 50.0, 0.0, testPlayer);
-        MoneyProcess makingMahoganyPlank = new MoneyProcess (pullItem(6332.0), ringOfDueling, pullItem(8782.0), 14, 50.0, 0.0, testPlayer);
+        MoneyProcess makingPlank = new MoneyProcess (pullItem(1511.0,j), ringOfDueling, pullItem(960.0,j), 14, 50.0, 0.0, testPlayer);
+        MoneyProcess makingOakPlank = new MoneyProcess (pullItem(1521.0,j), ringOfDueling, pullItem(8778.0,j), 14, 50.0, 0.0, testPlayer);
+        MoneyProcess makingTeakPlank = new MoneyProcess (pullItem(6333.0,j), ringOfDueling, pullItem(8780.0,j), 14, 50.0, 0.0, testPlayer);
+        MoneyProcess makingMahoganyPlank = new MoneyProcess (pullItem(6332.0,j), ringOfDueling, pullItem(8782.0,j), 14, 50.0, 0.0, testPlayer);
 
         ArrayList<MoneyProcess> dataMakingPlanks = new ArrayList<MoneyProcess>();
 
@@ -890,12 +915,14 @@ public class MainActivity extends AppCompatActivity {
     //CategoryID = 15 (Tanning Leather)
     public ArrayList<MoneyProcess> dataTanningLeather(){
 
-        MoneyProcess tanningLeather = new MoneyProcess (pullItem(1739.0), pullItem(1741.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningHardLeather = new MoneyProcess (pullItem(1739.0), pullItem(1743.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningGreenDragon = new MoneyProcess (pullItem(1753.0), pullItem(1745.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningBlueDragon = new MoneyProcess (pullItem(1751.0), pullItem(2505.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningRedDragon = new MoneyProcess (pullItem(1749.0), pullItem(2507.0), 15, 1.0, 0.0, testPlayer);
-        MoneyProcess tanningBlackDragon = new MoneyProcess (pullItem(1747.0), pullItem(2509.0), 15, 1.0, 0.0, testPlayer);
+        String j = APIWrapper.pullAWSJson("1739,1741,1739,1743,1753,1745,1751,2505,1749,2507,1747,2509");
+
+        MoneyProcess tanningLeather = new MoneyProcess (pullItem(1739.0,j), pullItem(1741.0,j), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningHardLeather = new MoneyProcess (pullItem(1739.0,j), pullItem(1743.0,j), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningGreenDragon = new MoneyProcess (pullItem(1753.0,j), pullItem(1745.0,j), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningBlueDragon = new MoneyProcess (pullItem(1751.0,j), pullItem(2505.0,j), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningRedDragon = new MoneyProcess (pullItem(1749.0,j), pullItem(2507.0,j), 15, 1.0, 0.0, testPlayer);
+        MoneyProcess tanningBlackDragon = new MoneyProcess (pullItem(1747.0,j), pullItem(2509.0,j), 15, 1.0, 0.0, testPlayer);
 
         ArrayList<MoneyProcess> dataTanningLeather = new ArrayList<MoneyProcess>();
 
@@ -914,30 +941,32 @@ public class MainActivity extends AppCompatActivity {
     //Pulling data for decantPrayer, decantSuperRestore, and decantAntivenomPlus causes exceptions and forces the app to close
     public ArrayList<MoneyProcess> dataDecantPotions(){
 
-        Item rangingPotion = pullItem (2444.0);
-        MoneyProcess decantRanging1 = new MoneyProcess (pullItem(173.0), rangingPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantRanging2 = new MoneyProcess (pullItem(171.0), rangingPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantRanging3 = new MoneyProcess (pullItem(169.0), rangingPotion, 18, 1.0, 0.0, testPlayer);
+        String j = APIWrapper.pullAWSJson("2444,173,171,169,4417,4423,4421,4419,7660,7666,7664,7662,3008,3014,3012,3010,3016,3022,3020,3018,2434,143,141,139,2428,125,123,121,2436,149,147,145,2448,185,183,181,2440,161,159,157,3024,3030,3028,3026,2442,167,165,163,2450,193,191,189,6685,6691,6689,6687,12905,12911,12909,12907,12913,12919,12917,12915,12625,12631,12629,12627");
 
-        Item guthixRestPotion = pullItem (4417.0);
-        MoneyProcess decantGuthixRest1 = new MoneyProcess (pullItem(4423.0), guthixRestPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantGuthixRest2 = new MoneyProcess (pullItem(4421.0), guthixRestPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantGuthixRest3 = new MoneyProcess (pullItem(4419.0), guthixRestPotion, 18, 1.0, 0.0, testPlayer);
+        Item rangingPotion = pullItem (2444.0,j);
+        MoneyProcess decantRanging1 = new MoneyProcess (pullItem(173.0,j), rangingPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantRanging2 = new MoneyProcess (pullItem(171.0,j), rangingPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantRanging3 = new MoneyProcess (pullItem(169.0,j), rangingPotion, 18, 1.0, 0.0, testPlayer);
 
-        Item guthixBalancePotion = pullItem (7660.0);
-        MoneyProcess decantGuthixBalance1 = new MoneyProcess (pullItem(7666.0), guthixBalancePotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantGuthixBalance2 = new MoneyProcess (pullItem(7664.0), guthixBalancePotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantGuthixBalance3 = new MoneyProcess (pullItem(7662.0), guthixBalancePotion, 18, 1.0, 0.0, testPlayer);
+        Item guthixRestPotion = pullItem (4417.0,j);
+        MoneyProcess decantGuthixRest1 = new MoneyProcess (pullItem(4423.0,j), guthixRestPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantGuthixRest2 = new MoneyProcess (pullItem(4421.0,j), guthixRestPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantGuthixRest3 = new MoneyProcess (pullItem(4419.0,j), guthixRestPotion, 18, 1.0, 0.0, testPlayer);
 
-        Item energyPotion = pullItem (3008.0);
-        MoneyProcess decantEnergy1 = new MoneyProcess (pullItem(3014.0), energyPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantEnergy2 = new MoneyProcess (pullItem(3012.0), energyPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantEnergy3 = new MoneyProcess (pullItem(3010.0), energyPotion, 18, 1.0, 0.0, testPlayer);
+        Item guthixBalancePotion = pullItem (7660.0,j);
+        MoneyProcess decantGuthixBalance1 = new MoneyProcess (pullItem(7666.0,j), guthixBalancePotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantGuthixBalance2 = new MoneyProcess (pullItem(7664.0,j), guthixBalancePotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantGuthixBalance3 = new MoneyProcess (pullItem(7662.0,j), guthixBalancePotion, 18, 1.0, 0.0, testPlayer);
 
-        Item superEnergyPotion = pullItem (3016.0);
-        MoneyProcess decantSuperEnergy1 = new MoneyProcess (pullItem(3022.0), superEnergyPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperEnergy2 = new MoneyProcess (pullItem(3020.0), superEnergyPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperEnergy3 = new MoneyProcess (pullItem(3018.0), superEnergyPotion, 18, 1.0, 0.0, testPlayer);
+        Item energyPotion = pullItem (3008.0,j);
+        MoneyProcess decantEnergy1 = new MoneyProcess (pullItem(3014.0,j), energyPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantEnergy2 = new MoneyProcess (pullItem(3012.0,j), energyPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantEnergy3 = new MoneyProcess (pullItem(3010.0,j), energyPotion, 18, 1.0, 0.0, testPlayer);
+
+        Item superEnergyPotion = pullItem (3016.0,j);
+        MoneyProcess decantSuperEnergy1 = new MoneyProcess (pullItem(3022.0,j), superEnergyPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperEnergy2 = new MoneyProcess (pullItem(3020.0,j), superEnergyPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperEnergy3 = new MoneyProcess (pullItem(3018.0,j), superEnergyPotion, 18, 1.0, 0.0, testPlayer);
 
         /*
         Item prayerPotion = pullItem (2434.0);
@@ -946,25 +975,25 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess decantPrayer3 = new MoneyProcess (pullItem(139.0), prayerPotion, 18, 1.0, 0.0, testPlayer);
         */
 
-        Item attackPotion = pullItem (2428.0);
-        MoneyProcess decantAttack1 = new MoneyProcess (pullItem(125.0), attackPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAttack2 = new MoneyProcess (pullItem(123.0), attackPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAttack3 = new MoneyProcess (pullItem(121.0), attackPotion, 18, 1.0, 0.0, testPlayer);
+        Item attackPotion = pullItem (2428.0,j);
+        MoneyProcess decantAttack1 = new MoneyProcess (pullItem(125.0,j), attackPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAttack2 = new MoneyProcess (pullItem(123.0,j), attackPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAttack3 = new MoneyProcess (pullItem(121.0,j), attackPotion, 18, 1.0, 0.0, testPlayer);
 
-        Item superAttackPotion = pullItem (2436.0);
-        MoneyProcess decantSuperAttack1 = new MoneyProcess (pullItem(149.0), superAttackPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperAttack2 = new MoneyProcess (pullItem(147.0), superAttackPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperAttack3 = new MoneyProcess (pullItem(145.0), superAttackPotion, 18, 1.0, 0.0, testPlayer);
+        Item superAttackPotion = pullItem (2436.0,j);
+        MoneyProcess decantSuperAttack1 = new MoneyProcess (pullItem(149.0,j), superAttackPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperAttack2 = new MoneyProcess (pullItem(147.0,j), superAttackPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperAttack3 = new MoneyProcess (pullItem(145.0,j), superAttackPotion, 18, 1.0, 0.0, testPlayer);
 
-        Item superAntipoisonPotion = pullItem (2448.0);
-        MoneyProcess decantSuperAntipoison1 = new MoneyProcess (pullItem(185.0), superAntipoisonPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperAntipoison2 = new MoneyProcess (pullItem(183.0), superAntipoisonPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperAntipoison3 = new MoneyProcess (pullItem(181.0), superAntipoisonPotion, 18, 1.0, 0.0, testPlayer);
+        Item superAntipoisonPotion = pullItem (2448.0,j);
+        MoneyProcess decantSuperAntipoison1 = new MoneyProcess (pullItem(185.0,j), superAntipoisonPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperAntipoison2 = new MoneyProcess (pullItem(183.0,j), superAntipoisonPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperAntipoison3 = new MoneyProcess (pullItem(181.0,j), superAntipoisonPotion, 18, 1.0, 0.0, testPlayer);
 
-        Item superStrengthPotion = pullItem (2440.0);
-        MoneyProcess decantSuperStrength1 = new MoneyProcess (pullItem(161.0), superStrengthPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperStrength2 = new MoneyProcess (pullItem(159.0), superStrengthPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperStrength3 = new MoneyProcess (pullItem(157.0), superStrengthPotion, 18, 1.0, 0.0, testPlayer);
+        Item superStrengthPotion = pullItem (2440.0,j);
+        MoneyProcess decantSuperStrength1 = new MoneyProcess (pullItem(161.0,j), superStrengthPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperStrength2 = new MoneyProcess (pullItem(159.0,j), superStrengthPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperStrength3 = new MoneyProcess (pullItem(157.0,j), superStrengthPotion, 18, 1.0, 0.0, testPlayer);
         /*
         Item superRestorePotion = pullItem (3024.0);
         MoneyProcess decantSuperRestore1 = new MoneyProcess (pullItem(3030.0), superRestorePotion, 16, 1.0, 0.0, testPlayer);
@@ -972,25 +1001,25 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess decantSuperRestore3 = new MoneyProcess (pullItem(3026.0), superRestorePotion, 18, 1.0, 0.0, testPlayer);
         */
 
-        Item superDefencePotion = pullItem (2442.0);
-        MoneyProcess decantSuperDefence1 = new MoneyProcess (pullItem(167.0), superDefencePotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperDefence2 = new MoneyProcess (pullItem(165.0), superDefencePotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSuperDefence3 = new MoneyProcess (pullItem(163.0), superDefencePotion, 18, 1.0, 0.0, testPlayer);
+        Item superDefencePotion = pullItem (2442.0,j);
+        MoneyProcess decantSuperDefence1 = new MoneyProcess (pullItem(167.0,j), superDefencePotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperDefence2 = new MoneyProcess (pullItem(165.0,j), superDefencePotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSuperDefence3 = new MoneyProcess (pullItem(163.0,j), superDefencePotion, 18, 1.0, 0.0, testPlayer);
 
-        Item zamorakBrew = pullItem (2450.0);
-        MoneyProcess decantZamorakBrew1 = new MoneyProcess (pullItem(193.0), zamorakBrew, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantZamorakBrew2 = new MoneyProcess (pullItem(191.0), zamorakBrew, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantZamorakBrew3 = new MoneyProcess (pullItem(189.0), zamorakBrew, 18, 1.0, 0.0, testPlayer);
+        Item zamorakBrew = pullItem (2450.0,j);
+        MoneyProcess decantZamorakBrew1 = new MoneyProcess (pullItem(193.0,j), zamorakBrew, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantZamorakBrew2 = new MoneyProcess (pullItem(191.0,j), zamorakBrew, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantZamorakBrew3 = new MoneyProcess (pullItem(189.0,j), zamorakBrew, 18, 1.0, 0.0, testPlayer);
 
-        Item saradominBrew = pullItem (6685.0);
-        MoneyProcess decantSaradominBrew1 = new MoneyProcess (pullItem(6691.0), saradominBrew, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSaradominBrew2 = new MoneyProcess (pullItem(6689.0), saradominBrew, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantSaradominBrew3 = new MoneyProcess (pullItem(6687.0), saradominBrew, 18, 1.0, 0.0, testPlayer);
+        Item saradominBrew = pullItem (6685.0,j);
+        MoneyProcess decantSaradominBrew1 = new MoneyProcess (pullItem(6691.0,j), saradominBrew, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSaradominBrew2 = new MoneyProcess (pullItem(6689.0,j), saradominBrew, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantSaradominBrew3 = new MoneyProcess (pullItem(6687.0,j), saradominBrew, 18, 1.0, 0.0, testPlayer);
 
-        Item antiVenom = pullItem (12905.0);
-        MoneyProcess decantAntiVenom1 = new MoneyProcess (pullItem(12911.0), antiVenom, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAntiVenom2 = new MoneyProcess (pullItem(12909.0), antiVenom, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantAntiVenom3 = new MoneyProcess (pullItem(12907.0), antiVenom, 18, 1.0, 0.0, testPlayer);
+        Item antiVenom = pullItem (12905.0,j);
+        MoneyProcess decantAntiVenom1 = new MoneyProcess (pullItem(12911.0,j), antiVenom, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAntiVenom2 = new MoneyProcess (pullItem(12909.0,j), antiVenom, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantAntiVenom3 = new MoneyProcess (pullItem(12907.0,j), antiVenom, 18, 1.0, 0.0, testPlayer);
 
         /*
         Item antiVenomPlus = pullItem (12913.0);
@@ -999,10 +1028,10 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess decantAntiVenomPlus3 = new MoneyProcess (pullItem(12915.0), antiVenomPlus, 18, 1.0, 0.0, testPlayer);
         */
 
-        Item staminaPotion = pullItem (12625.0);
-        MoneyProcess decantStamina1 = new MoneyProcess (pullItem(12631.0), staminaPotion, 16, 1.0, 0.0, testPlayer);
-        MoneyProcess decantStamina2 = new MoneyProcess (pullItem(12629.0), staminaPotion, 17, 1.0, 0.0, testPlayer);
-        MoneyProcess decantStamina3 = new MoneyProcess (pullItem(12627.0), staminaPotion, 18, 1.0, 0.0, testPlayer);
+        Item staminaPotion = pullItem (12625.0,j);
+        MoneyProcess decantStamina1 = new MoneyProcess (pullItem(12631.0,j), staminaPotion, 16, 1.0, 0.0, testPlayer);
+        MoneyProcess decantStamina2 = new MoneyProcess (pullItem(12629.0,j), staminaPotion, 17, 1.0, 0.0, testPlayer);
+        MoneyProcess decantStamina3 = new MoneyProcess (pullItem(12627.0,j), staminaPotion, 18, 1.0, 0.0, testPlayer);
 
 
 
@@ -1078,30 +1107,32 @@ public class MainActivity extends AppCompatActivity {
     //TODO: Test BarrowsRepair profit calculation methods
     public ArrayList<MoneyProcess> dataBarrowsRepair(){
 
+        String j = APIWrapper.pullAWSJson("4884,4716,4896,4720,4902,4722,4956,4745,4968,4749,4974,4751,4908,4724,4920,4728,4926,4730,4980,4753,4992,4755,4998,4757,4932,4732,4944,4736,4950,4738,4860,4708,4860,4708,4872,4712,4878,4714");
+
         //Required level for Barrows repair is 55 construction
-        MoneyProcess repairDharokHelm = new MoneyProcess (pullItem(4884.0), pullItem(4716.0), 19, 55.0, testPlayer);
-        MoneyProcess repairDharokBody = new MoneyProcess (pullItem(4896.0), pullItem(4720.0), 20, 55.0, testPlayer);
-        MoneyProcess repairDharokLegs = new MoneyProcess (pullItem(4902.0), pullItem(4722.0), 21, 55.0, testPlayer);
+        MoneyProcess repairDharokHelm = new MoneyProcess (pullItem(4884.0,j), pullItem(4716.0,j), 19, 55.0, testPlayer);
+        MoneyProcess repairDharokBody = new MoneyProcess (pullItem(4896.0,j), pullItem(4720.0,j), 20, 55.0, testPlayer);
+        MoneyProcess repairDharokLegs = new MoneyProcess (pullItem(4902.0,j), pullItem(4722.0,j), 21, 55.0, testPlayer);
 
-        MoneyProcess repairToragHelm = new MoneyProcess (pullItem(4956.0), pullItem(4745.0), 19, 55.0, testPlayer);
-        MoneyProcess repairToragBody = new MoneyProcess (pullItem(4968.0), pullItem(4749.0), 20, 55.0, testPlayer);
-        MoneyProcess repairToragLegs = new MoneyProcess (pullItem(4974.0), pullItem(4751.0), 21, 55.0, testPlayer);
+        MoneyProcess repairToragHelm = new MoneyProcess (pullItem(4956.0,j), pullItem(4745.0,j), 19, 55.0, testPlayer);
+        MoneyProcess repairToragBody = new MoneyProcess (pullItem(4968.0,j), pullItem(4749.0,j), 20, 55.0, testPlayer);
+        MoneyProcess repairToragLegs = new MoneyProcess (pullItem(4974.0,j), pullItem(4751.0,j), 21, 55.0, testPlayer);
 
-        MoneyProcess repairGuthanHelm = new MoneyProcess (pullItem(4908.0), pullItem(4724.0), 19, 55.0, testPlayer);
-        MoneyProcess repairGuthanBody = new MoneyProcess (pullItem(4920.0), pullItem(4728.0), 20, 55.0, testPlayer);
-        MoneyProcess repairGuthanLegs = new MoneyProcess (pullItem(4926.0), pullItem(4730.0), 21, 55.0, testPlayer);
+        MoneyProcess repairGuthanHelm = new MoneyProcess (pullItem(4908.0,j), pullItem(4724.0,j), 19, 55.0, testPlayer);
+        MoneyProcess repairGuthanBody = new MoneyProcess (pullItem(4920.0,j), pullItem(4728.0,j), 20, 55.0, testPlayer);
+        MoneyProcess repairGuthanLegs = new MoneyProcess (pullItem(4926.0,j), pullItem(4730.0,j), 21, 55.0, testPlayer);
 
-        MoneyProcess repairVeracHelm = new MoneyProcess (pullItem(4980.0), pullItem(4753.0), 19, 55.0, testPlayer);
-        MoneyProcess repairVeracBody = new MoneyProcess (pullItem(4992.0), pullItem(4755.0), 20, 55.0, testPlayer);
-        MoneyProcess repairVeracLegs = new MoneyProcess (pullItem(4998.0), pullItem(4757.0), 21, 55.0, testPlayer);
+        MoneyProcess repairVeracHelm = new MoneyProcess (pullItem(4980.0,j), pullItem(4753.0,j), 19, 55.0, testPlayer);
+        MoneyProcess repairVeracBody = new MoneyProcess (pullItem(4992.0,j), pullItem(4755.0,j), 20, 55.0, testPlayer);
+        MoneyProcess repairVeracLegs = new MoneyProcess (pullItem(4998.0,j), pullItem(4757.0,j), 21, 55.0, testPlayer);
 
-        MoneyProcess repairKarilHelm = new MoneyProcess (pullItem(4932.0), pullItem(4732.0), 19, 55.0, testPlayer);
-        MoneyProcess repairKarilBody = new MoneyProcess (pullItem(4944.0), pullItem(4736.0), 20, 55.0, testPlayer);
-        MoneyProcess repairKarilLegs = new MoneyProcess (pullItem(4950.0), pullItem(4738.0), 21, 55.0, testPlayer);
+        MoneyProcess repairKarilHelm = new MoneyProcess (pullItem(4932.0,j), pullItem(4732.0,j), 19, 55.0, testPlayer);
+        MoneyProcess repairKarilBody = new MoneyProcess (pullItem(4944.0,j), pullItem(4736.0,j), 20, 55.0, testPlayer);
+        MoneyProcess repairKarilLegs = new MoneyProcess (pullItem(4950.0,j), pullItem(4738.0,j), 21, 55.0, testPlayer);
 
-        MoneyProcess repairAhrimHelm = new MoneyProcess (pullItem(4860.0), pullItem(4708.0), 19, 55.0, testPlayer);
-        MoneyProcess repairAhrimBody = new MoneyProcess (pullItem(4872.0), pullItem(4712.0), 20, 55.0, testPlayer);
-        MoneyProcess repairAhrimLegs = new MoneyProcess (pullItem(4878.0), pullItem(4714.0), 21, 55.0, testPlayer);
+        MoneyProcess repairAhrimHelm = new MoneyProcess (pullItem(4860.0,j), pullItem(4708.0,j), 19, 55.0, testPlayer);
+        MoneyProcess repairAhrimBody = new MoneyProcess (pullItem(4872.0,j), pullItem(4712.0,j), 20, 55.0, testPlayer);
+        MoneyProcess repairAhrimLegs = new MoneyProcess (pullItem(4878.0,j), pullItem(4714.0,j), 21, 55.0, testPlayer);
 
         ArrayList<MoneyProcess> dataBarrowsRepair = new ArrayList<MoneyProcess>();
 
@@ -1132,13 +1163,15 @@ public class MainActivity extends AppCompatActivity {
     //TODO: Test BlastFurnace profit calculation methods
     public ArrayList<MoneyProcess> dataBlastFurnace(){
 
-        Item coalOre = pullItem (453.0);
+        String j = APIWrapper.pullAWSJson("453,440,444,2357,447,449,451,2353,2359,2361,2363");
 
-        MoneyProcess blastSteel = new MoneyProcess (coalOre, pullItem(440.0), pullItem (2353.0), 22, 30.0, 17.5, testPlayer);
-        MoneyProcess blastGold = new MoneyProcess (pullItem(444.0), pullItem (2357.0), 23, 40.0, 56.2, testPlayer);
-        MoneyProcess blastMithril = new MoneyProcess (coalOre, pullItem(447.0), pullItem (2359.0), 24, 50.0, 30.0, testPlayer);
-        MoneyProcess blastAdamantite = new MoneyProcess (coalOre, pullItem(449.0), pullItem (2361.0), 25, 70.0, 37.5, testPlayer);
-        MoneyProcess blastRunite = new MoneyProcess (coalOre, pullItem(451.0), pullItem (2363.0), 26, 85.0, 50.0, testPlayer);
+        Item coalOre = pullItem (453.0,j);
+
+        MoneyProcess blastSteel = new MoneyProcess (coalOre, pullItem(440.0,j), pullItem (2353.0,j), 22, 30.0, 17.5, testPlayer);
+        MoneyProcess blastGold = new MoneyProcess (pullItem(444.0,j), pullItem (2357.0,j), 23, 40.0, 56.2, testPlayer);
+        MoneyProcess blastMithril = new MoneyProcess (coalOre, pullItem(447.0,j), pullItem (2359.0,j), 24, 50.0, 30.0, testPlayer);
+        MoneyProcess blastAdamantite = new MoneyProcess (coalOre, pullItem(449.0,j), pullItem (2361.0,j), 25, 70.0, 37.5, testPlayer);
+        MoneyProcess blastRunite = new MoneyProcess (coalOre, pullItem(451.0,j), pullItem (2363.0,j), 26, 85.0, 50.0, testPlayer);
 
         blastSteel.setIfMemberOnly (true);
         blastGold.setIfMemberOnly (true);
