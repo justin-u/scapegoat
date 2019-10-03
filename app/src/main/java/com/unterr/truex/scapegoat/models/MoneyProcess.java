@@ -224,8 +224,6 @@ public class MoneyProcess {
             return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()/2.0)* 4.0));
         }if (_categoryID == 18){
             return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()/3.0)* 4.0));
-        }if (_categoryID == 23){
-            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 12.4));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -261,6 +259,8 @@ public class MoneyProcess {
         }if (_categoryID == 22){
             //Calculations take into account the ammount of coal ore needed for each bar as well as the amount of GP spent per bar based on the 72k cost per hour
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + _inputItem2.getTradePrice () + 13.3));
+        }if (_categoryID == 23){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 12.4));
         }if (_categoryID == 24){
             return ((_productItem.getTradePrice ()) - ((_inputItem.getTradePrice () * 2.0) + _inputItem2.getTradePrice () + 20.0));
         }if (_categoryID == 25){

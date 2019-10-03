@@ -1,12 +1,17 @@
 package com.unterr.truex.scapegoat.activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +22,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.unterr.truex.scapegoat.R;
 import com.unterr.truex.scapegoat.elements.CharacterAdapter;
@@ -34,6 +42,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.view.View.VISIBLE;
+
 public class MainActivity extends AppCompatActivity {
 
     // Android Elements
@@ -46,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager  layoutManager;
     public String JsonData;
 
-
     // Objects
     //TODO: Add
-    public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
+    //public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
+    public Player testPlayer = new Player("Guest", 1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
 
 
 
@@ -69,11 +82,31 @@ public class MainActivity extends AppCompatActivity {
         //setupDrawerContent (navigationView);
 
 
-
-        recyclerView = (RecyclerView) findViewById (R.id.lst);
+        recyclerView = findViewById (R.id.lst);
         layoutManager = new LinearLayoutManager (this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+
+
+
+        String SharedUser = PreferenceManager.getDefaultSharedPreferences(this).getString("USERNAME", "default");
+        //SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+
+        showUserDialog (MainActivity.this);
+
+        /*
+        if(SharedUser == "default"){
+
+
+            String userName = testPlayer.getUsername ();
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString("USERNAME", userName).apply();
+
+            //TODO: Alter myStringToSave to the username String
+        } else{
+            testPlayer = APIWrapper.pullPlayer (SharedUser);
+        }
+        */
+
 
         //TODO: Ensure that JsonData value is not null when making pullItem calls (onCreate)
         //JsonData = APIWrapper.pullAWSJson();
@@ -83,13 +116,14 @@ public class MainActivity extends AppCompatActivity {
 
         //JsonData = APIWrapper.pullAWSJson ();
 
-
-
-        //TODO: Add navigation bar options for DecantPotions() and BarrowsRepair()
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        mDrawer.closeDrawers();
+                        //TODO: Fix Progress Bar Animation (circular_progress_bar.xml)
+                        //ProgressBar pgsBar = findViewById(R.id.pBar);
+                        //pgsBar.setVisibility(View.VISIBLE);
                         // set item as selected to persist highlight
                         switch (menuItem.getItemId ()){
                             case R.id.nav_character:{
@@ -242,9 +276,11 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             }
                         }
+
                         menuItem.setChecked(true);
                         // close drawer when item is tapped
-                        mDrawer.closeDrawers();
+
+                        //pgsBar.setVisibility(View.GONE);
 
                         return false;
                     }
@@ -294,6 +330,37 @@ public class MainActivity extends AppCompatActivity {
         */
 
     }
+
+    public void showUserDialog(Context c){
+        final EditText taskEditText = new EditText(c);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("Enter your username:");
+            alertDialogBuilder.setView(taskEditText);
+            alertDialogBuilder.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    if(!APIWrapper.verifyUsername (String.valueOf (taskEditText.getText ()))){
+                        Toast.makeText(MainActivity.this,"Username Not Found",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this,"Username Found! Go to settings to change your current Username.",Toast.LENGTH_LONG).show();
+                        testPlayer = APIWrapper.pullPlayer (String.valueOf (taskEditText.getText ()));
+                        //TODO: Save username String to SharedPreferences
+                        //finish();
+                    }
+             }});
+
+        alertDialogBuilder.setNegativeButton("Skip",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this,"No Username added. Go to settings to add a Username.",Toast.LENGTH_LONG).show();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 
     public void setToolbar(String heading) {
         toolbar.setTitle(heading);
@@ -487,7 +554,6 @@ public class MainActivity extends AppCompatActivity {
 
     //CategoryID = 1 (Cleaning Herbs)
     public ArrayList<MoneyProcess> dataHerbCleaning(){
-
         String j = APIWrapper.pullAWSJson("199,249,201,251,203,253,205,255,207,257,3049,2998,209,259,211,261,213,263,3051,3000,215,265,2485,2481,217,267,219,269");
 
         MoneyProcess cleaningGuam = new MoneyProcess (pullItem(199.0,j), pullItem(249.0,j), 1, 3.0, 2.5, testPlayer);
@@ -1104,7 +1170,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CategoryID = 19, 20, 21 (Barrows Repair)
-    //TODO: Test BarrowsRepair profit calculation methods
     public ArrayList<MoneyProcess> dataBarrowsRepair(){
 
         String j = APIWrapper.pullAWSJson("4884,4716,4896,4720,4902,4722,4956,4745,4968,4749,4974,4751,4908,4724,4920,4728,4926,4730,4980,4753,4992,4755,4998,4757,4932,4732,4944,4736,4950,4738,4860,4708,4860,4708,4872,4712,4878,4714");
@@ -1160,7 +1225,7 @@ public class MainActivity extends AppCompatActivity {
 
     //CategoryID = 22, 23, 24, 25, 26
     //Alter MoneyProcesses to make sure that they are listed as MemberOnly
-    //TODO: Test BlastFurnace profit calculation methods
+    //TODO: Fix BlastFurnace profit calculation methods
     public ArrayList<MoneyProcess> dataBlastFurnace(){
 
         String j = APIWrapper.pullAWSJson("453,440,444,2357,447,449,451,2353,2359,2361,2363");

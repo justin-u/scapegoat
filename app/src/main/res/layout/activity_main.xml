@@ -16,13 +16,14 @@
         tools:context=".activities.MainActivity">
 
         //Toolbar displayed at the top of the activity
+
         <include
             layout="@layout/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <include
+            android:id="@+id/include"
             layout="@layout/content_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,6 +37,21 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </FrameLayout>
+
+        <ProgressBar
+            android:id="@+id/pBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:visibility="invisible"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="bottom|center"
+            tools:visibility="visible" />
+
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
