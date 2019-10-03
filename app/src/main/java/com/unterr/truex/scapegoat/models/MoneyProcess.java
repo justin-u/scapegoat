@@ -224,6 +224,22 @@ public class MoneyProcess {
             return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()/2.0)* 4.0));
         }if (_categoryID == 18){
             return ((_productItem.getTradePrice ()) - Math.round((_inputItem.getTradePrice ()/3.0)* 4.0));
+        }if (_categoryID == 27 || _productItem.getItemID () == 2353.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 8088.0));
+        }if (_categoryID == 27 || _productItem.getItemID () == 1319.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 38400.0));
+        }if (_categoryID == 27 || _productItem.getItemID () == 1079.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 38400.0));
+        }if (_categoryID == 27 || _productItem.getItemID () == 1163.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 21120.0));
+        }if (_categoryID == 28 || _productItem.getItemID () == 2499.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 5616.0));
+        }if (_categoryID == 28 || _productItem.getItemID () == 1123.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 9984.0));
+        }if (_categoryID == 28 || _productItem.getItemID () == 1121.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 3120.0));
+        }if (_categoryID == 28 || _productItem.getItemID () == 1135.0){
+            return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 4680.0));
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -324,6 +340,10 @@ public class MoneyProcess {
             return 2700.0;
         }if (_categoryID == 26){
             return 2150.0;
+        }if (_categoryID == 27){
+            return 70.0;
+        }if (_categoryID == 28){
+            return 125.0;
         }else{
             return 1.0;
         }
@@ -370,9 +390,9 @@ public class MoneyProcess {
             skillLvl = _player.getCraftingLvl ();
         }if (this.categoryID == 19 || this.categoryID == 20 || this.categoryID == 21){
             skillLvl = _player.getConstructionLvl();
-        }
-
-        if (skillLvl >= this.reqLvl){
+        }if (this.categoryID == 27 || this.categoryID == 28){
+            skillLvl = _player.getMagicLvl ();
+        }if (skillLvl >= this.reqLvl){
             return true;
         } else{
             return false;

@@ -18,6 +18,10 @@
             android:icon="@drawable/herblore"
             android:title="Decanting Potions" />
         <item
+            android:id="@+id/nav_highAlchemy"
+            android:icon="@drawable/magic"
+            android:title="High Alchemy" />
+        <item
             android:id="@+id/nav_growingSaplings"
             android:icon="@drawable/farming"
             android:title="Growing Saplings" />

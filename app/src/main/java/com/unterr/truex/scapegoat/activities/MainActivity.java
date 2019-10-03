@@ -164,6 +164,16 @@ public class MainActivity extends AppCompatActivity {
                                     setToolbar ("Decanting Potions");
                                 }
                                 break;
+                            }case R.id.nav_highAlchemy:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataHighAlch ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getMagicLvl () != null){
+                                    setToolbar ("High Alchemy" + " (lvl:" + (String.format("%.0f", testPlayer.getHerbLvl ())) + ")");
+                                }else{
+                                    setToolbar ("High Alchemy");
+                                }
+                                break;
                             }case R.id.nav_growingSaplings:{
                                 mDrawer.closeDrawer (GravityCompat.START);
                                 adapter = new CustomAdapter (dataSaplings ());
@@ -1255,14 +1265,32 @@ public class MainActivity extends AppCompatActivity {
         return(dataBlastFurnace);
     }
 
-    //CategoryID = 27
-    //TODO: Test HighAlch method
+    //CategoryID = 27 (70 item buy max), 28 (125 item buy max)
+    //TODO: Test HighAlch method and add ItemIDs to AWS server
     public ArrayList<MoneyProcess> dataHighAlch(){
         Item natureRune = pullItem (561.0);
 
-        MoneyProcess alchBlackDHide = new MoneyProcess (natureRune, pullItem (2353.0), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchBlackDHideBody = new MoneyProcess (natureRune, pullItem (2353.0), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchBlueDHideBody = new MoneyProcess (natureRune, pullItem (2499.0), 28, 55.0, 65.0, testPlayer);
+        MoneyProcess alchAdamantPlatebody = new MoneyProcess (natureRune, pullItem (1123.0), 28, 55.0, 65.0, testPlayer);
+        MoneyProcess alchGreenDHideBody = new MoneyProcess (natureRune, pullItem (1135.0), 28, 55.0, 65.0, testPlayer);
+        MoneyProcess alchRune2hSword = new MoneyProcess (natureRune, pullItem (1319.0), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchRunePlatelegs = new MoneyProcess (natureRune, pullItem (1079.0), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchRuneFullHelm = new MoneyProcess (natureRune, pullItem (1163.0), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchMithrilPlatebody = new MoneyProcess (natureRune, pullItem (1121.0), 28, 55.0, 65.0, testPlayer);
+
 
         ArrayList<MoneyProcess> dataHighAlch = new ArrayList<> ();
+
+        dataHighAlch.add(alchBlackDHideBody);
+        dataHighAlch.add(alchBlueDHideBody);
+        dataHighAlch.add(alchAdamantPlatebody);
+        dataHighAlch.add(alchGreenDHideBody);
+        dataHighAlch.add(alchBlackDHideBody);
+        dataHighAlch.add(alchRune2hSword);
+        dataHighAlch.add(alchRunePlatelegs);
+        dataHighAlch.add(alchRuneFullHelm);
+        dataHighAlch.add(alchMithrilPlatebody);
 
         return(dataHighAlch);
     }
