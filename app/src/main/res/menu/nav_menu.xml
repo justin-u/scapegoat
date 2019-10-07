@@ -65,5 +65,9 @@
             android:id="@+id/nav_tanningLeather"
             android:icon="@drawable/crafting"
             android:title="Tanning Leather" />
+        <item
+            android:id="@+id/nav_cuttingLogs"
+            android:icon="@drawable/woodcutting"
+            android:title="Cutting Logs" />
     </group>
 </menu>

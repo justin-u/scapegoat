@@ -165,6 +165,25 @@ public class MoneyProcess {
         this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
     }
 
+    public MoneyProcess(Item _inputItem, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Double _outputTotal, Player _player){
+        this.inputID = getItemID (_inputItem);
+        this.productID = getItemID (_productItem);
+        this.categoryID = _categoryID;
+        this.reqLvl = _reqLvl;
+        this.xpPer = _xpPer;
+        this.name = getItemName (_inputItem, _productItem, _categoryID);
+        this.inputTradePrice = 0.0;
+        this.productTradePrice = getItemTradePrice (_productItem);
+        this.profitPer = getProfitPer (_inputItem, _productItem, _categoryID);
+        this.outputTotal = _outputTotal;
+        this.profitTotal = (this.profitPer * _outputTotal);
+        this.xpTotal = (_xpPer * _outputTotal);
+        this.ifMemberOnly = getIfMemberOnly (_inputItem, _productItem);
+        //Alter ReqLvlMet
+        this.reqLvlMet = setReqLvlMet (_player);
+        this.iconUrl = getIconUrl (_inputItem, _productItem, _categoryID);
+    }
+
     public MoneyProcess(Item _inputItem, Item _inputItem2, Item _productItem, int _categoryID, Double _reqLvl, Double _xpPer, Player _player){
         this.inputID = getItemID (_inputItem);
         this.productID = getItemID (_productItem);
@@ -240,6 +259,8 @@ public class MoneyProcess {
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 3120.0));
         }if (_categoryID == 28 || _productItem.getItemID () == 1135.0){
             return ((_productItem.getTradePrice ()) - (_inputItem.getTradePrice () + 4680.0));
+        }if (_categoryID == 29 || _categoryID == 30){
+            return (_productItem.getTradePrice ());
         }else{
             return (_productItem.getTradePrice ()) - (_inputItem.getTradePrice ());
         }
@@ -330,6 +351,8 @@ public class MoneyProcess {
             return 1000.0;
         }if (_categoryID == 18){
             return 1500.0;
+        }if (_categoryID == 19 || _categoryID == 20 || _categoryID == 21){
+            return 15.0;
         }if (_categoryID == 22){
             return 5400.0;
         }if (_categoryID == 23){
@@ -392,6 +415,8 @@ public class MoneyProcess {
             skillLvl = _player.getConstructionLvl();
         }if (this.categoryID == 27 || this.categoryID == 28){
             skillLvl = _player.getMagicLvl ();
+        }if (this.categoryID == 29 || this.categoryID == 30){
+            skillLvl = _player.getWoodcuttingLvl ();
         }if (skillLvl >= this.reqLvl){
             return true;
         } else{

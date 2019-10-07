@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager  layoutManager;
     public String JsonData;
 
-    // Objects
-    //TODO: Add
+    //TODO: Remove unused bits of code
+    //Objects
     //public Player testPlayer = APIWrapper.pullPlayer ("Jtruezie");
     public Player testPlayer = new Player("Guest", 1.0, 1.0, 1.0, 1.0, 1.0,
             1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
@@ -87,17 +87,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-
+        //SharedPreferences sharedPreferences = this.getSharedPreferences("com.unterr.truex.scapegoat.sharedpreferences", Context.MODE_PRIVATE);
 
         String SharedUser = PreferenceManager.getDefaultSharedPreferences(this).getString("USERNAME", "default");
         //SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 
-        showUserDialog (MainActivity.this);
 
-        /*
+
         if(SharedUser == "default"){
 
-
+            showUserDialog (MainActivity.this);
             String userName = testPlayer.getUsername ();
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString("USERNAME", userName).apply();
 
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         } else{
             testPlayer = APIWrapper.pullPlayer (SharedUser);
         }
-        */
+
 
 
         //TODO: Ensure that JsonData value is not null when making pullItem calls (onCreate)
@@ -282,6 +281,16 @@ public class MainActivity extends AppCompatActivity {
                                     setToolbar ("Tanning Leather" + " (lvl:" + (String.format("%.0f", testPlayer.getCraftingLvl ())) + ")");
                                 }else{
                                     setToolbar ("Tanning Leather");
+                                }
+                                break;
+                            }case R.id.nav_cuttingLogs:{
+                                mDrawer.closeDrawer (GravityCompat.START);
+                                adapter = new CustomAdapter (dataCuttingLogs ());
+                                recyclerView.setAdapter(adapter);
+                                if (testPlayer.getCraftingLvl () != null){
+                                    setToolbar ("Cutting Logs" + " (lvl:" + (String.format("%.0f", testPlayer.getWoodcuttingLvl ())) + ")");
+                                }else{
+                                    setToolbar ("Cutting Logs");
                                 }
                                 break;
                             }
@@ -462,7 +471,7 @@ public class MainActivity extends AppCompatActivity {
         Double _tradePrice = 0.0;
 
         try {
-            //TODO: Alter AWSJson data to a universal variable
+            //TODO: Alter AWSJson data to remove _iconURL and _itemID
             JSONObject reader = new JSONObject(JsonData);
             String urlItemID = String.format("%.0f", itemID);
             JSONObject itemObj = reader.getJSONObject (urlItemID);
@@ -494,8 +503,6 @@ public class MainActivity extends AppCompatActivity {
 
         Item newItemObject = new Item(_iconURL, _iconLargeURL, _itemID, _memberOnly, _name, _tradePrice);
 
-        //TODO: Create check to validate if the given (perameter) itemID matches the itemID pulled from the ge API
-
         //Double itemID converted to String urlItemID with formatting to remove the decimal point and decimal values. (decimal point causes url to not return data)
         //String urlItemID = String.format("%.0f", itemID);
 
@@ -517,7 +524,7 @@ public class MainActivity extends AppCompatActivity {
         Double _tradePrice = 0.0;
 
         try {
-            //TODO: Alter AWSJson data to a universal variable
+            //TODO: Alter AWSJson data to remove _iconURL and _itemID
             JSONObject reader = new JSONObject(json);
             String urlItemID = String.format("%.0f", itemID);
             JSONObject itemObj = reader.getJSONObject (urlItemID);
@@ -549,15 +556,12 @@ public class MainActivity extends AppCompatActivity {
 
         Item newItemObject = new Item(_iconURL, _iconLargeURL, _itemID, _memberOnly, _name, _tradePrice);
 
-        //TODO: Create check to validate if the given (perameter) itemID matches the itemID pulled from the ge API
 
         //Double itemID converted to String urlItemID with formatting to remove the decimal point and decimal values. (decimal point causes url to not return data)
         //String urlItemID = String.format("%.0f", itemID);
 
         //DownloadItem task = new DownloadItem();
         //task.execute("http://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json?item=" + urlItemID);
-
-        //TODO: create new Item object with the pulled JSON data
 
         return newItemObject;
     }
@@ -968,9 +972,9 @@ public class MainActivity extends AppCompatActivity {
     //CategoryID = 14 (Making Planks)
     public ArrayList<MoneyProcess> dataMakingPlanks(){
 
-        String j = APIWrapper.pullAWSJson("1511,960,1521,8778,6333,8780,6332,8782");
+        String j = APIWrapper.pullAWSJson("2552,1511,960,1521,8778,6333,8780,6332,8782");
 
-        Item ringOfDueling = pullItem (2552.0);
+        Item ringOfDueling = pullItem (2552.0,j);
 
         MoneyProcess makingPlank = new MoneyProcess (pullItem(1511.0,j), ringOfDueling, pullItem(960.0,j), 14, 50.0, 0.0, testPlayer);
         MoneyProcess makingOakPlank = new MoneyProcess (pullItem(1521.0,j), ringOfDueling, pullItem(8778.0,j), 14, 50.0, 0.0, testPlayer);
@@ -1234,7 +1238,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CategoryID = 22, 23, 24, 25, 26
-    //Alter MoneyProcesses to make sure that they are listed as MemberOnly
+    //TODO: Alter MoneyProcesses to make sure that they are listed as MemberOnly
     //TODO: Fix BlastFurnace profit calculation methods
     public ArrayList<MoneyProcess> dataBlastFurnace(){
 
@@ -1268,16 +1272,19 @@ public class MainActivity extends AppCompatActivity {
     //CategoryID = 27 (70 item buy max), 28 (125 item buy max)
     //TODO: Test HighAlch method and add ItemIDs to AWS server
     public ArrayList<MoneyProcess> dataHighAlch(){
-        Item natureRune = pullItem (561.0);
 
-        MoneyProcess alchBlackDHideBody = new MoneyProcess (natureRune, pullItem (2353.0), 27, 55.0, 65.0, testPlayer);
-        MoneyProcess alchBlueDHideBody = new MoneyProcess (natureRune, pullItem (2499.0), 28, 55.0, 65.0, testPlayer);
-        MoneyProcess alchAdamantPlatebody = new MoneyProcess (natureRune, pullItem (1123.0), 28, 55.0, 65.0, testPlayer);
-        MoneyProcess alchGreenDHideBody = new MoneyProcess (natureRune, pullItem (1135.0), 28, 55.0, 65.0, testPlayer);
-        MoneyProcess alchRune2hSword = new MoneyProcess (natureRune, pullItem (1319.0), 27, 55.0, 65.0, testPlayer);
-        MoneyProcess alchRunePlatelegs = new MoneyProcess (natureRune, pullItem (1079.0), 27, 55.0, 65.0, testPlayer);
-        MoneyProcess alchRuneFullHelm = new MoneyProcess (natureRune, pullItem (1163.0), 27, 55.0, 65.0, testPlayer);
-        MoneyProcess alchMithrilPlatebody = new MoneyProcess (natureRune, pullItem (1121.0), 28, 55.0, 65.0, testPlayer);
+        String j = APIWrapper.pullAWSJson("561,2353,2499,1123,1135,1319,1079,1163,1121");
+
+        Item natureRune = pullItem (561.0,j);
+
+        MoneyProcess alchBlackDHideBody = new MoneyProcess (natureRune, pullItem (2353.0,j), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchBlueDHideBody = new MoneyProcess (natureRune, pullItem (2499.0,j), 28, 55.0, 65.0, testPlayer);
+        MoneyProcess alchAdamantPlatebody = new MoneyProcess (natureRune, pullItem (1123.0,j), 28, 55.0, 65.0, testPlayer);
+        MoneyProcess alchGreenDHideBody = new MoneyProcess (natureRune, pullItem (1135.0,j), 28, 55.0, 65.0, testPlayer);
+        MoneyProcess alchRune2hSword = new MoneyProcess (natureRune, pullItem (1319.0,j), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchRunePlatelegs = new MoneyProcess (natureRune, pullItem (1079.0,j), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchRuneFullHelm = new MoneyProcess (natureRune, pullItem (1163.0,j), 27, 55.0, 65.0, testPlayer);
+        MoneyProcess alchMithrilPlatebody = new MoneyProcess (natureRune, pullItem (1121.0,j), 28, 55.0, 65.0, testPlayer);
 
 
         ArrayList<MoneyProcess> dataHighAlch = new ArrayList<> ();
@@ -1293,6 +1300,33 @@ public class MainActivity extends AppCompatActivity {
         dataHighAlch.add(alchMithrilPlatebody);
 
         return(dataHighAlch);
+    }
+
+    //CategoryID = 29 (Using Ring of Dueling), 30 (No Ring of Dueling)
+    public ArrayList<MoneyProcess> dataCuttingLogs(){
+        String j = APIWrapper.pullAWSJson("2552,1521,6333,1517,6332,1515,1513,19669");
+
+        Item ringOfDueling = pullItem (2552.0,j);
+
+        MoneyProcess cuttingOak = new MoneyProcess (ringOfDueling, pullItem (1521.0,j), 30, 15.0, 37.5, 1100.0, testPlayer);
+        MoneyProcess cuttingTeak = new MoneyProcess (ringOfDueling, pullItem (6333.0,j), 29, 35.0, 85.0, 550.0, testPlayer);
+        MoneyProcess cuttingMaple = new MoneyProcess (ringOfDueling, pullItem (1517.0,j), 30, 45.0, 100.0, 360.0, testPlayer);
+        MoneyProcess cuttingMahogany = new MoneyProcess (ringOfDueling, pullItem (6332.0,j), 29, 50.0, 125.0, 350.0, testPlayer);
+        MoneyProcess cuttingYew = new MoneyProcess (ringOfDueling, pullItem (1515.0,j), 30, 60.0, 175.0, 175.0, testPlayer);
+        MoneyProcess cuttingMagic = new MoneyProcess (ringOfDueling, pullItem (1513.0,j), 30, 75.0, 250.0, 130.0, testPlayer);
+        MoneyProcess cuttingRedwood = new MoneyProcess (ringOfDueling, pullItem (19669.0,j), 30, 90.0, 380.0, 180.0, testPlayer);
+
+        ArrayList<MoneyProcess> dataCuttingLogs = new ArrayList<> ();
+
+        dataCuttingLogs.add(cuttingOak);
+        dataCuttingLogs.add(cuttingTeak);
+        dataCuttingLogs.add(cuttingMaple);
+        dataCuttingLogs.add(cuttingMahogany);
+        dataCuttingLogs.add(cuttingYew);
+        dataCuttingLogs.add(cuttingMagic);
+        dataCuttingLogs.add(cuttingRedwood);
+
+        return(dataCuttingLogs);
     }
 
 }

@@ -107,10 +107,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         }
 
         if (process.getCategoryID () == 16 || process.getCategoryID () == 17 || process.getCategoryID () == 18){
-            holder.labelProfitPerHr.setText ("Buy Limit Profit(2000):");
+            holder.labelProfitPerHr.setText ("Buy Limit Profit (2000):");
         }if (process.getCategoryID () == 10){
             holder.labelProfitPer.setText ("Profit Per Patch:");
             holder.labelProfitPerHr.setText ("Total Run Profit (7):");
+        }if (process.getCategoryID () == 19 || process.getCategoryID () == 20 || process.getCategoryID () == 21){
+            holder.labelProfitPer.setText ("Profit Per Item:");
+            holder.labelProfitPerHr.setText ("Buy Limit Profit (15):");
+        }if (process.getCategoryID () == 27){
+            holder.labelProfitPer.setText ("Profit Per Item:");
+            holder.labelProfitPerHr.setText ("Buy Limit Profit (70):");
+        }if (process.getCategoryID () == 28){
+            holder.labelProfitPer.setText ("Profit Per Item:");
+            holder.labelProfitPerHr.setText ("Buy Limit Profit (125):");
         }
 
         holder.name.setText (process.getProcessName ());
@@ -137,6 +146,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             holder.imageSkill.setImageResource (R.drawable.firemaking);
         }if (process.categoryID == 15){
             holder.imageSkill.setImageResource (R.drawable.crafting);
+        }if (process.categoryID == 27 || process.categoryID == 28){
+            holder.imageSkill.setImageResource (R.drawable.magic);
+        }if (process.categoryID == 29 || process.categoryID == 30){
+            holder.imageSkill.setImageResource (R.drawable.woodcutting);
         }
 
 
