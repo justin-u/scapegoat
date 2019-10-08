@@ -13,6 +13,7 @@ public class Item {
     private String  name;
     private Double  tradePrice;
 
+    //TODO: Remove iconURL String and all uses of it throughout the project
     public Item(){}
 
     //Constructor method to call the pullItem method (APIWrapper) that pulls JSON data and uses the second constructor to create a new Item object.

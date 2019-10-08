@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView                recyclerView;
     private RecyclerView.Adapter        adapter;
     private RecyclerView.LayoutManager  layoutManager;
+    //TODO: Remove JsonData String
     public String JsonData;
 
     //TODO: Remove unused bits of code
@@ -89,14 +90,14 @@ public class MainActivity extends AppCompatActivity {
 
         //SharedPreferences sharedPreferences = this.getSharedPreferences("com.unterr.truex.scapegoat.sharedpreferences", Context.MODE_PRIVATE);
 
-        String SharedUser = PreferenceManager.getDefaultSharedPreferences(this).getString("USERNAME", "default");
+        //String SharedUser = PreferenceManager.getDefaultSharedPreferences(this).getString("USERNAME", "default");
         //SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 
+        showUserDialog (MainActivity.this);
 
-
+        /*
         if(SharedUser == "default"){
 
-            showUserDialog (MainActivity.this);
             String userName = testPlayer.getUsername ();
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString("USERNAME", userName).apply();
 
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         } else{
             testPlayer = APIWrapper.pullPlayer (SharedUser);
         }
-
+        */
 
 
         //TODO: Ensure that JsonData value is not null when making pullItem calls (onCreate)
@@ -516,7 +517,7 @@ public class MainActivity extends AppCompatActivity {
 
     public Item pullItem(final Double itemID, String json){
 
-        String _iconURL = new String();
+        //String _iconURL = new String();
         String _iconLargeURL = new String();
         Double _itemID = 0.0;
         Boolean _memberOnly = false;
@@ -524,13 +525,13 @@ public class MainActivity extends AppCompatActivity {
         Double _tradePrice = 0.0;
 
         try {
-            //TODO: Alter AWSJson data to remove _iconURL and _itemID
+            //TODO: Alter AWSJson data to remove _iconURL
             JSONObject reader = new JSONObject(json);
             String urlItemID = String.format("%.0f", itemID);
             JSONObject itemObj = reader.getJSONObject (urlItemID);
 
-            _iconURL = itemObj.getString ("icon");
-            Log.i("ItemDataReturn","Icon Url:" + _iconURL);
+            //_iconURL = itemObj.getString ("icon");
+            //Log.i("ItemDataReturn","Icon Url:" + _iconURL);
 
             _iconLargeURL = itemObj.getString ("icon_large");
             Log.i("ItemDataReturn","Large Icon Url:" + _iconLargeURL);
@@ -544,7 +545,7 @@ public class MainActivity extends AppCompatActivity {
             _name = itemObj.getString ("name");
             Log.i("ItemDataReturn","Item Name:" + _name);
 
-            String tradePrice = itemObj.getString ("currentPrice");
+            String tradePrice = itemObj.getString ("price");
             tradePrice = tradePrice.replace (",","");
             _tradePrice = Double.parseDouble (tradePrice);
             Log.i("ItemDataReturn","Trade Price:" + _tradePrice.toString ());
@@ -554,7 +555,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Item newItemObject = new Item(_iconURL, _iconLargeURL, _itemID, _memberOnly, _name, _tradePrice);
+        Item newItemObject = new Item(_iconLargeURL, _iconLargeURL, _itemID, _memberOnly, _name, _tradePrice);
 
 
         //Double itemID converted to String urlItemID with formatting to remove the decimal point and decimal values. (decimal point causes url to not return data)
@@ -800,7 +801,7 @@ public class MainActivity extends AppCompatActivity {
 
         String j = APIWrapper.pullAWSJson("841,839,843,845,849,847,853,859,857,855,861,859,50,48,54,56,60,58,64,62,68,66,72,70");
 
-        Item bowString = pullItem (1777.0);
+        Item bowString = pullItem (1777.0,j);
 
         MoneyProcess stringSB = new MoneyProcess (pullItem(50.0,j), bowString, pullItem(841.0,j), 5, 5.0, 5.0, testPlayer);
         MoneyProcess stringLB = new MoneyProcess (pullItem(48.0,j), bowString, pullItem(839.0,j), 5, 10.0, 10.0, testPlayer);
@@ -867,7 +868,7 @@ public class MainActivity extends AppCompatActivity {
 
         String j = APIWrapper.pullAWSJson("5291,5292,5293,5294,5295,5296,5297,5298,5299,5300,5301,5302,5303,5304,199,201,203,205,207,3049,209,211,213,3051,215,2485,217,219");
 
-        Item ultracompost = pullItem (21483.0);
+        Item ultracompost = pullItem (21483.0,j);
 
         MoneyProcess farmingGuam = new MoneyProcess (pullItem(5291.0,j), ultracompost, pullItem(199.0,j), 10, 9.0, 12.5, testPlayer);
         MoneyProcess farmingMarrentil = new MoneyProcess (pullItem(5292.0,j), ultracompost, pullItem(201.0,j), 10, 14.0, 15.0, testPlayer);
@@ -1021,7 +1022,7 @@ public class MainActivity extends AppCompatActivity {
     //Pulling data for decantPrayer, decantSuperRestore, and decantAntivenomPlus causes exceptions and forces the app to close
     public ArrayList<MoneyProcess> dataDecantPotions(){
 
-        String j = APIWrapper.pullAWSJson("2444,173,171,169,4417,4423,4421,4419,7660,7666,7664,7662,3008,3014,3012,3010,3016,3022,3020,3018,2434,143,141,139,2428,125,123,121,2436,149,147,145,2448,185,183,181,2440,161,159,157,3024,3030,3028,3026,2442,167,165,163,2450,193,191,189,6685,6691,6689,6687,12905,12911,12909,12907,12913,12919,12917,12915,12625,12631,12629,12627");
+        String j = APIWrapper.pullAWSJson("2444,173,171,169,4417,4423,4421,4419,7660,7666,7664,7662,3008,3014,3012,3010,3016,3022,3020,3018");
 
         Item rangingPotion = pullItem (2444.0,j);
         MoneyProcess decantRanging1 = new MoneyProcess (pullItem(173.0,j), rangingPotion, 16, 1.0, 0.0, testPlayer);
@@ -1047,6 +1048,8 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess decantSuperEnergy1 = new MoneyProcess (pullItem(3022.0,j), superEnergyPotion, 16, 1.0, 0.0, testPlayer);
         MoneyProcess decantSuperEnergy2 = new MoneyProcess (pullItem(3020.0,j), superEnergyPotion, 17, 1.0, 0.0, testPlayer);
         MoneyProcess decantSuperEnergy3 = new MoneyProcess (pullItem(3018.0,j), superEnergyPotion, 18, 1.0, 0.0, testPlayer);
+
+        j = APIWrapper.pullAWSJson("2434,143,141,139,2428,125,123,121,2436,149,147,145,2448,185,183,181,2440,161,159,157,3024,3030,3028,3026");
 
         /*
         Item prayerPotion = pullItem (2434.0);
@@ -1080,6 +1083,8 @@ public class MainActivity extends AppCompatActivity {
         MoneyProcess decantSuperRestore2 = new MoneyProcess (pullItem(3028.0), superRestorePotion, 17, 1.0, 0.0, testPlayer);
         MoneyProcess decantSuperRestore3 = new MoneyProcess (pullItem(3026.0), superRestorePotion, 18, 1.0, 0.0, testPlayer);
         */
+
+        j = APIWrapper.pullAWSJson ("2442,167,165,163,2450,193,191,189,6685,6691,6689,6687,12905,12911,12909,12907,12913,12919,12917,12915,12625,12631,12629,12627");
 
         Item superDefencePotion = pullItem (2442.0,j);
         MoneyProcess decantSuperDefence1 = new MoneyProcess (pullItem(167.0,j), superDefencePotion, 16, 1.0, 0.0, testPlayer);

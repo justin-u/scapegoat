@@ -309,8 +309,10 @@ public class APIWrapper {
             }
         }
 
+        //TODO: Update AWS link to new database
+
         try{
-            JsonData = new DownloadItem().execute("https://0ennap82fi.execute-api.us-east-2.amazonaws.com/stable/getSelect?ids=" + itemIDs).get();
+            JsonData = new DownloadItem().execute("https://88dejay8qi.execute-api.us-east-1.amazonaws.com/default/OSRS_getItemFromDb?ids=" + itemIDs).get();
         }catch(InterruptedException e){
             Log.e("AsyncException","Interrupted Exception:" + e.getMessage());
             return null;
